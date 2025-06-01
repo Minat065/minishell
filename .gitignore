@@ -1,6 +1,3 @@
-en.norm.pdf
-en.subject.pdf
-message (1).txt
-minishell_claude_ca.pdf
-PARSER_DEVELOPMENT.md
-CLAUDE.md
+*.pdf
+*.md
+*.txt
