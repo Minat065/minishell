@@ -1,3 +1,27 @@
-*.pdf
-*.md
-*.txt
+# Object files
+*.o
+*.a
+obj/
+
+# Executable
+minishell
+
+# Test executables
+tests/**/*
+!tests/**/*.c
+!tests/**/*.h
+
+# IDE files
+.vscode/
+*.swp
+.DS_Store
+
+# Temporary files
+*.tmp
+*~
+
+# Documentation (keep these)
+!CLAUDE.md
+!docs/*.md
+!docs/*.txt
+!minishell-directory-structure.txt

@@ -1,0 +1,99 @@
+minishell/
+├── Makefile
+├── include/
+│   ├── minishell.h                        # メインヘッダーファイル
+│   ├── entities/                          # エンティティ層
+│   │   ├── command.h                      # コマンドエンティティ
+│   │   ├── token.h                        # トークンエンティティ
+│   │   └── environment.h                  # 環境変数エンティティ
+│   ├── usecases/                          # ユースケース層
+│   │   ├── command_executor.h             # コマンド実行ユースケース
+│   │   ├── input_processor.h              # 入力処理ユースケース
+│   │   ├── shell_session.h                # シェルセッション管理
+│   │   └── environment_manager.h          # 環境変数管理ユースケース
+│   ├── interfaces/                        # インターフェース層
+│   │   ├── repositories/                  # リポジトリインターフェース
+│   │   │   ├── command_repository.h       # コマンドリポジトリ
+│   │   │   └── environment_repository.h   # 環境変数リポジトリ
+│   │   ├── presenters/                    # プレゼンターインターフェース
+│   │   │   ├── output_presenter.h         # 出力プレゼンター
+│   │   │   └── prompt_presenter.h         # プロンプトプレゼンター
+│   │   └── controllers/                   # コントローラーインターフェース
+│   │       └── shell_controller.h         # シェルコントローラー
+│   └── frameworks/                        # フレームワーク層
+│       ├── readline_adapter.h             # readlineライブラリアダプター
+│       ├── signal_handler.h               # シグナルハンドラー
+│       └── system_call_adapter.h          # システムコールアダプター
+├── src/
+│   ├── main.c                             # エントリーポイント
+│   ├── entities/                          # エンティティ実装
+│   │   ├── command.c                      # コマンドエンティティ実装
+│   │   ├── token.c                        # トークンエンティティ実装
+│   │   └── environment.c                  # 環境変数エンティティ実装
+│   ├── usecases/                          # ユースケース実装
+│   │   ├── command_executor.c             # コマンド実行処理
+│   │   ├── input_processor.c              # 入力処理実装
+│   │   ├── shell_session.c                # シェルセッション管理実装
+│   │   └── environment_manager.c          # 環境変数管理実装
+│   ├── adapters/                          # アダプター実装
+│   │   ├── repositories/                  # リポジトリ実装
+│   │   │   ├── command_repository.c       # コマンドリポジトリ実装
+│   │   │   └── environment_repository.c   # 環境変数リポジトリ実装
+│   │   ├── presenters/                    # プレゼンター実装
+│   │   │   ├── output_presenter.c         # 出力プレゼンター実装
+│   │   │   └── prompt_presenter.c         # プロンプトプレゼンター実装
+│   │   ├── controllers/                   # コントローラー実装
+│   │   │   └── shell_controller.c         # シェルコントローラー実装
+│   │   ├── lexer/                         # レクサー（字句解析）
+│   │   │   ├── lexer.c                    # レクサーメイン実装
+│   │   │   ├── quote_handler.c            # クォート処理
+│   │   │   └── token_factory.c            # トークン生成
+│   │   └── parser/                        # パーサー（構文解析）
+│   │       ├── parser.c                   # パーサーメイン実装
+│   │       ├── command_parser.c           # コマンド解析
+│   │       └── redirection_parser.c       # リダイレクション解析
+│   └── frameworks/                        # フレームワーク実装
+│       ├── readline_adapter.c             # readlineライブラリアダプター実装
+│       ├── signal_handler.c               # シグナルハンドラー実装
+│       ├── system_call_adapter.c          # システムコールアダプター実装
+│       ├── builtins/                      # ビルトインコマンド
+│       │   ├── echo.c                     # echoコマンド実装
+│       │   ├── cd.c                       # cdコマンド実装
+│       │   ├── pwd.c                      # pwdコマンド実装
+│       │   ├── export.c                   # exportコマンド実装
+│       │   ├── unset.c                    # unsetコマンド実装
+│       │   ├── env.c                      # envコマンド実装
+│       │   └── exit.c                     # exitコマンド実装
+│       └── io/                            # I/O処理
+│           ├── redirection.c              # リダイレクション処理
+│           ├── pipe_handler.c             # パイプ処理
+│           └── heredoc.c                  # ヒアドキュメント処理
+└── tests/                                 # テストディレクトリ
+    ├── unit/                              # ユニットテスト
+    │   ├── entities/
+    │   ├── usecases/
+    │   └── adapters/
+    └── integration/                       # 統合テスト
+
+===========================================
+Clean Architecture層の説明
+===========================================
+
+1. Entities (エンティティ層)
+   - ビジネスルールを表現する最も内側の層
+   - 外部に依存しない純粋なデータ構造とロジック
+
+2. Use Cases (ユースケース層)
+   - アプリケーション固有のビジネスルール
+   - エンティティを使用してユースケースを実現
+
+3. Interface Adapters (インターフェースアダプター層)
+   - データの変換層
+   - Controllers: 外部からの入力を処理
+   - Presenters: 内部データを外部向けに変換
+   - Repositories: データ永続化の抽象化
+
+4. Frameworks & Drivers (フレームワーク・ドライバー層)
+   - 最も外側の層
+   - 外部ライブラリやシステムとの接続
+   - readline、シグナル、システムコールなど
