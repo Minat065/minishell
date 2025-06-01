@@ -13,14 +13,17 @@ LIBFT_DIR = srcs/libft
 # libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-# ソースファイル
-SRCS = $(SRC_DIR)/adapters/parser/parser.c \
-       $(SRC_DIR)/adapters/parser/parser_factory.c \
-       $(SRC_DIR)/adapters/parser/parser_utils.c \
-       $(SRC_DIR)/adapters/parser/redirection_parser.c \
-       $(SRC_DIR)/adapters/parser/command_parser.c \
-       $(SRC_DIR)/adapters/parser/pipeline_parser.c \
-       $(SRC_DIR)/entities/command.c
+# ライブラリソースファイル（main.c除く）
+LIB_SRCS = $(SRC_DIR)/adapters/parser/parser.c \
+           $(SRC_DIR)/adapters/parser/parser_factory.c \
+           $(SRC_DIR)/adapters/parser/parser_utils.c \
+           $(SRC_DIR)/adapters/parser/redirection_parser.c \
+           $(SRC_DIR)/adapters/parser/command_parser.c \
+           $(SRC_DIR)/adapters/parser/pipeline_parser.c \
+           $(SRC_DIR)/entities/command.c
+
+# メインプログラム用ソースファイル
+SRCS = $(SRC_DIR)/main.c $(LIB_SRCS)
 
 # オブジェクトファイル
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -72,23 +75,23 @@ test_operators: $(TESTS_DIR)/test_operators
 test_heredoc: $(TESTS_DIR)/test_heredoc
 	./$(TESTS_DIR)/test_heredoc
 
-$(TESTS_DIR)/test_simple_command: $(LIBFT) $(TESTS_DIR)/test_simple_command.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_simple_command.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_simple_command: $(LIBFT) $(TESTS_DIR)/test_simple_command.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_simple_command.c $(LIB_SRCS) $(LIBFT) -o $@
 
-$(TESTS_DIR)/test_quote_handling: $(LIBFT) $(TESTS_DIR)/test_quote_handling.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_quote_handling.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_quote_handling: $(LIBFT) $(TESTS_DIR)/test_quote_handling.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_quote_handling.c $(LIB_SRCS) $(LIBFT) -o $@
 
-$(TESTS_DIR)/test_pipe: $(LIBFT) $(TESTS_DIR)/test_pipe.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_pipe.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_pipe: $(LIBFT) $(TESTS_DIR)/test_pipe.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_pipe.c $(LIB_SRCS) $(LIBFT) -o $@
 
-$(TESTS_DIR)/test_redirection: $(LIBFT) $(TESTS_DIR)/test_redirection.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_redirection.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_redirection: $(LIBFT) $(TESTS_DIR)/test_redirection.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_redirection.c $(LIB_SRCS) $(LIBFT) -o $@
 
-$(TESTS_DIR)/test_operators: $(LIBFT) $(TESTS_DIR)/test_operators.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_operators.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_operators: $(LIBFT) $(TESTS_DIR)/test_operators.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_operators.c $(LIB_SRCS) $(LIBFT) -o $@
 
-$(TESTS_DIR)/test_heredoc: $(LIBFT) $(TESTS_DIR)/test_heredoc.c $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_heredoc.c $(SRCS) $(LIBFT) -o $@
+$(TESTS_DIR)/test_heredoc: $(LIBFT) $(TESTS_DIR)/test_heredoc.c $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_DIR)/test_heredoc.c $(LIB_SRCS) $(LIBFT) -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
