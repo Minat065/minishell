@@ -1,27 +1,105 @@
-# Object files
-*.o
-*.a
-obj/
+# ============================================================================
+# 42 Minishell Project .gitignore
+# ============================================================================
 
-# Executable
+# Compiled Object files
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+obj/
+build/
+
+# Libft compiled files
+srcs/libft/*.o
+srcs/libft/libft.a
+
+# Main executable
 minishell
 
-# Test executables
-tests/**/*
+# Test executables and binaries
+test_*
+tests/**/test_*
 !tests/**/*.c
 !tests/**/*.h
+tests/**/*.out
+tests/**/*.bin
 
-# IDE files
-.vscode/
-*.swp
-.DS_Store
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+core
+core.*
+vgcore.*
 
-# Temporary files
+# Temporary files created during development
 *.tmp
+*.temp
 *~
+*.bak
+*.orig
+*.rej
+.*.sw?
 
-# Documentation (keep these)
+# Log files
+*.log
+debug.txt
+valgrind.log
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-*
+*.swp
+*.swo
+.vim/
+.netrwhist
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Development and testing artifacts
+*.diff
+*.patch
+output.txt
+result.txt
+test_output/
+coverage/
+
+# Readline library files (if locally compiled)
+readline/
+libreadline*
+
+# Norminette output
+norm.out
+
+# 42 specific files to keep
 !CLAUDE.md
-!docs/*.md
-!docs/*.txt
-!minishell-directory-structure.txt
+!*.md
+!en.subject.pdf
+!en.norm.pdf
+
+# Documentation
+docs/
+!docs/README.md
+
+# Keep source and header files
+!*.c
+!*.h
+!Makefile
+!*/Makefile
+
+# Keep important configuration files
+!.gitignore
+!.gitattributes
