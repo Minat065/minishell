@@ -6,13 +6,13 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:27:11 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/11 02:58:40 by mokabe           ###   ########.fr       */
+/*   Updated: 2025/10/14 22:16:26 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../../../include/adapters/parser/parser_internal.h"
 #include "../../../src/utils/libft/libft.h"
+#include <stdlib.h>
 
 int	add_word_to_cmd(t_cmd *cmd, t_token_stream *tokens, int *argc)
 {
@@ -61,8 +61,8 @@ t_cmd	*init_simple_command(void)
 	return (cmd);
 }
 
-int	process_command_tokens(t_cmd *cmd, t_token_stream *tokens,
-		int *argc, t_cmd_redirect **last_redirect)
+int	process_command_tokens(t_cmd *cmd, t_token_stream *tokens, int *argc,
+		t_cmd_redirect **last_redirect)
 {
 	while (tokens->current && tokens->current->type != TOKEN_PIPE
 		&& tokens->current->type != TOKEN_EOF)
@@ -95,8 +95,15 @@ t_cmd	*parse_simple_command(t_token_stream *tokens)
 	last_redirect = NULL;
 	argc = 0;
 	if (!process_command_tokens(cmd, tokens, &argc, &last_redirect))
+	{
+		free_cmd(cmd);
 		return (NULL);
-	if (argc > 0)
-		cmd->argv[argc] = NULL;
+	}
+	if (argc == 0)
+	{
+		free_cmd(cmd);
+		return (NULL);
+	}
+	cmd->argv[argc] = NULL;
 	return (cmd);
 }
