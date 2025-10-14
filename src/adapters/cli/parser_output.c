@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser_output.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/13 23:40:29 by tatsato          ###   ########.fr       */
+/*   Updated: 2025/10/14 22:17:26 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "adapters/cli/parser_output.h"
 #include "adapters/parser/parser_interface.h"
 #include "domain/command.h"
+#include "utils/libft_custom.h"
+#include <stdio.h>
+#include <unistd.h>
 
 static void	count_pipelines_and_commands(t_parse_result *result, int *counts)
 {
@@ -38,7 +40,8 @@ static void	count_pipelines_and_commands(t_parse_result *result, int *counts)
 
 static void	print_parser_error(t_parse_result *result)
 {
-	(void)result;
+	if (result && result->error_msg)
+		ft_putendl_fd(result->error_msg, STDERR_FILENO);
 }
 
 static void	print_ast_statistics(int *counts)

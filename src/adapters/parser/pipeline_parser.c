@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:27:11 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/06/13 23:59:29 by tatsato          ###   ########.fr       */
+/*   Updated: 2025/10/14 22:17:29 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "adapters/parser/parser_internal.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
 
 /* パースエラーを設定 */
-void	set_parse_error(
-	t_parse_result *result, t_token_stream *tokens, const char *msg)
+void	set_parse_error(t_parse_result *result, t_token_stream *tokens,
+		const char *msg)
 {
 	result->error_msg = ft_strdup(msg);
 	if (tokens->current)
@@ -27,21 +27,19 @@ void	set_parse_error(
 }
 
 /* 最初のコマンドエラーを処理 */
-void	handle_first_cmd_error(
-	t_parse_result *result, t_token_stream *tokens)
+void	handle_first_cmd_error(t_parse_result *result, t_token_stream *tokens)
 {
 	if (tokens->current && tokens->current->type == TOKEN_PIPE)
 		set_parse_error(result, tokens,
 			"syntax error near unexpected token '|'");
-	else if
-	(tokens->current && tokens->current->type == TOKEN_REDIRECT)
+	else if (tokens->current && tokens->current->type == TOKEN_REDIRECT)
 		set_parse_error(result, tokens,
 			"syntax error near unexpected token 'newline'");
 }
 
 /* パイプコマンドを処理 */
-int	process_pipe_commands(
-	t_token_stream *tokens, t_parse_result *result, t_cmd **current_cmd)
+int	process_pipe_commands(t_token_stream *tokens, t_parse_result *result,
+		t_cmd **current_cmd)
 {
 	t_cmd	*new_cmd;
 

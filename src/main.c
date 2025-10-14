@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/16 08:32:40 by tatsato          ###   ########.fr       */
+/*   Updated: 2025/10/14 22:37:08 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "usecase/signal/signal_handler.h"
-#include "domain/token.h"
-#include "usecase/env/env_manager.h"
-#include "usecase/lexer/token_manager.h"
-#include "usecase/lexer/token_printer.h"
-#include "usecase/lexer/lexer.h"
-#include "usecase/builtin/builtin_commands.h"
-#include "adapters/parser/parser_interface.h"
-#include "usecase/executor/executor.h"
-#include "domain/command.h"
 #include "adapters/cli/debug_output.h"
-#include "adapters/cli/parser_output.h"
 #include "adapters/cli/output_utils.h"
+#include "adapters/cli/parser_output.h"
+#include "adapters/parser/parser_interface.h"
+#include "domain/command.h"
+#include "domain/token.h"
 #include "interfaces/io_interface.h"
 #include "interfaces/output_interface.h"
 #include "interfaces/process_interface.h"
+#include "usecase/builtin/builtin_commands.h"
+#include "usecase/env/env_manager.h"
+#include "usecase/executor/executor.h"
+#include "usecase/lexer/lexer.h"
+#include "usecase/lexer/token_manager.h"
+#include "usecase/lexer/token_printer.h"
+#include "usecase/signal/signal_handler.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static void	execute_and_cleanup(t_parse_result *result, t_exec_context *ctx)
 {
@@ -47,6 +47,14 @@ static void	process_and_print(char *line, t_exec_context *exec_ctx)
 
 	stream = lexer(line);
 	result = parse(stream);
+	if (result && result->error_msg)
+	{
+		print_parse_result(result);
+		exec_ctx->last_exit_status = 2;
+		free_parse_result(result);
+		free_tokens(stream);
+		return ;
+	}
 	execute_and_cleanup(result, exec_ctx);
 	if (result)
 		free_parse_result(result);
@@ -111,8 +119,8 @@ int	main(int argc, char **argv, char **envp)
 	env = NULL;
 	if (envp)
 		env = env_create_from_envp(envp);
-	exec_ctx = create_exec_context(&env, io_service, output_service, 
-		process_service);
+	exec_ctx = create_exec_context(&env, io_service, output_service,
+			process_service);
 	if (!exec_ctx)
 	{
 		printf("Failed to create execution context\n");
