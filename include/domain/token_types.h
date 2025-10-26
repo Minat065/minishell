@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 23:09:07 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/01 18:09:44 by tatsato          ###   ########.fr       */
+/*   Updated: 2025/10/26 23:49:00 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef enum e_token_type
 	TOKEN_REDIRECT,
 	TOKEN_PIPE,
 	TOKEN_EOF,
+	TOKEN_OR,
 	TOKEN_ERROR
 }	t_token_type;
 

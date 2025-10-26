@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:27:11 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/14 22:17:29 by mokabe           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:48:39 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,24 @@ void	handle_first_cmd_error(t_parse_result *result, t_token_stream *tokens)
 		set_parse_error(result, tokens,
 			"syntax error near unexpected token 'newline'");
 }
+/* パイプ直後が不正な場合の構文エラー判定 */
+static int	check_pipe_syntax_error(t_token_stream *tokens,
+		t_parse_result *result)
+{
+	if (!tokens->current)
+	{
+		set_parse_error(result, tokens,
+			"minishell: syntax error near unexpected token 'newline'");
+		return (1);
+	}
+	if (tokens->current->type == TOKEN_PIPE)
+	{
+		set_parse_error(result, tokens,
+			"minishell: syntax error near unexpected token '|'");
+		return (1);
+	}
+	return (0);
+}
 
 /* パイプコマンドを処理 */
 int	process_pipe_commands(t_token_stream *tokens, t_parse_result *result,
@@ -46,11 +64,15 @@ int	process_pipe_commands(t_token_stream *tokens, t_parse_result *result,
 	while (tokens->current && tokens->current->type == TOKEN_PIPE)
 	{
 		tokens->current = tokens->current->next;
+		if (check_pipe_syntax_error(tokens, result))
+			return (0);
+		if (tokens->current->type == TOKEN_OR)
+			break ;
 		new_cmd = parse_simple_command(tokens);
 		if (!new_cmd)
 		{
 			set_parse_error(result, tokens,
-				"syntax error: unexpected end after pipe");
+				"minishell: syntax error near unexpected token '|'");
 			return (0);
 		}
 		(*current_cmd)->next = new_cmd;
