@@ -21,6 +21,7 @@ BUILTIN_SRCS	=	$(wildcard $(USE_CASE_DIR)/builtin/*.c)
 ASSIGNMENT_SRCS	=	$(wildcard $(USE_CASE_DIR)/assignment/*.c)
 EXIT_SRCS	=		$(wildcard $(USE_CASE_DIR)/exit/*.c)
 SIGNAL_SRCS	=		$(wildcard $(USE_CASE_DIR)/signal/*.c)
+INPUT_SRCS  =		$(wildcard $(USE_CASE_DIR)/input/*.c)
 
 # Adapters layer sources
 ADAPT_CLI_SRCS	=	$(wildcard $(ADAPTERS_DIR)/cli/*.c)
@@ -43,6 +44,7 @@ SRCS			=	$(DOMAIN_SRCS) \
 					$(ASSIGNMENT_SRCS) \
 					$(EXIT_SRCS) \
 					$(SIGNAL_SRCS) \
+					$(INPUT_SRCS) \
 					$(ADAPT_CLI_SRCS) \
 					$(ADAPT_PARSER_SRCS) \
 					$(ADAPT_SYS_SRCS) \
