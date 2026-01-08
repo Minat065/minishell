@@ -22,6 +22,8 @@ typedef enum e_token_type
 	TOKEN_PIPE,
 	TOKEN_EOF,
 	TOKEN_OR,
+	TOKEN_LPAREN,
+	TOKEN_RPAREN,
 	TOKEN_ERROR
 }	t_token_type;
 

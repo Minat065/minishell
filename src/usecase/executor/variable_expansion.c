@@ -113,6 +113,24 @@ char	*expand_variables(const char *str, t_exec_context *ctx)
 	return (result);
 }
 
+static char	*expand_dquote_content(const char *str, t_exec_context *ctx)
+{
+	char	*content;
+	char	*expanded;
+	char	*result;
+
+	content = ft_strdup(str + 1);
+	if (!content)
+		return (NULL);
+	expanded = expand_variables(content, ctx);
+	free(content);
+	if (!expanded)
+		return (NULL);
+	result = ft_strjoin("\x02", expanded);
+	free(expanded);
+	return (result);
+}
+
 void	expand_command_variables(t_cmd *cmd, t_exec_context *ctx)
 {
 	int		i;
@@ -124,10 +142,15 @@ void	expand_command_variables(t_cmd *cmd, t_exec_context *ctx)
 	while (cmd->argv[i])
 	{
 		if (cmd->argv[i][0] == '\x01')
+			;
+		else if (cmd->argv[i][0] == '\x02')
 		{
-			expanded = ft_strdup(cmd->argv[i] + 1);
-			free(cmd->argv[i]);
-			cmd->argv[i] = expanded;
+			expanded = expand_dquote_content(cmd->argv[i], ctx);
+			if (expanded)
+			{
+				free(cmd->argv[i]);
+				cmd->argv[i] = expanded;
+			}
 		}
 		else
 		{

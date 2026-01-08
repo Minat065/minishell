@@ -17,7 +17,7 @@ t_token_type_handlers	create_token_handlers(void)
 {
 	t_token_type_handlers	handlers;
 
-	handlers.token_handler_count = 9;
+	handlers.token_handler_count = 11;
 	handlers.token_handlers
 		= malloc(sizeof(t_token_handler) * handlers.token_handler_count);
 	if (!handlers.token_handlers)
@@ -41,7 +41,11 @@ t_token_type_handlers	create_token_handlers(void)
 	{.handler_regular = handle_ampersand}};
 	handlers.token_handlers[7] = (t_token_handler){is_semicolon,
 	{.handler_regular = handle_semicolon}};
-	handlers.token_handlers[8] = (t_token_handler){is_word,
+	handlers.token_handlers[8] = (t_token_handler){is_lparen,
+	{.handler_regular = handle_lparen}};
+	handlers.token_handlers[9] = (t_token_handler){is_rparen,
+	{.handler_regular = handle_rparen}};
+	handlers.token_handlers[10] = (t_token_handler){is_word,
 	{.handler_regular = handle_word_or_assignment}};
 	return (handlers);
 }

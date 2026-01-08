@@ -65,6 +65,7 @@ static void	execute_command_in_child(t_pipe_params *params)
 
 	setup_child_signal_handlers();
 	expand_command_variables(params->cmd, params->ctx);
+	expand_command_wildcards(params->cmd, params->ctx);
 	setup_input_fd(params->input_fd, params->ctx->process_service);
 	setup_output_fd(params->output_fd, params->ctx->process_service);
 	close_all_pipes(params);

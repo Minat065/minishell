@@ -21,6 +21,7 @@ typedef struct s_cmd_redirect {
 /* パイプライン構造体（コマンドの連鎖） */
 typedef struct s_pipeline {
     t_cmd *cmds;                  // コマンドのリスト
+    struct s_pipeline *group;     // グループ化されたパイプライン (括弧用)
     struct s_pipeline *next;      // 演算子でつながる次のパイプライン
     int connector;                // 接続演算子（AND, OR, SEMICOLON）
 } t_pipeline;

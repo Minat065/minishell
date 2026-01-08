@@ -58,7 +58,11 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 /* Execute a single pipeline (commands connected by pipes) */
 int	execute_pipeline(t_pipeline *pipeline, t_exec_context *ctx)
 {
-	if (!pipeline || !pipeline->cmds || !ctx)
+	if (!pipeline || !ctx)
+		return (EXIT_FAILURE);
+	if (pipeline->group)
+		return (execute_pipeline_list(pipeline->group, ctx));
+	if (!pipeline->cmds)
 		return (EXIT_FAILURE);
 	if (!pipeline->cmds->next)
 		return (execute_single_command(pipeline->cmds, ctx));
@@ -84,6 +88,7 @@ int	execute_single_command(t_cmd *cmd, t_exec_context *ctx)
 	if (!cmd || !cmd->argv || !cmd->argv[0] || !ctx)
 		return (EXIT_FAILURE);
 	expand_command_variables(cmd, ctx);
+	expand_command_wildcards(cmd, ctx);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (cmd->redirects && setup_redirections_with_service(cmd->redirects, 

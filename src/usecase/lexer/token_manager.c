@@ -33,6 +33,12 @@ void	add_token(t_token_stream *stream, t_token *token)
 	stream->count++;
 }
 
+static int	has_word_value(t_token_type type)
+{
+	return (type == TOKEN_WORD || type == TOKEN_OPERATOR
+		|| type == TOKEN_OR || type == TOKEN_LPAREN || type == TOKEN_RPAREN);
+}
+
 void	free_tokens(t_token_stream *stream)
 {
 	t_token	*cur;
@@ -42,7 +48,7 @@ void	free_tokens(t_token_stream *stream)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->type == TOKEN_WORD)
+		if (has_word_value(cur->type))
 			free(cur->value.word);
 		else if (cur->type == TOKEN_ASSIGNMENT)
 			free_assignment(&cur->value.assignment);

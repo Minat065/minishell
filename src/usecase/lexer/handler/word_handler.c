@@ -31,6 +31,8 @@ int	is_word(char c)
 		&& !is_redirect_output_or_append(c)
 		&& !is_ampersand(c)
 		&& !is_semicolon(c)
+		&& !is_lparen(c)
+		&& !is_rparen(c)
 	);
 }
 

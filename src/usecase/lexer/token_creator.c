@@ -45,7 +45,8 @@ static t_value	create_value(
 	t_value	value;
 
 	value.word = NULL;
-	if (type == TOKEN_WORD || type == TOKEN_OPERATOR || type == TOKEN_OR)
+	if (type == TOKEN_WORD || type == TOKEN_OPERATOR || type == TOKEN_OR
+		|| type == TOKEN_LPAREN || type == TOKEN_RPAREN)
 		value.word = ft_strndup(text, len);
 	else if (type == TOKEN_ASSIGNMENT)
 		value.assignment = create_assignment(text, len);
