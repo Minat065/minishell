@@ -14,15 +14,34 @@
 #include "../../../src/utils/libft/libft.h"
 #include <stdlib.h>
 
+static char	*concat_strings(char *s1, const char *s2)
+{
+	char	*result;
+
+	result = ft_strjoin(s1, s2);
+	free(s1);
+	return (result);
+}
+
 int	add_word_to_cmd(t_cmd *cmd, t_token_stream *tokens, int *argc)
 {
-	cmd->argv = extend_argv(cmd->argv, *argc);
-	if (!cmd->argv)
-		return (0);
-	cmd->argv[*argc] = ft_strdup(tokens->current->value.word);
-	if (!cmd->argv[*argc])
-		return (0);
-	(*argc)++;
+	if (!tokens->current->space_before && *argc > 0)
+	{
+		cmd->argv[*argc - 1] = concat_strings(cmd->argv[*argc - 1],
+				tokens->current->value.word);
+		if (!cmd->argv[*argc - 1])
+			return (0);
+	}
+	else
+	{
+		cmd->argv = extend_argv(cmd->argv, *argc);
+		if (!cmd->argv)
+			return (0);
+		cmd->argv[*argc] = ft_strdup(tokens->current->value.word);
+		if (!cmd->argv[*argc])
+			return (0);
+		(*argc)++;
+	}
 	tokens->current = tokens->current->next;
 	return (1);
 }

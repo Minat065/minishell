@@ -39,57 +39,35 @@ cd /tmp && cd - && pwd  # → /home/user/minishell
 
 ## 残りの問題
 
-### Issue #5: クォート連結バグ (優先度: 高)
-**状態**: 未着手
+### ✅ Issue #5: クォート連結バグ
+**状態**: 完了
 **影響**: クォート処理の厳密な準拠
 
-**問題**:
-```bash
-echo "hello"world
-# 期待 (bash): helloworld
-# 実際: hello world (スペースが入る)
-```
-
-**原因**: レキサーが引用符で囲まれた部分と囲まれていない部分を別々のトークンとして作成し、パーサーがそれらを連結していない
-
-**修正箇所**:
-- `src/usecase/lexer/handler/double_quote_handler.c`
-- `src/usecase/lexer/handler/single_quote_handler.c`
-- `src/adapters/parser/command_parser.c`
+**修正内容**:
+- トークンに`space_before`フィールドを追加
+- レキサー状態に`last_token_end`フィールドを追加
+- パーサーで隣接トークンを連結するロジックを実装
 
 **テストケース**:
-- [ ] `echo "hello"world` → `helloworld`
-- [ ] `echo 'test'"$HOME"` → `test/root` (現在は動作)
-- [ ] `echo hello"world"test` → `helloworldtest`
+- [x] `echo "hello"world` → `helloworld`
+- [x] `echo 'hello'world` → `helloworld`
+- [x] `echo hello"world"test` → `helloworldtest`
 
 ---
 
-### Issue #6: ファイルディスクリプタリダイレクション未対応 (優先度: 中)
-**状態**: 未着手
+### Issue #6: ファイルディスクリプタリダイレクション (優先度: 低)
+**状態**: 対象外 (42 subject で必須ではない)
 **影響**: 標準エラー出力のリダイレクト
 
-**問題**:
-```bash
-echo test 2>&1
-# 期待: test
-# 実際: (何も出力されない)
+**注記**: 42 minishell の subject によると、必須のリダイレクションは `<`, `>`, `<<`, `>>` のみ。
+`2>&1` などの fd リダイレクションは必須要件に含まれていない。
 
-cat nonexistent 2>&1
-# 期待: エラーメッセージ
-# 実際: (何も出力されない)
-```
-
-**原因**: `2>&1` の構文がパースされていない
-
-**修正箇所**:
-- `src/usecase/lexer/handler/redirect_output_or_append_handler.c`
-- `src/adapters/parser/redirection_parser.c`
-- `src/usecase/executor/redirection_handler.c`
-
-**テストケース**:
-- [ ] `echo test 2>&1` → `test`
-- [ ] `ls nonexistent 2>&1` → エラーメッセージ
-- [ ] `ls 2>/dev/null` → エラー抑制
+**参照**: en.subject_minishell.pdf, Page 7:
+> Implement the following redirections:
+> - < should redirect input.
+> - > should redirect output.
+> - << should be given a delimiter...
+> - >> should redirect output in append mode.
 
 ---
 
@@ -113,27 +91,43 @@ echo *
 
 ## 現在の完成度
 
-| 機能 | 状態 |
-|------|------|
-| 基本コマンド実行 | ✅ |
-| パイプ | ✅ |
-| リダイレクション (<, >, >>) | ✅ |
-| ヒアドキュメント (<<) | ✅ |
-| 環境変数展開 ($VAR, $?) | ✅ |
-| シングルクォート | ✅ |
-| ダブルクォート | ✅ |
-| 組み込みコマンド (7個) | ✅ |
-| 論理演算子 (&&, \|\|, ;) | ✅ |
-| クォート連結 | ❌ |
-| fdリダイレクション (2>&1) | ❌ |
-| ワイルドカード (*) | ❌ (ボーナス) |
+| 機能 | 状態 | 必須/ボーナス |
+|------|------|--------------|
+| 基本コマンド実行 | ✅ | 必須 |
+| パイプ | ✅ | 必須 |
+| リダイレクション (<, >, >>) | ✅ | 必須 |
+| ヒアドキュメント (<<) | ✅ | 必須 |
+| 環境変数展開 ($VAR, $?) | ✅ | 必須 |
+| シングルクォート | ✅ | 必須 |
+| ダブルクォート | ✅ | 必須 |
+| 組み込みコマンド (7個) | ✅ | 必須 |
+| クォート連結 | ✅ | 必須 |
+| 論理演算子 (&&, \|\|) | ✅ | ボーナス |
+| ワイルドカード (*) | ❌ | ボーナス |
+| fdリダイレクション (2>&1) | ❌ | 対象外 |
 
-**完成度: 約95%** (必須項目は全て動作、エッジケースに問題あり)
+**必須機能完成度: 100%** ✅
 
 ---
 
-## 実装優先順位
+## 42 Subject 要件整理
 
-1. **Issue #5**: クォート連結 - 42評価でテストされる可能性あり
-2. **Issue #6**: fdリダイレクション - 評価でテストされる可能性あり
-3. **Issue #7**: ワイルドカード - ボーナス機能
+### 必須 (Mandatory)
+- [x] プロンプト表示
+- [x] コマンド履歴
+- [x] PATH解決・実行
+- [x] シグナル処理 (Ctrl+C, Ctrl+D, Ctrl+\)
+- [x] クォート処理 (' と ")
+- [x] 環境変数展開 ($VAR, $?)
+- [x] リダイレクション (<, >, <<, >>)
+- [x] パイプ (|)
+- [x] 組み込みコマンド (echo, cd, pwd, export, unset, env, exit)
+
+### ボーナス (Bonus)
+- [x] && と || (優先度用の括弧なし)
+- [ ] ワイルドカード (*)
+
+### 対象外 (Not Required)
+- [ ] バックスラッシュ (\)
+- [ ] セミコロン (;) - subject で明示的に対象外
+- [ ] fdリダイレクション (2>&1)

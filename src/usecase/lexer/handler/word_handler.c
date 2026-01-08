@@ -103,7 +103,7 @@ int	handle_word_or_assignment(const char *input,
 		st->index++;
 	}
 	add_token(stream, create_token(
-			TOKEN_WORD, &input[start], st->index - start, st));
+			TOKEN_WORD, &input[start], st->index - start, start, st));
 	st->column += (st->index - start);
 	return (EXIT_SUCCESS);
 }

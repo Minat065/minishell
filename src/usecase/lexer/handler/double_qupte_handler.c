@@ -23,11 +23,13 @@ int	is_double_quote(char c)
 int	handle_double_quote(
 	const char *input, t_lexer_state *st, t_token_stream *stream)
 {
-	int	start;
+	int	token_start;
+	int	content_start;
 
+	token_start = st->index;
 	st->index++;
 	st->column++;
-	start = st->index;
+	content_start = st->index;
 	while (input[st->index])
 	{
 		if (input[st->index] == '\n' || input[st->index] == '"')
@@ -42,9 +44,9 @@ int	handle_double_quote(
 		stream->error_column = st->column;
 		return (-1);
 	}
-	add_token(stream,
-		create_token(TOKEN_WORD, &input[start], st->index - start, st));
 	st->index++;
 	st->column++;
+	add_token(stream, create_token(TOKEN_WORD, &input[content_start],
+			st->index - content_start - 1, token_start, st));
 	return (0);
 }

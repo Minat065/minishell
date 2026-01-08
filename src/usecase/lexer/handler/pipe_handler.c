@@ -21,17 +21,20 @@ int	is_pipe(char c)
 
 int	handle_pipe(const char *input, t_lexer_state *st, t_token_stream *stream)
 {
+	int	start;
+
+	start = st->index;
 	if (input[st->index + 1] == '|')
 	{
-		add_token(stream, create_token(TOKEN_OR, &input[st->index], 2, st));
 		st->index += 2;
 		st->column += 2;
+		add_token(stream, create_token(TOKEN_OR, &input[start], 2, start, st));
 	}
 	else
 	{
-		add_token(stream, create_token(TOKEN_PIPE, &input[st->index], 1, st));
 		st->index++;
 		st->column++;
+		add_token(stream, create_token(TOKEN_PIPE, &input[start], 1, start, st));
 	}
 	return (0);
 }

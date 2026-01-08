@@ -35,6 +35,7 @@ typedef struct s_token
 	t_value			value;
 	int				line_number;
 	int				column;
+	int				space_before;
 	struct s_token	*next;
 }					t_token;
 
@@ -54,6 +55,7 @@ typedef struct s_lexer_state
 	int				index;
 	int				line;
 	int				column;
+	int				last_token_end;
 }					t_lexer_state;
 
 #endif

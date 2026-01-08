@@ -34,6 +34,6 @@ int	handle_redirect_input_or_heredoc(const char *input,
 	if (input[st->index] == '<')
 		st->index++;
 	add_token(stream, create_token(TOKEN_REDIRECT, input + start,
-			st->index - start, st));
+			st->index - start, start, st));
 	return (1);
 }
