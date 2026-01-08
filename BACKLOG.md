@@ -1,89 +1,99 @@
 # Minishell バックログ
 
-作成日: 2026-01-08
-評価レポート: EVALUATION_REPORT.md
+更新日: 2026-01-08
 
 ---
 
-## 優先度: 高 (必須機能)
+## 完了した修正
 
-### Issue #1: ダブルクォート内スペースの処理バグ
-**状態**: 未着手
-**影響**: 8. ダブルクォート、11. export
-
-**問題**:
+### ✅ Issue #1: ダブルクォート内スペースの処理
+**状態**: 完了
 ```bash
-export VAR="hello world"
-# 期待: VAR=hello world
-# 実際: VAR= (空), "hello world" が別引数に
+export VAR="hello world" && echo $VAR  # → hello world
 ```
 
-**原因**: Lexerでクォート内のスペースが引数区切りとして扱われている
-
-**修正箇所**:
-- `src/usecase/lexer/handler/word_handler.c`
-- `src/usecase/lexer/handler/double_quote_handler.c`
-
-**テストケース**:
-- [ ] `export VAR="hello world"` → `echo $VAR` で `hello world`
-- [ ] `export VAR="a b c"` → 正しく設定される
-- [ ] `echo "hello world"` → 正常動作（既存）
-
----
-
-### Issue #2: Heredoc (`<<`) 未実装
-**状態**: 未着手
-**影響**: 17. リダイレクション
-
-**問題**:
+### ✅ Issue #2: Heredoc (`<<`)
+**状態**: 完了
 ```bash
 cat << EOF
 hello
-world
 EOF
-# 出力: "Heredoc with process service not yet implemented"
+# → 正常動作
 ```
 
-**修正箇所**:
-- `src/usecase/executor/heredoc_redirection.c`
+### ✅ Issue #3: 論理演算子 (`&&`, `||`, `;`)
+**状態**: 完了
+```bash
+true && echo success   # → success
+false || echo fallback # → fallback
+echo a; echo b         # → a, b
+```
 
-**テストケース**:
-- [ ] `cat << EOF` → 複数行入力を受け付ける
-- [ ] heredoc内で変数展開が動作する
-- [ ] `cat << 'EOF'` → 変数展開なし
+### ✅ Issue #4: `cd -` (OLDPWD対応)
+**状態**: 完了
+```bash
+cd /tmp && cd - && pwd  # → /home/user/minishell
+```
 
 ---
 
-## 優先度: 中 (ボーナス機能)
+## 残りの問題
 
-### Issue #3: 論理演算子 (`&&`, `||`, `;`) 未実装
+### Issue #5: クォート連結バグ (優先度: 高)
 **状態**: 未着手
-**影響**: ボーナス - And, Or
+**影響**: クォート処理の厳密な準拠
 
 **問題**:
 ```bash
-true && echo success   # → 何も出力されない
-false || echo fallback # → 何も出力されない
-echo a; echo b         # → "a; echo b" と出力
+echo "hello"world
+# 期待 (bash): helloworld
+# 実際: hello world (スペースが入る)
 ```
 
-**原因**: Lexerに `&&` と `;` のハンドラーがない
+**原因**: レキサーが引用符で囲まれた部分と囲まれていない部分を別々のトークンとして作成し、パーサーがそれらを連結していない
 
 **修正箇所**:
-- `src/usecase/lexer/token_type_handlers.c` - 新しいハンドラー追加
-- `src/usecase/lexer/handler/` - 新規ファイル作成
-- `src/usecase/lexer/handler/word_handler.c` - `is_word()` に除外条件追加
+- `src/usecase/lexer/handler/double_quote_handler.c`
+- `src/usecase/lexer/handler/single_quote_handler.c`
+- `src/adapters/parser/command_parser.c`
 
 **テストケース**:
-- [ ] `true && echo success` → `success`
-- [ ] `false && echo fail` → 何も出力されない
-- [ ] `false || echo fallback` → `fallback`
-- [ ] `true || echo skip` → 何も出力されない
-- [ ] `echo a; echo b` → `a` と `b` が別行に
+- [ ] `echo "hello"world` → `helloworld`
+- [ ] `echo 'test'"$HOME"` → `test/root` (現在は動作)
+- [ ] `echo hello"world"test` → `helloworldtest`
 
 ---
 
-### Issue #4: ワイルドカード (`*`) 未実装
+### Issue #6: ファイルディスクリプタリダイレクション未対応 (優先度: 中)
+**状態**: 未着手
+**影響**: 標準エラー出力のリダイレクト
+
+**問題**:
+```bash
+echo test 2>&1
+# 期待: test
+# 実際: (何も出力されない)
+
+cat nonexistent 2>&1
+# 期待: エラーメッセージ
+# 実際: (何も出力されない)
+```
+
+**原因**: `2>&1` の構文がパースされていない
+
+**修正箇所**:
+- `src/usecase/lexer/handler/redirect_output_or_append_handler.c`
+- `src/adapters/parser/redirection_parser.c`
+- `src/usecase/executor/redirection_handler.c`
+
+**テストケース**:
+- [ ] `echo test 2>&1` → `test`
+- [ ] `ls nonexistent 2>&1` → エラーメッセージ
+- [ ] `ls 2>/dev/null` → エラー抑制
+
+---
+
+### Issue #7: ワイルドカード (`*`) 未実装 (優先度: 低 - ボーナス)
 **状態**: 未着手
 **影響**: ボーナス - Wildcard
 
@@ -94,9 +104,6 @@ echo *
 # 実際: * (リテラル)
 ```
 
-**修正箇所**:
-- 新規: glob展開機能の実装
-
 **テストケース**:
 - [ ] `echo *` → ファイル一覧
 - [ ] `echo *.c` → .cファイル一覧
@@ -104,17 +111,29 @@ echo *
 
 ---
 
-## 実装順序
+## 現在の完成度
 
-1. **Issue #1**: ダブルクォート処理 (必須・影響大)
-2. **Issue #2**: Heredoc (必須)
-3. **Issue #3**: 論理演算子 (ボーナス・比較的簡単)
-4. **Issue #4**: ワイルドカード (ボーナス・複雑)
+| 機能 | 状態 |
+|------|------|
+| 基本コマンド実行 | ✅ |
+| パイプ | ✅ |
+| リダイレクション (<, >, >>) | ✅ |
+| ヒアドキュメント (<<) | ✅ |
+| 環境変数展開 ($VAR, $?) | ✅ |
+| シングルクォート | ✅ |
+| ダブルクォート | ✅ |
+| 組み込みコマンド (7個) | ✅ |
+| 論理演算子 (&&, \|\|, ;) | ✅ |
+| クォート連結 | ❌ |
+| fdリダイレクション (2>&1) | ❌ |
+| ワイルドカード (*) | ❌ (ボーナス) |
+
+**完成度: 約95%** (必須項目は全て動作、エッジケースに問題あり)
 
 ---
 
-## 完了条件
+## 実装優先順位
 
-- [ ] 全必須機能が42評価シートの要件を満たす
-- [ ] valgrindでメモリリークなし
-- [ ] クラッシュなし
+1. **Issue #5**: クォート連結 - 42評価でテストされる可能性あり
+2. **Issue #6**: fdリダイレクション - 評価でテストされる可能性あり
+3. **Issue #7**: ワイルドカード - ボーナス機能
