@@ -17,7 +17,7 @@ t_token_type_handlers	create_token_handlers(void)
 {
 	t_token_type_handlers	handlers;
 
-	handlers.token_handler_count = 7;
+	handlers.token_handler_count = 9;
 	handlers.token_handlers
 		= malloc(sizeof(t_token_handler) * handlers.token_handler_count);
 	if (!handlers.token_handlers)
@@ -37,7 +37,11 @@ t_token_type_handlers	create_token_handlers(void)
 	{.handler_regular = handle_redirect_input_or_heredoc}};
 	handlers.token_handlers[5] = (t_token_handler){is_redirect_output_or_append,
 	{.handler_regular = handle_redirect_output_or_append}};
-	handlers.token_handlers[6] = (t_token_handler){is_word,
+	handlers.token_handlers[6] = (t_token_handler){is_ampersand,
+	{.handler_regular = handle_ampersand}};
+	handlers.token_handlers[7] = (t_token_handler){is_semicolon,
+	{.handler_regular = handle_semicolon}};
+	handlers.token_handlers[8] = (t_token_handler){is_word,
 	{.handler_regular = handle_word_or_assignment}};
 	return (handlers);
 }

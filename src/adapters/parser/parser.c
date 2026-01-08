@@ -34,11 +34,17 @@ t_pipeline	*create_and_parse_pipeline(
 	return (new_pipeline);
 }
 
+/* 演算子かどうかを判定 */
+static int	is_operator_token(t_token_type type)
+{
+	return (type == TOKEN_OPERATOR || type == TOKEN_OR);
+}
+
 /* 演算子を処理 */
 int	handle_operator(
 	t_token_stream *tokens, t_pipeline *pipeline, t_parse_result *result)
 {
-	if (!tokens->current || tokens->current->type != TOKEN_OPERATOR)
+	if (!tokens->current || !is_operator_token(tokens->current->type))
 		return (1);
 	pipeline->connector = get_connector_type(tokens->current->value.word);
 	tokens->current = tokens->current->next;
