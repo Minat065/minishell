@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/09 11:32:35 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/09 12:20:15 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,33 @@ static void	process_input_line(char *line, t_exec_context *exec_ctx)
 {
 	process_and_print(line, exec_ctx);
 }
+static int	shell_loop(t_exec_context *exec_ctx)
+{
+	char	*line;
 
+	while (1)
+	{
+		g_signal_received = 0;
+		line = readline("minishell> ");
+		if (!line)
+		{
+			printf("exit\n");
+			break ;
+		}
+		if (g_signal_received == SIGINT)
+		{
+			exec_ctx->last_exit_status = 130;
+			g_signal_received = 0;
+		}
+		if (*line)
+			add_history(line);
+		process_input_line(line, exec_ctx);
+		free(line);
+		if (exec_ctx->should_exit)
+			break ;
+	}
+	return (exec_ctx->exit_code);
+}
 int	main(int argc, char **argv, char **envp)
 {
 	t_env_var			*env;
