@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2025/10/29 23:14:11 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/09 11:32:35 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_printer.h"
 #include "usecase/signal/signal_handler.h"
+#include "utils/libft/libft.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
@@ -46,6 +47,13 @@ static void	process_and_print(char *line, t_exec_context *exec_ctx)
 	t_parse_result	*result;
 
 	stream = lexer(line);
+	if (stream->error_message)
+	{
+		ft_putendl_fd(stream->error_message, STDERR_FILENO);
+		exec_ctx->last_exit_status = 258;
+		free_tokens(stream);
+		return ;
+	}
 	result = parse(stream);
 	if (result && result->error_msg)
 	{
