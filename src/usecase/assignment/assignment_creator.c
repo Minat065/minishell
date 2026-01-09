@@ -24,6 +24,35 @@ static t_assignment	init_assignment(void)
 	return (assignment);
 }
 
+static char	*strip_quotes(const char *str, int len)
+{
+	char	*result;
+	int		i;
+	int		j;
+	char	quote;
+
+	result = malloc(len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			quote = str[i++];
+			while (i < len && str[i] != quote)
+				result[j++] = str[i++];
+			if (i < len)
+				i++;
+		}
+		else
+			result[j++] = str[i++];
+	}
+	result[j] = '\0';
+	return (result);
+}
+
 t_assignment	create_assignment(const char *text, int len)
 {
 	t_assignment	assignment;
@@ -46,7 +75,7 @@ t_assignment	create_assignment(const char *text, int len)
 		assignment.operator = ft_strndup("=", 1);
 	}
 	assignment.value
-		= ft_strndup(text + equal_index + 1, len - equal_index - 1);
+		= strip_quotes(text + equal_index + 1, len - equal_index - 1);
 	assignment.text = ft_strndup(text, len);
 	return (assignment);
 }

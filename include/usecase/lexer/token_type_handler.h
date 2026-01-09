@@ -45,6 +45,8 @@ int		is_pipe(char c);
 int		is_word(char c);
 int		is_redirect_input_or_heredoc(char c);
 int		is_redirect_output_or_append(char c);
+int		is_ampersand(char c);
+int		is_semicolon(char c);
 int		handle_space(const char *input,
 			t_lexer_state *st, t_token_stream *stream);
 int		handle_single_quote(const char *input,
@@ -58,6 +60,16 @@ int		handle_word_or_assignment(const char *input,
 int		handle_redirect_input_or_heredoc(const char *input,
 			t_lexer_state *st, t_token_stream *stream);
 int		handle_redirect_output_or_append(const char *input,
+			t_lexer_state *st, t_token_stream *stream);
+int		handle_ampersand(const char *input,
+			t_lexer_state *st, t_token_stream *stream);
+int		handle_semicolon(const char *input,
+			t_lexer_state *st, t_token_stream *stream);
+int		is_lparen(char c);
+int		is_rparen(char c);
+int		handle_lparen(const char *input,
+			t_lexer_state *st, t_token_stream *stream);
+int		handle_rparen(const char *input,
 			t_lexer_state *st, t_token_stream *stream);
 
 #endif

@@ -29,6 +29,10 @@ int	is_word(char c)
 		&& !is_pipe(c)
 		&& !is_redirect_input_or_heredoc(c)
 		&& !is_redirect_output_or_append(c)
+		&& !is_ampersand(c)
+		&& !is_semicolon(c)
+		&& !is_lparen(c)
+		&& !is_rparen(c)
 	);
 }
 
@@ -47,26 +51,61 @@ int	validate_assignment(char *str)
 	return (ft_isalnum(*str) || *str == '_');
 }
 
+static int	skip_quoted_content(const char *input, t_lexer_state *st, char quote)
+{
+	st->index++;
+	st->column++;
+	while (input[st->index] && input[st->index] != quote)
+	{
+		if (input[st->index] == '\n')
+			return (-1);
+		st->index++;
+		st->column++;
+	}
+	if (input[st->index] == quote)
+	{
+		st->index++;
+		st->column++;
+		return (0);
+	}
+	return (-1);
+}
+
+static int	is_word_continue(char c, int after_equal)
+{
+	if (after_equal && (is_single_quote(c) || is_double_quote(c)))
+		return (1);
+	return (is_word(c));
+}
+
 int	handle_word_or_assignment(const char *input,
 		t_lexer_state *st, t_token_stream *stream)
 {
 	int	start;
-	int	valid_assignment;
-	int	equal_index;
+	int	after_equal;
 
 	start = st->index;
-	valid_assignment = validate_assignment_first_char(input[st->index]);
-	equal_index = -1;
-	while (input[st->index] && is_word(input[st->index]))
+	after_equal = 0;
+	while (input[st->index] && is_word_continue(input[st->index], after_equal))
 	{
-		if (valid_assignment && input[st->index] == '=' && equal_index == -1)
-			equal_index = st->index;
-		if (valid_assignment && equal_index == -1)
-			valid_assignment = validate_assignment((char *)input + st->index);
+		if (input[st->index] == '=')
+			after_equal = 1;
+		else if (after_equal && is_single_quote(input[st->index]))
+		{
+			if (skip_quoted_content(input, st, '\'') == -1)
+				break ;
+			continue ;
+		}
+		else if (after_equal && is_double_quote(input[st->index]))
+		{
+			if (skip_quoted_content(input, st, '"') == -1)
+				break ;
+			continue ;
+		}
 		st->index++;
 	}
 	add_token(stream, create_token(
-			TOKEN_WORD, &input[start], st->index - start, st));
+			TOKEN_WORD, &input[start], st->index - start, start, st));
 	st->column += (st->index - start);
 	return (EXIT_SUCCESS);
 }

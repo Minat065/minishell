@@ -45,7 +45,8 @@ static t_value	create_value(
 	t_value	value;
 
 	value.word = NULL;
-	if (type == TOKEN_WORD)
+	if (type == TOKEN_WORD || type == TOKEN_OPERATOR || type == TOKEN_OR
+		|| type == TOKEN_LPAREN || type == TOKEN_RPAREN)
 		value.word = ft_strndup(text, len);
 	else if (type == TOKEN_ASSIGNMENT)
 		value.assignment = create_assignment(text, len);
@@ -55,7 +56,8 @@ static t_value	create_value(
 }
 
 t_token	*create_token(
-	t_token_type type, const char *text, int len, t_lexer_state *st)
+	t_token_type type, const char *text, int len, int start_index,
+	t_lexer_state *st)
 {
 	t_token	*token;
 
@@ -67,6 +69,8 @@ t_token	*create_token(
 	token->length = len;
 	token->line_number = st->line;
 	token->column = st->column;
+	token->space_before = (start_index != st->last_token_end);
 	token->next = NULL;
+	st->last_token_end = st->index;
 	return (token);
 }

@@ -36,19 +36,16 @@ static int	process_heredoc_line(int pipefd, char *line, const char *delimiter)
 	return (0);
 }
 
-static int	heredoc_child_process(int pipefd_write, const char *delimiter)
+static void	heredoc_child_process(int pipefd_write, const char *delimiter)
 {
 	char	*line;
 
-	close(pipefd_write);
-	printf("heredoc> ");
-	line = readline("");
+	line = readline("> ");
 	while (line != NULL)
 	{
 		if (process_heredoc_line(pipefd_write, line, delimiter))
 			break ;
-		printf("heredoc> ");
-		line = readline("");
+		line = readline("> ");
 	}
 	close(pipefd_write);
 	exit(0);
@@ -77,13 +74,11 @@ static int	handle_heredoc_parent(int *pipefd)
 	return (0);
 }
 
-int	handle_heredoc_redirect_with_service(const char *delimiter, 
+int	handle_heredoc_redirect_with_service(const char *delimiter,
 	t_process_service *proc_service)
 {
-	(void)delimiter;
 	(void)proc_service;
-	printf("⚠️  Heredoc with process service not yet implemented\n");
-	return (-1);
+	return (handle_heredoc_redirect(delimiter));
 }
 
 int	handle_heredoc_redirect(const char *delimiter)

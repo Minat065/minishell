@@ -20,6 +20,8 @@ void	free_pipeline(t_pipeline *pipeline)
 	while (pipeline)
 	{
 		next = pipeline->next;
+		if (pipeline->group)
+			free_pipeline(pipeline->group);
 		free_cmd(pipeline->cmds);
 		free(pipeline);
 		pipeline = next;

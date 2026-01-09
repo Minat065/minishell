@@ -36,6 +36,7 @@ t_pipeline	*create_pipeline(void)
 	if (!pipeline)
 		return (NULL);
 	pipeline->cmds = NULL;
+	pipeline->group = NULL;
 	pipeline->next = NULL;
 	pipeline->connector = CONN_NONE;
 	return (pipeline);

@@ -24,26 +24,55 @@
  *
  * If no arguments are provided,
  * it retrieves the HOME directory from the environment.
+ * If "-" is provided, it retrieves the OLDPWD directory.
  * If an argument is provided, it uses that as the path.
  *
  * Return: The path to change to,
- * or NULL if HOME is not set and no argument is given.
+ * or NULL if HOME/OLDPWD is not set and needed.
  */
-static char	*get_path(char **argv, t_env_var **envp)
+static char	*get_path(char **argv, t_env_var **envp, int *print_path)
 {
-	char	*home;
 	char	*path;
 
+	*print_path = 0;
 	if (!argv || !*argv)
 	{
-		home = env_get(*envp, "HOME");
-		if (!home)
+		path = env_get(*envp, "HOME");
+		if (!path)
 			return (NULL);
-		path = home;
+	}
+	else if (ft_strcmp(*argv, "-") == 0)
+	{
+		path = env_get(*envp, "OLDPWD");
+		if (!path)
+			return (NULL);
+		*print_path = 1;
 	}
 	else
 		path = *argv;
 	return (path);
+}
+
+static int	handle_cd_error(char *path, char *cwd, t_io_service *io,
+		t_output_service *out)
+{
+	char		*err_msg;
+
+	err_msg = ft_strjoin("minishell: cd: ", path);
+	if (err_msg)
+	{
+		out->write_stderr(err_msg);
+		out->write_stderr(": ");
+		free(err_msg);
+	}
+	err_msg = io->get_error_message(IO_ERROR_NOT_FOUND);
+	if (err_msg)
+	{
+		out->write_stderr_newline(err_msg);
+		free(err_msg);
+	}
+	free(cwd);
+	return (EXIT_FAILURE);
 }
 
 /**
@@ -63,42 +92,34 @@ int	ft_cd(char **argv, t_env_var **envp, t_io_service *io,
 {
 	char		*path;
 	char		*cwd;
-	char		*err_msg;
+	char		*new_cwd;
 	t_io_result	result;
+	int			print_path;
 
 	if (!io || !out)
 		return (EXIT_FAILURE);
 	cwd = io->get_current_directory();
 	if (!cwd)
 		return (EXIT_FAILURE);
-	path = get_path(argv, envp);
+	path = get_path(argv, envp, &print_path);
 	if (!path)
 	{
-		out->write_stderr("bash: cd: HOME not set\n");
+		out->write_stderr("minishell: cd: HOME not set\n");
 		free(cwd);
 		return (EXIT_FAILURE);
 	}
 	result = io->change_directory(path);
 	if (result != IO_SUCCESS)
-	{
-		err_msg = ft_strjoin("bash: cd: ", path);
-		if (err_msg)
-		{
-			out->write_stderr(err_msg);
-			out->write_stderr(": ");
-			free(err_msg);
-		}
-		err_msg = io->get_error_message(result);
-		if (err_msg)
-		{
-			out->write_stderr_newline(err_msg);
-			free(err_msg);
-		}
-		free(cwd);
-		return (EXIT_FAILURE);
-	}
+		return (handle_cd_error(path, cwd, io, out));
 	env_add(envp, "OLDPWD", cwd, "=");
-	env_add(envp, "PWD", path, "=");
+	new_cwd = io->get_current_directory();
+	if (new_cwd)
+	{
+		env_add(envp, "PWD", new_cwd, "=");
+		if (print_path)
+			out->write_stdout_newline(new_cwd);
+		free(new_cwd);
+	}
 	free(cwd);
 	return (EXIT_SUCCESS);
 }

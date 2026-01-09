@@ -123,6 +123,9 @@ int			execute_pipe_chain_with_service(t_cmd *cmds, t_exec_context *ctx);
 char		*expand_variables(const char *str, t_exec_context *ctx);
 void		expand_command_variables(t_cmd *cmd, t_exec_context *ctx);
 
+/* Wildcard expansion */
+void		expand_command_wildcards(t_cmd *cmd, t_exec_context *ctx);
+
 /* Note: Utility functions declared above in "Environment and command path utilities" section */
 
 #endif /* EXECUTOR_H */

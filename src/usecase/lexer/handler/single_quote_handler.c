@@ -23,13 +23,15 @@ int	is_single_quote(char c)
 int	handle_single_quote(
 	const char *input, t_lexer_state *st, t_token_stream *stream)
 {
-	int		start;
+	int		token_start;
+	int		content_start;
 	char	*quoted_content;
 	char	*marked_content;
 
+	token_start = st->index;
 	st->index++;
 	st->column++;
-	start = st->index;
+	content_start = st->index;
 	while (input[st->index])
 	{
 		if (input[st->index] == '\n' || input[st->index] == '\'')
@@ -44,13 +46,13 @@ int	handle_single_quote(
 		stream->error_column = st->column;
 		return (-1);
 	}
-	quoted_content = ft_strndup(&input[start], st->index - start);
+	quoted_content = ft_strndup(&input[content_start], st->index - content_start);
 	marked_content = ft_strjoin("\x01", quoted_content);
 	free(quoted_content);
-	add_token(stream, create_token(TOKEN_WORD, marked_content, 
-		ft_strlen(marked_content), st));
-	free(marked_content);
 	st->index++;
 	st->column++;
+	add_token(stream, create_token(TOKEN_WORD, marked_content,
+		ft_strlen(marked_content), token_start, st));
+	free(marked_content);
 	return (EXIT_SUCCESS);
 }

@@ -18,26 +18,38 @@
 #include "usecase/builtin/builtin_commands.h"
 #include "utils/libft_custom.h"
 
+/* Check if pipeline should be executed based on previous connector */
+static int	should_execute_pipeline(t_pipeline *prev, int status)
+{
+	if (!prev)
+		return (1);
+	if (prev->connector == CONN_AND && status != EXIT_SUCCESS)
+		return (0);
+	if (prev->connector == CONN_OR && status == EXIT_SUCCESS)
+		return (0);
+	return (1);
+}
+
 /* Execute a list of pipelines connected by operators (&&, ||, ;) */
 int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 {
 	t_pipeline	*current;
+	t_pipeline	*prev;
 	int			status;
 
 	if (!pipelines || !ctx)
 		return (EXIT_FAILURE);
 	current = pipelines;
+	prev = NULL;
+	status = 0;
 	while (current && !ctx->should_exit)
 	{
-		status = execute_pipeline(current, ctx);
-		ctx->last_exit_status = status;
-		if (current->next)
+		if (should_execute_pipeline(prev, status))
 		{
-			if (current->connector == CONN_AND && status != EXIT_SUCCESS)
-				break ;
-			if (current->connector == CONN_OR && status == EXIT_SUCCESS)
-				break ;
+			status = execute_pipeline(current, ctx);
+			ctx->last_exit_status = status;
 		}
+		prev = current;
 		current = current->next;
 	}
 	return (ctx->last_exit_status);
@@ -46,7 +58,11 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 /* Execute a single pipeline (commands connected by pipes) */
 int	execute_pipeline(t_pipeline *pipeline, t_exec_context *ctx)
 {
-	if (!pipeline || !pipeline->cmds || !ctx)
+	if (!pipeline || !ctx)
+		return (EXIT_FAILURE);
+	if (pipeline->group)
+		return (execute_pipeline_list(pipeline->group, ctx));
+	if (!pipeline->cmds)
 		return (EXIT_FAILURE);
 	if (!pipeline->cmds->next)
 		return (execute_single_command(pipeline->cmds, ctx));
@@ -72,6 +88,7 @@ int	execute_single_command(t_cmd *cmd, t_exec_context *ctx)
 	if (!cmd || !cmd->argv || !cmd->argv[0] || !ctx)
 		return (EXIT_FAILURE);
 	expand_command_variables(cmd, ctx);
+	expand_command_wildcards(cmd, ctx);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (cmd->redirects && setup_redirections_with_service(cmd->redirects, 

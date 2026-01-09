@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "utils/libft_custom.h"
 #include "domain/token.h"
 #include "usecase/lexer/token_manager.h"
@@ -20,14 +21,30 @@ int	is_double_quote(char c)
 	return (c == '\"');
 }
 
+static char	*add_dquote_marker(const char *content, int len)
+{
+	char	*marked;
+	char	*quoted_content;
+
+	quoted_content = ft_strndup(content, len);
+	if (!quoted_content)
+		return (NULL);
+	marked = ft_strjoin("\x02", quoted_content);
+	free(quoted_content);
+	return (marked);
+}
+
 int	handle_double_quote(
 	const char *input, t_lexer_state *st, t_token_stream *stream)
 {
-	int	start;
+	int		token_start;
+	int		content_start;
+	char	*marked_content;
 
+	token_start = st->index;
 	st->index++;
 	st->column++;
-	start = st->index;
+	content_start = st->index;
 	while (input[st->index])
 	{
 		if (input[st->index] == '\n' || input[st->index] == '"')
@@ -42,9 +59,12 @@ int	handle_double_quote(
 		stream->error_column = st->column;
 		return (-1);
 	}
-	add_token(stream,
-		create_token(TOKEN_WORD, &input[start], st->index - start, st));
 	st->index++;
 	st->column++;
+	marked_content = add_dquote_marker(&input[content_start],
+			st->index - content_start - 1);
+	add_token(stream, create_token(TOKEN_WORD, marked_content,
+			ft_strlen(marked_content), token_start, st));
+	free(marked_content);
 	return (0);
 }
