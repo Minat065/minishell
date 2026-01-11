@@ -111,7 +111,7 @@ A **production-ready shell implementation** combining Clean Architecture princip
 ### Directory Structure
 
 ```
-minishell_tatsato/
+minishell/
 ├── include/
 │   ├── domain/           # Pure domain entities
 │   ├── entities/         # Command and pipeline structures
@@ -184,7 +184,7 @@ typedef struct s_io_service {
 ```bash
 # Clone and build
 git clone <repository-url>
-cd minishell_tatsato
+cd minishell
 make                    # Build minishell executable
 
 # Development commands
@@ -193,8 +193,11 @@ make fclean            # Full clean including executable
 make re                # Rebuild everything
 
 # Testing commands
-make test_parser       # Run parser unit tests
-make test_integration  # Run integration tests
+make test_criterion    # Run Criterion TDT test suite
+make test_42           # Run 42 evaluation test suite
+make test_all          # Run complete test suite
+make test_parser       # Run parser unit tests (legacy)
+make test_integration  # Run integration tests (legacy)
 ```
 
 ### Dependencies
@@ -235,9 +238,17 @@ minishell> echo "double quotes"
 minishell> export PATH="/usr/bin:/bin"
 minishell> unset MY_VAR
 
-# Command parsing (AST generation ready)
-minishell> ls | grep test > output.txt    # Parsed, execution pending
-minishell> cmd1 && cmd2 || cmd3           # Parsed, execution pending
+# Pipes and redirections
+minishell> ls | grep test > output.txt
+minishell> cat < input.txt | wc -l > output.txt
+
+# Logical operators
+minishell> cmd1 && cmd2 || cmd3
+minishell> echo "test" && ls || pwd
+
+# Wildcards (bonus)
+minishell> echo *.c
+minishell> ls test*.txt
 ```
 
 ## Built-in Commands
@@ -435,9 +446,12 @@ This implementation is **specifically designed for 100% evaluation score** with 
 - **✅ Exit Status**: Proper $? handling and exit code propagation
 
 #### **Bonus Part - 100% Coverage** ✅
-- **✅ Logical Operators**: && and || with proper precedence
-- **✅ Wildcards**: Basic pattern matching (if implemented)
-- **✅ Advanced Features**: All bonus criteria met
+
+- **✅ Logical Operators**: && and || with proper precedence and short-circuit evaluation
+- **✅ Wildcards**: Complete wildcard pattern matching with * expansion
+- **✅ Parentheses**: Subshell execution with () for command grouping
+- **✅ Heredoc**: << with delimiter support and variable expansion
+- **✅ Advanced Features**: All bonus criteria fully implemented
 
 #### **Evaluation Test Commands** 🧪
 ```bash
@@ -454,6 +468,8 @@ minishell> ls | grep main | wc -l
 minishell> export TEST=value && echo $TEST
 minishell> cd /tmp && pwd && echo $?
 minishell> cat << EOF > test.txt && cat test.txt
+minishell> echo *.c                        # Wildcard expansion (bonus)
+minishell> (cd /tmp && pwd) && pwd         # Parentheses/subshell (bonus)
 ```
 
 ### **Quality Metrics for Evaluation** 📊
@@ -480,4 +496,4 @@ minishell> cat << EOF > test.txt && cat test.txt
 ### **Final Status** 🏆
 **Complete, production-ready shell implementation combining advanced software architecture with full 42 evaluation compliance. Ready for immediate evaluation with 100% score expectation.**
 
-*Last updated: 2025/06/19 - Post-Merge Complete Implementation*
+*Last updated: 2026/01/09 - Complete Implementation with Bonus Features*

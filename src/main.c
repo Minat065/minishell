@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/11 11:26:24 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:19:32 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	process_and_print(char *line, t_exec_context *exec_ctx)
 	t_parse_result	*result;
 
 	stream = lexer(line);
-	if (stream && stream->error_message)
+	if (stream->error_message)
 	{
 		ft_putendl_fd(stream->error_message, STDERR_FILENO);
 		exec_ctx->last_exit_status = 258;
