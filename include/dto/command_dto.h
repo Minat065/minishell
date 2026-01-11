@@ -47,18 +47,13 @@ typedef struct s_parse_result_dto
 	int							error_column;
 }								t_parse_result_dto;
 
-/* DTO creation and cleanup functions */
-t_command_dto					*create_command_dto(char **argv);
-t_redirection_dto				*create_redirection_dto(int type, char *file,
-									int fd);
-t_pipeline_dto					*create_pipeline_dto(t_command_dto *commands,
-									int connector);
-t_parse_result_dto				*create_parse_result_dto(t_pipeline_dto *pipelines,
-									char *error_msg);
-
-void							free_command_dto(t_command_dto *cmd);
-void							free_redirection_dto(t_redirection_dto *redir);
-void							free_pipeline_dto(t_pipeline_dto *pipeline);
-void							free_parse_result_dto(t_parse_result_dto *result);
+t_command_dto		*create_command_dto(char **argv);
+t_redirection_dto	*create_redirection_dto(int type, char *file, int fd);
+t_pipeline_dto		*create_pipeline_dto(t_command_dto *cmds, int conn);
+t_parse_result_dto	*create_parse_result_dto(t_pipeline_dto *pl, char *err);
+void				free_command_dto(t_command_dto *cmd);
+void				free_redirection_dto(t_redirection_dto *redir);
+void				free_pipeline_dto(t_pipeline_dto *pipeline);
+void				free_parse_result_dto(t_parse_result_dto *result);
 
 #endif

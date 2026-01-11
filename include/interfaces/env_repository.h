@@ -25,16 +25,14 @@ typedef enum e_env_result
 	ENV_ERROR_MEMORY
 }					t_env_result;
 
-/* Environment repository interface */
 typedef struct s_env_repository
 {
-	t_env_result	(*add_variable)(const char *key, const char *value,
-			const char *operator);
-	t_env_result	(*add_assignment)(t_assignment *assignment);
-	t_env_result	(*remove_variable)(const char *key);
-	char			*(*get_variable)(const char *key);
-	t_env_var		*(*get_all_variables)(void);
-	t_env_result	(*initialize_from_envp)(char **envp);
+	t_env_result	(*add_var)(const char *k, const char *v, const char *o);
+	t_env_result	(*add_assign)(t_assignment *a);
+	t_env_result	(*remove_var)(const char *key);
+	char			*(*get_var)(const char *key);
+	t_env_var		*(*get_all_vars)(void);
+	t_env_result	(*init_envp)(char **envp);
 	void			(*cleanup)(void);
 }					t_env_repository;
 

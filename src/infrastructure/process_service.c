@@ -81,16 +81,16 @@ t_process_service	*create_process_service(void)
 	service = malloc(sizeof(t_process_service));
 	if (!service)
 		return (NULL);
-	service->fork_process = impl_fork_process;
-	service->exec_command = impl_exec_command;
-	service->wait_process = impl_wait_process;
-	service->wait_all_processes = impl_wait_all;
+	service->fork_proc = impl_fork_process;
+	service->exec_cmd = impl_exec_command;
+	service->wait_proc = impl_wait_process;
+	service->wait_all = impl_wait_all;
 	service->create_pipe = process_create_pipe;
 	service->close_pipe = process_close_pipe;
-	service->duplicate_fd = process_duplicate_fd;
+	service->dup_fd = process_duplicate_fd;
 	service->close_fd = process_close_fd;
-	service->is_process_running = process_is_running;
-	service->get_error_message = process_get_error_message;
+	service->is_running = process_is_running;
+	service->get_err_msg = process_get_error_message;
 	return (service);
 }
 

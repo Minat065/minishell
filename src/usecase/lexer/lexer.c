@@ -46,7 +46,7 @@ t_token_stream	*lexer(const char *input)
 		free(stream);
 		return (NULL);
 	}
-	st = (t_lexer_state){0, 1, 1, 0};
+	st = (t_lexer_state){0, 1, 1, 0, 0};
 	while (input[st.index])
 	{
 		if (dispatch_token_handler(input, &st, stream, &handlers) == -1)
@@ -55,7 +55,8 @@ t_token_stream	*lexer(const char *input)
 			return (stream);
 		}
 	}
-	add_token(stream, create_token(TOKEN_EOF, "", 0, st.index, &st));
+	st.start_index = st.index;
+	add_token(stream, create_token(TOKEN_EOF, "", 0, &st));
 	free_token_handlers(&handlers);
 	return (stream);
 }

@@ -16,5 +16,5 @@
 # include "domain/token.h"
 
 t_token	*create_token(t_token_type type, const char *text, int len,
-			int start_index, t_lexer_state *st);
+			t_lexer_state *st);
 #endif

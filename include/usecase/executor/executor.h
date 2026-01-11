@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 00:00:00 by tatsato            #+#    #+#             */
+/*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
 /*   Updated: 2025/06/16 07:37:44 by tatsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -97,25 +97,24 @@ t_exec_context			*create_exec_context(t_env_var **env, t_io_service *io,
 							t_output_service *out, t_process_service *proc);
 void					free_exec_context(t_exec_context *ctx);
 
-/* Redirection handling */
 int						setup_redirections(t_cmd_redirect *redirects);
-int						setup_redirections_with_service(t_cmd_redirect *redirects,
-							t_process_service *proc_service);
-void					restore_redirections(int saved_stdin, int saved_stdout);
-void					restore_redirections_with_service(int saved_stdin,
-							int saved_stdout, t_process_service *proc_service);
-int						handle_input_redirect(const char *filename);
-int						handle_input_redirect_with_service(const char *filename,
-							t_process_service *proc_service);
-int						handle_output_redirect(const char *filename);
-int						handle_output_redirect_with_service(const char *filename,
-							t_process_service *proc_service);
-int						handle_append_redirect(const char *filename);
-int						handle_append_redirect_with_service(const char *filename,
-							t_process_service *proc_service);
-int						handle_heredoc_redirect(const char *delimiter);
-int						handle_heredoc_redirect_with_service(const char *delimiter,
-							t_process_service *proc_service);
+int						setup_redirections_with_service(t_cmd_redirect *redir,
+							t_process_service *proc);
+void					restore_redirections(int saved_in, int saved_out);
+void					restore_redirections_with_service(int in, int out,
+							t_process_service *proc);
+int						handle_input_redirect(const char *file);
+int						handle_input_redirect_with_service(const char *file,
+							t_process_service *proc);
+int						handle_output_redirect(const char *file);
+int						handle_output_redirect_with_service(const char *file,
+							t_process_service *proc);
+int						handle_append_redirect(const char *file);
+int						handle_append_redirect_with_service(const char *file,
+							t_process_service *proc);
+int						handle_heredoc_redirect(const char *delim);
+int						handle_heredoc_redirect_with_service(const char *delim,
+							t_process_service *proc);
 int						handle_heredoc_with_content(const char *content);
 
 /* Heredoc pre-collection */
@@ -136,6 +135,6 @@ void					expand_command_variables(t_cmd *cmd,
 void					expand_command_wildcards(t_cmd *cmd,
 							t_exec_context *ctx);
 
-/* Note: Utility functions declared above in "Environment and command path utilities" section */
+/* Utility functions declared above */
 
 #endif /* EXECUTOR_H */

@@ -31,12 +31,12 @@ int	handle_ampersand(const char *input, t_lexer_state *st,
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	if (input[st->index + 1] == '&')
 	{
 		st->index += 2;
 		st->column += 2;
-		add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 2, start,
-				st));
+		add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 2, st));
 	}
 	else
 	{
@@ -54,9 +54,9 @@ int	handle_semicolon(const char *input, t_lexer_state *st,
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	st->index++;
 	st->column++;
-	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, start,
-			st));
+	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, st));
 	return (0);
 }

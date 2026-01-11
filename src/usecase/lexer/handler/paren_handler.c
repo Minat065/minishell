@@ -26,11 +26,8 @@ int	is_rparen(char c)
 
 int	handle_lparen(const char *input, t_lexer_state *st, t_token_stream *stream)
 {
-	int	start;
-
-	start = st->index;
-	add_token(stream, create_token(TOKEN_LPAREN, &input[st->index], 1, start,
-			st));
+	st->start_index = st->index;
+	add_token(stream, create_token(TOKEN_LPAREN, &input[st->index], 1, st));
 	st->index++;
 	st->column++;
 	return (0);
@@ -38,11 +35,8 @@ int	handle_lparen(const char *input, t_lexer_state *st, t_token_stream *stream)
 
 int	handle_rparen(const char *input, t_lexer_state *st, t_token_stream *stream)
 {
-	int	start;
-
-	start = st->index;
-	add_token(stream, create_token(TOKEN_RPAREN, &input[st->index], 1, start,
-			st));
+	st->start_index = st->index;
+	add_token(stream, create_token(TOKEN_RPAREN, &input[st->index], 1, st));
 	st->index++;
 	st->column++;
 	return (0);

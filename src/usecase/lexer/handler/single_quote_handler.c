@@ -23,12 +23,11 @@ int	is_single_quote(char c)
 int	handle_single_quote(const char *input, t_lexer_state *st,
 		t_token_stream *stream)
 {
-	int		token_start;
 	int		content_start;
 	char	*quoted_content;
 	char	*marked_content;
 
-	token_start = st->index;
+	st->start_index = st->index;
 	st->index++;
 	st->column++;
 	content_start = st->index;
@@ -53,7 +52,7 @@ int	handle_single_quote(const char *input, t_lexer_state *st,
 	st->index++;
 	st->column++;
 	add_token(stream, create_token(TOKEN_WORD, marked_content,
-			ft_strlen(marked_content), token_start, st));
+			ft_strlen(marked_content), st));
 	free(marked_content);
 	return (EXIT_SUCCESS);
 }

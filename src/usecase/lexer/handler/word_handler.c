@@ -78,6 +78,7 @@ int	handle_word_or_assignment(const char *input, t_lexer_state *st,
 	int	after_equal;
 
 	start = st->index;
+	st->start_index = start;
 	after_equal = 0;
 	while (input[st->index] && is_word_continue(input[st->index], after_equal))
 	{
@@ -98,7 +99,7 @@ int	handle_word_or_assignment(const char *input, t_lexer_state *st,
 		st->index++;
 	}
 	add_token(stream, create_token(TOKEN_WORD, &input[start], st->index - start,
-			start, st));
+			st));
 	st->column += (st->index - start);
 	return (EXIT_SUCCESS);
 }

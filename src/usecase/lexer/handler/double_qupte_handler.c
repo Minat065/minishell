@@ -42,6 +42,7 @@ int	handle_double_quote(const char *input, t_lexer_state *st,
 	char	*marked_content;
 
 	token_start = st->index;
+	st->start_index = token_start;
 	st->index++;
 	st->column++;
 	content_start = st->index;
@@ -64,7 +65,7 @@ int	handle_double_quote(const char *input, t_lexer_state *st,
 	marked_content = add_dquote_marker(&input[content_start], st->index
 			- content_start - 1);
 	add_token(stream, create_token(TOKEN_WORD, marked_content,
-			ft_strlen(marked_content), token_start, st));
+			ft_strlen(marked_content), st));
 	free(marked_content);
 	return (0);
 }

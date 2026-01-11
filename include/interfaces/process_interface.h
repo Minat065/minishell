@@ -43,26 +43,18 @@ typedef struct s_pipe_info
 	int					write_fd;
 }						t_pipe_info;
 
-/* Process management service interface */
 typedef struct s_process_service
 {
-	/* Process creation and execution */
-	t_process_result	(*fork_process)(pid_t *pid);
-	t_process_result	(*exec_command)(const char *path, char **argv,
-			char **envp);
-	t_process_result	(*wait_process)(pid_t pid, int *exit_status);
-	t_process_result	(*wait_all_processes)(pid_t *pids, int count,
-			int *exit_statuses);
-
-	/* Pipe management */
-	t_process_result	(*create_pipe)(t_pipe_info *pipe_info);
-	t_process_result	(*close_pipe)(t_pipe_info *pipe_info);
-	t_process_result	(*duplicate_fd)(int old_fd, int new_fd);
+	t_process_result	(*fork_proc)(pid_t *p);
+	t_process_result	(*exec_cmd)(const char *p, char **av, char **ev);
+	t_process_result	(*wait_proc)(pid_t pid, int *status);
+	t_process_result	(*wait_all)(pid_t *p, int cnt, int *st);
+	t_process_result	(*create_pipe)(t_pipe_info *pi);
+	t_process_result	(*close_pipe)(t_pipe_info *pi);
+	t_process_result	(*dup_fd)(int ofd, int nfd);
 	t_process_result	(*close_fd)(int fd);
-
-	/* Process information */
-	bool				(*is_process_running)(pid_t pid);
-	char				*(*get_error_message)(t_process_result result);
+	bool				(*is_running)(pid_t pid);
+	char				*(*get_err_msg)(t_process_result r);
 }						t_process_service;
 
 /* Service factory functions */

@@ -56,6 +56,7 @@ typedef struct s_lexer_state
 	int				line;
 	int				column;
 	int				last_token_end;
+	int				start_index;
 }					t_lexer_state;
 
 #endif

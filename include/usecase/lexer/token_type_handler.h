@@ -15,28 +15,28 @@
 
 # include <domain/token.h>
 
+typedef int	(*t_match_fn)(const char c);
+typedef int	(*t_handler_fn)(const char *input, t_lexer_state *st,
+				t_token_stream *stream);
+
 typedef union u_token_handle_function
 {
-	int						(*handler_regular)(const char *input,
-								t_lexer_state *st, t_token_stream *stream);
-	int						(*handler_simple)(t_lexer_state *st);
-}							t_token_handle_function;
+	int	(*handler_regular)(const char *input, t_lexer_state *st,
+			t_token_stream *stream);
+	int	(*handler_simple)(t_lexer_state *st);
+}	t_token_handle_function;
 
 typedef struct s_token_handler
 {
-	// トークンのタイプ
 	int						(*match)(const char input);
-	// トークンのハンドラ
 	t_token_handle_function	handler;
-}							t_token_handler;
+}	t_token_handler;
 
 typedef struct s_token_type_handlers
 {
-	// トークンのハンドラの配列
 	t_token_handler			*token_handlers;
-	// トークンのハンドラの数
 	int						token_handler_count;
-}							t_token_type_handlers;
+}	t_token_type_handlers;
 
 int							ft_isspace(const char c);
 int							is_single_quote(char c);
@@ -61,6 +61,7 @@ int							handle_redirect_input_or_heredoc(const char *input,
 								t_lexer_state *st, t_token_stream *stream);
 int							handle_redirect_output_or_append(const char *input,
 								t_lexer_state *st, t_token_stream *stream);
+
 int							handle_ampersand(const char *input,
 								t_lexer_state *st, t_token_stream *stream);
 int							handle_semicolon(const char *input,

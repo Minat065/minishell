@@ -13,6 +13,32 @@
 #include <stdlib.h>
 #include <usecase/lexer/token_type_handler.h>
 
+static void	init_handlers(t_token_handler *h)
+{
+	h[0].match = ft_isspace;
+	h[0].handler.handler_regular = handle_space;
+	h[1].match = is_single_quote;
+	h[1].handler.handler_regular = handle_single_quote;
+	h[2].match = is_double_quote;
+	h[2].handler.handler_regular = handle_double_quote;
+	h[3].match = is_pipe;
+	h[3].handler.handler_regular = handle_pipe;
+	h[4].match = is_redirect_input_or_heredoc;
+	h[4].handler.handler_regular = handle_redirect_input_or_heredoc;
+	h[5].match = is_redirect_output_or_append;
+	h[5].handler.handler_regular = handle_redirect_output_or_append;
+	h[6].match = is_ampersand;
+	h[6].handler.handler_regular = handle_ampersand;
+	h[7].match = is_semicolon;
+	h[7].handler.handler_regular = handle_semicolon;
+	h[8].match = is_lparen;
+	h[8].handler.handler_regular = handle_lparen;
+	h[9].match = is_rparen;
+	h[9].handler.handler_regular = handle_rparen;
+	h[10].match = is_word;
+	h[10].handler.handler_regular = handle_word_or_assignment;
+}
+
 t_token_type_handlers	create_token_handlers(void)
 {
 	t_token_type_handlers	handlers;
@@ -25,28 +51,7 @@ t_token_type_handlers	create_token_handlers(void)
 		handlers.token_handler_count = 0;
 		return (handlers);
 	}
-	handlers.token_handlers[0] = (t_token_handler){ft_isspace,
-		{.handler_regular = handle_space}};
-	handlers.token_handlers[1] = (t_token_handler){is_single_quote,
-		{.handler_regular = handle_single_quote}};
-	handlers.token_handlers[2] = (t_token_handler){is_double_quote,
-		{.handler_regular = handle_double_quote}};
-	handlers.token_handlers[3] = (t_token_handler){is_pipe,
-		{.handler_regular = handle_pipe}};
-	handlers.token_handlers[4] = (t_token_handler){is_redirect_input_or_heredoc,
-		{.handler_regular = handle_redirect_input_or_heredoc}};
-	handlers.token_handlers[5] = (t_token_handler){is_redirect_output_or_append,
-		{.handler_regular = handle_redirect_output_or_append}};
-	handlers.token_handlers[6] = (t_token_handler){is_ampersand,
-		{.handler_regular = handle_ampersand}};
-	handlers.token_handlers[7] = (t_token_handler){is_semicolon,
-		{.handler_regular = handle_semicolon}};
-	handlers.token_handlers[8] = (t_token_handler){is_lparen,
-		{.handler_regular = handle_lparen}};
-	handlers.token_handlers[9] = (t_token_handler){is_rparen,
-		{.handler_regular = handle_rparen}};
-	handlers.token_handlers[10] = (t_token_handler){is_word,
-		{.handler_regular = handle_word_or_assignment}};
+	init_handlers(handlers.token_handlers);
 	return (handlers);
 }
 

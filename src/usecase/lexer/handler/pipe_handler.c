@@ -24,18 +24,18 @@ int	handle_pipe(const char *input, t_lexer_state *st, t_token_stream *stream)
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	if (input[st->index + 1] == '|')
 	{
 		st->index += 2;
 		st->column += 2;
-		add_token(stream, create_token(TOKEN_OR, &input[start], 2, start, st));
+		add_token(stream, create_token(TOKEN_OR, &input[start], 2, st));
 	}
 	else
 	{
 		st->index++;
 		st->column++;
-		add_token(stream, create_token(TOKEN_PIPE, &input[start], 1, start,
-				st));
+		add_token(stream, create_token(TOKEN_PIPE, &input[start], 1, st));
 	}
 	return (0);
 }

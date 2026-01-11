@@ -31,10 +31,11 @@ int	handle_redirect_input_or_heredoc(const char *input, t_lexer_state *st,
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	st->index++;
 	if (input[st->index] == '<')
 		st->index++;
 	add_token(stream, create_token(TOKEN_REDIRECT, input + start, st->index
-			- start, start, st));
+			- start, st));
 	return (1);
 }
