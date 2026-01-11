@@ -76,39 +76,6 @@ static int	handle_heredoc_parent(int *pipefd, pid_t pid)
 	return (0);
 }
 
-int	handle_heredoc_redirect_with_service(const char *delimiter,
-		t_process_service *proc_service)
-{
-	(void)proc_service;
-	return (handle_heredoc_redirect(delimiter));
-}
-
-int	handle_heredoc_with_content(const char *content)
-{
-	int	pipefd[2];
-
-	if (!content)
-	{
-		printf("minishell: heredoc: missing content\n");
-		return (-1);
-	}
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe failed for heredoc");
-		return (-1);
-	}
-	write(pipefd[1], content, ft_strlen(content));
-	close(pipefd[1]);
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-	{
-		perror("dup2 failed for heredoc");
-		close(pipefd[0]);
-		return (-1);
-	}
-	close(pipefd[0]);
-	return (0);
-}
-
 int	handle_heredoc_redirect(const char *delimiter)
 {
 	int		pipefd[2];
