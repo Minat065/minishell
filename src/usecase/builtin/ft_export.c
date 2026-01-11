@@ -124,13 +124,6 @@ int	ft_export(char **argv, t_env_var **envp, t_output_service *out)
 	char			*arg;
 	t_assignment	assignment;
 
-	int i = 0; // debag
-	// デバッグ: argvの中身を表示
-	while (argv && argv[i])
-	{
-		printf("DEBUG argv[%d]: [%s]\n", i, argv[i]);
-		i++;
-	}
 	if (!argv || !*argv)
 		return (print_all_env(*envp, out));
 	while (*argv)

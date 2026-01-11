@@ -24,7 +24,6 @@ t_env_repository	*create_env_repository(void)
 	repo = malloc(sizeof(t_env_repository));
 	if (!repo)
 		return (NULL);
-	/* This is a simplified version - functionality moved to exec context */
 	repo->add_variable = NULL;
 	repo->add_assignment = NULL;
 	repo->remove_variable = NULL;

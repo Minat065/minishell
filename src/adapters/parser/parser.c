@@ -84,7 +84,7 @@ int	handle_operator(t_token_stream *tokens, t_pipeline *pipeline,
 	tokens->current = tokens->current->next;
 	if (!tokens->current || tokens->current->type == TOKEN_EOF)
 	{
-		result->error_msg = ft_strdup("syntax error: unexpected end after operator");
+		result->error_msg = ft_strdup("syntax error: unexpected end");
 		return (0);
 	}
 	return (1);

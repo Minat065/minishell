@@ -40,7 +40,7 @@ int	handle_ampersand(const char *input, t_lexer_state *st,
 	}
 	else
 	{
-		stream->error_message = ft_strdup("syntax error near unexpected token `&'");
+		stream->error_message = ft_strdup("syntax error near token `&'");
 		stream->error_line = st->line;
 		stream->error_column = st->column;
 		return (-1);
