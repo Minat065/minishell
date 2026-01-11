@@ -31,8 +31,7 @@ int	execute_pipe_chain_with_service(t_cmd *cmds, t_exec_context *ctx)
 
 	if (!cmds || !ctx)
 		return (EXIT_FAILURE);
-	cmd_count = allocate_pipe_resources(cmds, &pipefd, &pids);
-	if (cmd_count == 1)
+	if (count_commands(cmds) == 1)
 		return (execute_single_command(cmds, ctx));
 	cmd_count = setup_pipe_resources_with_service(cmds, &pipefd, &pids,
 			ctx->process_service);
@@ -58,8 +57,7 @@ int	execute_pipe_chain(t_cmd *cmds, t_exec_context *ctx)
 
 	if (!cmds || !ctx)
 		return (EXIT_FAILURE);
-	cmd_count = allocate_pipe_resources(cmds, &pipefd, &pids);
-	if (cmd_count == 1)
+	if (count_commands(cmds) == 1)
 		return (execute_single_command(cmds, ctx));
 	cmd_count = setup_pipe_resources(cmds, &pipefd, &pids);
 	if (cmd_count == -1)
