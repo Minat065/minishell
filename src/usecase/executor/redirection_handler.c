@@ -15,7 +15,7 @@
 #include "usecase/executor/executor.h"
 #include "domain/token.h"
 
-static int	process_redirection_with_service(t_cmd_redirect *current, 
+static int	process_redirection_with_service(t_cmd_redirect *current,
 	t_process_service *proc_service)
 {
 	if (current->type == REDIRECT_INPUT)
@@ -25,7 +25,11 @@ static int	process_redirection_with_service(t_cmd_redirect *current,
 	if (current->type == REDIRECT_APPEND)
 		return (handle_append_redirect_with_service(current->file, proc_service));
 	if (current->type == REDIRECT_HEREDOC)
+	{
+		if (current->heredoc_content)
+			return (handle_heredoc_with_content(current->heredoc_content));
 		return (handle_heredoc_redirect_with_service(current->file, proc_service));
+	}
 	printf("minishell: unsupported redirection type\n");
 	return (-1);
 }
@@ -39,7 +43,11 @@ static int	process_redirection(t_cmd_redirect *current)
 	if (current->type == REDIRECT_APPEND)
 		return (handle_append_redirect(current->file));
 	if (current->type == REDIRECT_HEREDOC)
+	{
+		if (current->heredoc_content)
+			return (handle_heredoc_with_content(current->heredoc_content));
 		return (handle_heredoc_redirect(current->file));
+	}
 	printf("minishell: unsupported redirection type\n");
 	return (-1);
 }

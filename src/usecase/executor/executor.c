@@ -39,6 +39,8 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 
 	if (!pipelines || !ctx)
 		return (EXIT_FAILURE);
+	if (collect_heredocs_for_pipeline(pipelines) == -1)
+		return (EXIT_FAILURE);
 	current = pipelines;
 	prev = NULL;
 	status = 0;

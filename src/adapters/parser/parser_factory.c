@@ -77,6 +77,7 @@ t_cmd_redirect	*create_redirect(t_redirect_type type, const char *file)
 	if (!init_redirect_file(redirect, file))
 		return (NULL);
 	redirect->fd = -1;
+	redirect->heredoc_content = NULL;
 	redirect->next = NULL;
 	return (redirect);
 }
