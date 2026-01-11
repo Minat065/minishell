@@ -94,12 +94,12 @@ void	ft_exit(char **argv, t_token_stream *stream, t_env_var *env)
 	argc = count_arg(argv);
 	if (argc > 1)
 	{
-		write(STDERR_FILENO, "bash: exit: too many arguments\n", 31);
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 31);
 		exit_minishell(1, stream, env);
 	}
 	if (can_convert_str_to_longlong(*argv) == 0)
 	{
-		write(STDERR_FILENO, "bash: exit: numeric argument required\n", 38);
+		write(STDERR_FILENO, "minishell: exit: numeric argument required\n", 38);
 		exit_minishell(255, stream, env);
 	}
 	exit_code = ft_atoll(*argv);

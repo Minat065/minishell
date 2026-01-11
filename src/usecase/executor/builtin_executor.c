@@ -47,7 +47,7 @@ static int	handle_exit_command(char **args, t_exec_context *ctx)
 	exit_code = 0;
 	if (args[0] && args[1])
 	{
-		write(STDERR_FILENO, "bash: exit: too many arguments\n", 31);
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
 		return (1);
 	}
 	if (args[0])
