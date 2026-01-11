@@ -15,6 +15,7 @@
 #include "utils/libft_custom.h"
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* Check if command is a builtin */
 int	is_builtin(const char *cmd)
@@ -42,7 +43,13 @@ static int	handle_exit_command(char **args, t_exec_context *ctx)
 {
 	int	exit_code;
 
+	write(STDERR_FILENO, "exit\n", 5);
 	exit_code = 0;
+	if (args[0] && args[1])
+	{
+		write(STDERR_FILENO, "bash: exit: too many arguments\n", 31);
+		return (1);
+	}
 	if (args[0])
 	{
 		exit_code = ft_atoll(args[0]);
