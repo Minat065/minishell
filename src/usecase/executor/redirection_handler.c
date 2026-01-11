@@ -84,33 +84,3 @@ int	setup_redirections(t_cmd_redirect *redirects)
 	}
 	return (0);
 }
-
-void	restore_redirections_with_service(int saved_stdin, int saved_stdout,
-		t_process_service *proc_service)
-{
-	if (saved_stdin != -1)
-	{
-		proc_service->dup_fd(saved_stdin, STDIN_FILENO);
-		proc_service->close_fd(saved_stdin);
-	}
-	if (saved_stdout != -1)
-	{
-		proc_service->dup_fd(saved_stdout, STDOUT_FILENO);
-		proc_service->close_fd(saved_stdout);
-	}
-}
-
-/* Restore original file descriptors */
-void	restore_redirections(int saved_stdin, int saved_stdout)
-{
-	if (saved_stdin != -1)
-	{
-		dup2(saved_stdin, STDIN_FILENO);
-		close(saved_stdin);
-	}
-	if (saved_stdout != -1)
-	{
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
-	}
-}

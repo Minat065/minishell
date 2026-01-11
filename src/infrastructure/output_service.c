@@ -59,14 +59,7 @@ static t_output_result	impl_write_stderr_newline(const char *message)
 	return (OUTPUT_SUCCESS);
 }
 
-static t_output_result	impl_write_fd(int fd, const char *message)
-{
-	if (!message || fd < 0)
-		return (OUTPUT_ERROR_WRITE);
-	if (write(fd, message, ft_strlen(message)) == -1)
-		return (OUTPUT_ERROR_SYSTEM);
-	return (OUTPUT_SUCCESS);
-}
+t_output_result	impl_write_fd(int fd, const char *message);
 
 t_output_service	*create_output_service(void)
 {
@@ -81,10 +74,4 @@ t_output_service	*create_output_service(void)
 	service->write_stderr_newline = impl_write_stderr_newline;
 	service->write_fd = impl_write_fd;
 	return (service);
-}
-
-void	destroy_output_service(t_output_service *service)
-{
-	if (service)
-		free(service);
 }
