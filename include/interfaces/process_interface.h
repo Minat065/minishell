@@ -45,12 +45,12 @@ typedef struct s_pipe_info
 
 typedef struct s_process_service
 {
-	t_process_result	(*fork_proc)(pid_t *p);
-	t_process_result	(*exec_cmd)(const char *p, char **av, char **ev);
+	t_process_result	(*fork_proc)(pid_t *pid);
+	t_process_result	(*exec_cmd)(const char *path, char **av, char **ev);
 	t_process_result	(*wait_proc)(pid_t pid, int *status);
-	t_process_result	(*wait_all)(pid_t *p, int cnt, int *st);
-	t_process_result	(*create_pipe)(t_pipe_info *pi);
-	t_process_result	(*close_pipe)(t_pipe_info *pi);
+	t_process_result	(*wait_all)(pid_t *pids, int cnt, int *stat);
+	t_process_result	(*create_pipe)(t_pipe_info *info);
+	t_process_result	(*close_pipe)(t_pipe_info *info);
 	t_process_result	(*dup_fd)(int ofd, int nfd);
 	t_process_result	(*close_fd)(int fd);
 	bool				(*is_running)(pid_t pid);

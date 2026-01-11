@@ -13,12 +13,10 @@
 #include "domain/token.h"
 #include "usecase/lexer/token_creator.h"
 #include "usecase/lexer/token_manager.h"
-#include "usecase/lexer/token_printer.h"
 #include "usecase/lexer/token_type_handler.h"
 #include "usecase/lexer/token_type_handlers.h"
 #include "utils/libft_custom.h"
 #include <stdlib.h>
-#include <string.h>
 
 static t_token_stream	*create_token_stream(void)
 {
@@ -31,10 +29,25 @@ static t_token_stream	*create_token_stream(void)
 	return (stream);
 }
 
+static int	tokenize_input(const char *input, t_token_stream *stream,
+		t_token_type_handlers *handlers)
+{
+	t_lexer_state	st;
+
+	st = (t_lexer_state){0, 1, 1, 0, 0};
+	while (input[st.index])
+	{
+		if (dispatch_token_handler(input, &st, stream, handlers) == -1)
+			return (-1);
+	}
+	st.start_index = st.index;
+	add_token(stream, create_token(TOKEN_EOF, "", 0, &st));
+	return (0);
+}
+
 t_token_stream	*lexer(const char *input)
 {
 	t_token_stream			*stream;
-	t_lexer_state			st;
 	t_token_type_handlers	handlers;
 
 	stream = create_token_stream();
@@ -46,17 +59,7 @@ t_token_stream	*lexer(const char *input)
 		free(stream);
 		return (NULL);
 	}
-	st = (t_lexer_state){0, 1, 1, 0, 0};
-	while (input[st.index])
-	{
-		if (dispatch_token_handler(input, &st, stream, &handlers) == -1)
-		{
-			free_token_handlers(&handlers);
-			return (stream);
-		}
-	}
-	st.start_index = st.index;
-	add_token(stream, create_token(TOKEN_EOF, "", 0, &st));
+	tokenize_input(input, stream, &handlers);
 	free_token_handlers(&handlers);
 	return (stream);
 }

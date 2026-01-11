@@ -49,7 +49,8 @@ SRCS			=	$(DOMAIN_SRCS) \
 					$(ADAPT_IO_SRCS) \
 					$(INFRA_SRCS) \
 					$(UTILS_SRCS) \
-					$(SRCS_DIR)/main.c
+					$(SRCS_DIR)/main.c \
+					$(SRCS_DIR)/main_helper.c
 OBJS			=	$(SRCS:%.c=%.o)
 LIBFT_DIR		=	$(SRCS_DIR)/utils/libft
 LIBFT_A			=	libft.a

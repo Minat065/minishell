@@ -21,28 +21,35 @@ int	is_double_quote(char c)
 	return (c == '\"');
 }
 
-static char	*add_dquote_marker(const char *content, int len)
+static int	set_dquote_error(t_token_stream *stream, t_lexer_state *st)
 {
-	char	*marked;
-	char	*quoted_content;
+	stream->error_message = ft_strdup("Unclosed double quote");
+	stream->error_line = st->line;
+	stream->error_column = st->column;
+	return (-1);
+}
 
-	quoted_content = ft_strndup(content, len);
-	if (!quoted_content)
-		return (NULL);
-	marked = ft_strjoin("\x02", quoted_content);
-	free(quoted_content);
-	return (marked);
+static void	add_dquote_token(t_token_stream *stream, const char *input,
+		int start, t_lexer_state *st)
+{
+	char	*quoted;
+	char	*marked;
+
+	st->index++;
+	st->column++;
+	quoted = ft_strndup(&input[start], st->index - start - 1);
+	marked = ft_strjoin("\x02", quoted);
+	free(quoted);
+	add_token(stream, create_token(TOKEN_WORD, marked, ft_strlen(marked), st));
+	free(marked);
 }
 
 int	handle_double_quote(const char *input, t_lexer_state *st,
 		t_token_stream *stream)
 {
-	int		token_start;
 	int		content_start;
-	char	*marked_content;
 
-	token_start = st->index;
-	st->start_index = token_start;
+	st->start_index = st->index;
 	st->index++;
 	st->column++;
 	content_start = st->index;
@@ -54,18 +61,7 @@ int	handle_double_quote(const char *input, t_lexer_state *st,
 		st->column++;
 	}
 	if (input[st->index] != '"')
-	{
-		stream->error_message = ft_strdup("Unclosed double quote");
-		stream->error_line = st->line;
-		stream->error_column = st->column;
-		return (-1);
-	}
-	st->index++;
-	st->column++;
-	marked_content = add_dquote_marker(&input[content_start], st->index
-			- content_start - 1);
-	add_token(stream, create_token(TOKEN_WORD, marked_content,
-			ft_strlen(marked_content), st));
-	free(marked_content);
+		return (set_dquote_error(stream, st));
+	add_dquote_token(stream, input, content_start, st);
 	return (0);
 }

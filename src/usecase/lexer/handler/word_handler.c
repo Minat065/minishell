@@ -16,10 +16,6 @@
 #include "usecase/lexer/token_type_handler.h"
 #include "utils/libft_custom.h"
 
-/**
- * allways return 1
- * @param c
- */
 int	is_word(char c)
 {
 	return (!ft_isspace(c) && !is_single_quote(c) && !is_double_quote(c)
@@ -28,8 +24,7 @@ int	is_word(char c)
 		&& !is_semicolon(c) && !is_lparen(c) && !is_rparen(c));
 }
 
-static int	skip_quoted_content(const char *input, t_lexer_state *st,
-		char quote)
+static int	skip_quoted(const char *input, t_lexer_state *st, char quote)
 {
 	st->index++;
 	st->column++;
@@ -40,20 +35,37 @@ static int	skip_quoted_content(const char *input, t_lexer_state *st,
 		st->index++;
 		st->column++;
 	}
-	if (input[st->index] == quote)
-	{
-		st->index++;
-		st->column++;
-		return (0);
-	}
-	return (-1);
+	if (input[st->index] != quote)
+		return (-1);
+	st->index++;
+	st->column++;
+	return (0);
 }
 
-static int	is_word_continue(char c, int after_equal)
+static int	handle_quoted_part(const char *input, t_lexer_state *st)
 {
-	if (after_equal && (is_single_quote(c) || is_double_quote(c)))
-		return (1);
-	return (is_word(c));
+	if (is_single_quote(input[st->index]))
+		return (skip_quoted(input, st, '\''));
+	if (is_double_quote(input[st->index]))
+		return (skip_quoted(input, st, '"'));
+	return (1);
+}
+
+static int	process_word_char(const char *input, t_lexer_state *st, int *aeq)
+{
+	int	qr;
+
+	if (input[st->index] == '=')
+		*aeq = 1;
+	else if (*aeq && (is_single_quote(input[st->index])
+			|| is_double_quote(input[st->index])))
+	{
+		qr = handle_quoted_part(input, st);
+		if (qr <= 0)
+			return (qr);
+	}
+	st->index++;
+	return (1);
 }
 
 int	handle_word_or_assignment(const char *input, t_lexer_state *st,
@@ -65,23 +77,12 @@ int	handle_word_or_assignment(const char *input, t_lexer_state *st,
 	start = st->index;
 	st->start_index = start;
 	after_equal = 0;
-	while (input[st->index] && is_word_continue(input[st->index], after_equal))
+	while (input[st->index] && (is_word(input[st->index]) || after_equal))
 	{
-		if (input[st->index] == '=')
-			after_equal = 1;
-		else if (after_equal && is_single_quote(input[st->index]))
-		{
-			if (skip_quoted_content(input, st, '\'') == -1)
-				break ;
-			continue ;
-		}
-		else if (after_equal && is_double_quote(input[st->index]))
-		{
-			if (skip_quoted_content(input, st, '"') == -1)
-				break ;
-			continue ;
-		}
-		st->index++;
+		if (!is_word(input[st->index]) && !after_equal)
+			break ;
+		if (process_word_char(input, st, &after_equal) <= 0)
+			break ;
 	}
 	add_token(stream, create_token(TOKEN_WORD, &input[start], st->index - start,
 			st));
