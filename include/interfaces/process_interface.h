@@ -69,4 +69,14 @@ typedef struct s_process_service
 t_process_service		*create_process_service(void);
 void					destroy_process_service(t_process_service *service);
 
+/* Pipe operations (process_pipe.c) */
+t_process_result		process_create_pipe(t_pipe_info *pipe_info);
+t_process_result		process_close_pipe(t_pipe_info *pipe_info);
+t_process_result		process_duplicate_fd(int old_fd, int new_fd);
+t_process_result		process_close_fd(int fd);
+
+/* Utility functions (process_utils.c) */
+bool					process_is_running(pid_t pid);
+char					*process_get_error_message(t_process_result result);
+
 #endif
