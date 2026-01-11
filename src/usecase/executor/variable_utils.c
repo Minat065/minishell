@@ -27,29 +27,52 @@ char	*get_variable_value(const char *var_name, t_exec_context *ctx)
 	return (ft_strdup(""));
 }
 
-char	*extract_variable_name(const char *str, int *end_pos)
+static char	*extract_braced_var(const char *str, int *end_pos)
 {
-	int		start;
 	int		end;
 	char	*var_name;
 
-	start = 1;
-	end = start;
-	if (str[start] == '?')
-	{
-		*end_pos = start + 1;
-		return (ft_strdup("?"));
-	}
+	end = 2;
+	while (str[end] && str[end] != '}')
+		end++;
+	if (!str[end])
+		return (NULL);
+	var_name = malloc(end - 2 + 1);
+	if (!var_name)
+		return (NULL);
+	ft_strlcpy(var_name, str + 2, end - 2 + 1);
+	*end_pos = end + 1;
+	return (var_name);
+}
+
+static char	*extract_simple_var(const char *str, int *end_pos)
+{
+	int		end;
+	char	*var_name;
+
+	end = 1;
 	while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
 	*end_pos = end;
-	if (end == start)
+	if (end == 1)
 		return (NULL);
-	var_name = malloc(end - start + 1);
+	var_name = malloc(end - 1 + 1);
 	if (!var_name)
 		return (NULL);
-	ft_strlcpy(var_name, str + start, end - start + 1);
+	ft_strlcpy(var_name, str + 1, end - 1 + 1);
 	return (var_name);
+}
+
+char	*extract_variable_name(const char *str, int *end_pos)
+{
+	if (str[1] == '?')
+	{
+		*end_pos = 2;
+		return (ft_strdup("?"));
+	}
+	if (str[1] == '{')
+		return (extract_braced_var(str, end_pos));
+	return (extract_simple_var(str, end_pos));
 }
 
 char	*join_parts(char *before, char *value, char *after)
