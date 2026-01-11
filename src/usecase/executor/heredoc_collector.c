@@ -1,0 +1,141 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_collector.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 00:00:00 by tatsato           #+#    #+#             */
+/*   Updated: 2025/06/17 00:00:00 by tatsato          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include "usecase/executor/executor.h"
+#include "utils/libft_custom.h"
+
+static char	*append_line(char *content, char *line)
+{
+	char	*temp;
+	char	*new_content;
+	size_t	content_len;
+	size_t	line_len;
+
+	if (!content)
+	{
+		temp = ft_strjoin(line, "\n");
+		return (temp);
+	}
+	content_len = ft_strlen(content);
+	line_len = ft_strlen(line);
+	new_content = malloc(content_len + line_len + 2);
+	if (!new_content)
+	{
+		free(content);
+		return (NULL);
+	}
+	ft_strlcpy(new_content, content, content_len + 1);
+	ft_strlcpy(new_content + content_len, line, line_len + 1);
+	new_content[content_len + line_len] = '\n';
+	new_content[content_len + line_len + 1] = '\0';
+	free(content);
+	return (new_content);
+}
+
+static char	*collect_heredoc_content(const char *delimiter)
+{
+	char	*content;
+	char	*line;
+	size_t	delimiter_len;
+
+	content = NULL;
+	delimiter_len = ft_strlen(delimiter);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (ft_strlen(line) == delimiter_len
+			&& ft_strncmp(line, delimiter, delimiter_len) == 0)
+		{
+			free(line);
+			break ;
+		}
+		content = append_line(content, line);
+		free(line);
+		if (!content)
+			return (NULL);
+	}
+	if (!content)
+		content = ft_strdup("");
+	return (content);
+}
+
+static int	collect_heredoc_for_redirect(t_cmd_redirect *redirect)
+{
+	if (redirect->type != REDIRECT_HEREDOC)
+		return (0);
+	if (redirect->heredoc_content)
+		return (0);
+	redirect->heredoc_content = collect_heredoc_content(redirect->file);
+	if (!redirect->heredoc_content)
+		return (-1);
+	return (0);
+}
+
+int	collect_heredocs_for_cmd(t_cmd *cmd)
+{
+	t_cmd_redirect	*redirect;
+
+	if (!cmd)
+		return (0);
+	redirect = cmd->redirects;
+	while (redirect)
+	{
+		if (collect_heredoc_for_redirect(redirect) == -1)
+			return (-1);
+		redirect = redirect->next;
+	}
+	return (0);
+}
+
+static int	collect_heredocs_for_cmd_chain(t_cmd *cmds)
+{
+	t_cmd	*current;
+
+	current = cmds;
+	while (current)
+	{
+		if (collect_heredocs_for_cmd(current) == -1)
+			return (-1);
+		current = current->next;
+	}
+	return (0);
+}
+
+int	collect_heredocs_for_pipeline(t_pipeline *pipeline)
+{
+	t_pipeline	*current;
+
+	if (!pipeline)
+		return (0);
+	current = pipeline;
+	while (current)
+	{
+		if (current->group)
+		{
+			if (collect_heredocs_for_pipeline(current->group) == -1)
+				return (-1);
+		}
+		if (current->cmds)
+		{
+			if (collect_heredocs_for_cmd_chain(current->cmds) == -1)
+				return (-1);
+		}
+		current = current->next;
+	}
+	return (0);
+}

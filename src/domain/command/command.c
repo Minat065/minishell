@@ -57,6 +57,7 @@ void	free_redirect(t_cmd_redirect *redirect)
 	{
 		next = redirect->next;
 		free(redirect->file);
+		free(redirect->heredoc_content);
 		free(redirect);
 		redirect = next;
 	}

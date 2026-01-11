@@ -112,8 +112,13 @@ int			handle_append_redirect(const char *filename);
 int			handle_append_redirect_with_service(const char *filename, 
 				t_process_service *proc_service);
 int			handle_heredoc_redirect(const char *delimiter);
-int			handle_heredoc_redirect_with_service(const char *delimiter, 
+int			handle_heredoc_redirect_with_service(const char *delimiter,
 				t_process_service *proc_service);
+int			handle_heredoc_with_content(const char *content);
+
+/* Heredoc pre-collection */
+int			collect_heredocs_for_pipeline(t_pipeline *pipeline);
+int			collect_heredocs_for_cmd(t_cmd *cmd);
 
 /* Pipe handling */
 int			execute_pipe_chain(t_cmd *cmds, t_exec_context *ctx);

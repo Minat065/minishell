@@ -15,6 +15,7 @@ typedef struct s_cmd_redirect {
     t_redirect_type type;         // リダイレクションの種類
     char *file;                   // ファイル名
     int fd;                       // ファイルディスクリプタ（必要な場合）
+    char *heredoc_content;        // ヒアドキュメントの事前収集済みコンテンツ
     struct s_cmd_redirect *next;  // 次のリダイレクション
 } t_cmd_redirect;
 
