@@ -99,11 +99,23 @@ fclean: clean
 re: clean all
 
 # Norm check using c_formatter_42
+# Run 'make norm-install' first to install c_formatter_42
+NORM_CMD = python3 -m c_formatter_42
+
+norm-install:
+	@echo "\033[0;33mInstalling c_formatter_42...\033[0m"
+	@pip3 install c_formatter_42 --quiet
+	@echo "\033[0;32mc_formatter_42 installed!\033[0m"
+
 norm:
+	@if ! python3 -c "import c_formatter_42" 2>/dev/null; then \
+		echo "\033[0;31mc_formatter_42 not found. Run 'make norm-install' first.\033[0m"; \
+		exit 1; \
+	fi
 	@echo "\033[0;33mChecking norm compliance...\033[0m"
 	@has_error=0; \
-	for file in $$(find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) 2>/dev/null); do \
-		c_formatter_42 < "$$file" > /tmp/norm_check.tmp 2>/dev/null; \
+	for file in $$(find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) ! -path "*/libft/*" 2>/dev/null); do \
+		$(NORM_CMD) < "$$file" > /tmp/norm_check.tmp 2>/dev/null; \
 		if ! diff -q "$$file" /tmp/norm_check.tmp > /dev/null 2>&1; then \
 			echo "\033[0;31mNorm error: $$file\033[0m"; \
 			has_error=1; \
@@ -117,11 +129,15 @@ norm:
 	@echo "\033[0;32mAll files are norm compliant!\033[0m"
 
 norm-fix:
+	@if ! python3 -c "import c_formatter_42" 2>/dev/null; then \
+		echo "\033[0;31mc_formatter_42 not found. Run 'make norm-install' first.\033[0m"; \
+		exit 1; \
+	fi
 	@echo "\033[0;33mFixing norm issues...\033[0m"
-	@find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) | \
+	@find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) ! -path "*/libft/*" | \
 		while read file; do \
-			c_formatter_42 < "$$file" > "$$file.tmp" && mv "$$file.tmp" "$$file"; \
+			$(NORM_CMD) < "$$file" > "$$file.tmp" && mv "$$file.tmp" "$$file"; \
 		done
 	@echo "\033[0;32mNorm issues fixed!\033[0m"
 
-.PHONY: all clean fclean re localclean norm norm-fix
+.PHONY: all clean fclean re localclean norm norm-fix norm-install
