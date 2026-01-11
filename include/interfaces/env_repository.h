@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_repository.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by claude           ###   ########.fr       */
+/*   Updated: 2026/01/11 17:19:47 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef enum e_env_result
 typedef struct s_env_repository
 {
 	t_env_result	(*add_var)(const char *k, const char *v, const char *o);
-	t_env_result	(*add_assign)(t_assignment *a);
+	t_env_result	(*add_assign)(t_assignment * a);
 	t_env_result	(*remove_var)(const char *key);
 	char			*(*get_var)(const char *key);
 	t_env_var		*(*get_all_vars)(void);

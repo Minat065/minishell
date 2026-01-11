@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_interface.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by claude           ###   ########.fr       */
+/*   Updated: 2026/01/11 17:20:41 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ typedef struct s_pipe_info
 
 typedef struct s_process_service
 {
-	t_process_result	(*fork_proc)(pid_t *pid);
+	t_process_result	(*fork_proc)(pid_t * pid);
 	t_process_result	(*exec_cmd)(const char *path, char **av, char **ev);
 	t_process_result	(*wait_proc)(pid_t pid, int *status);
-	t_process_result	(*wait_all)(pid_t *pids, int cnt, int *stat);
-	t_process_result	(*create_pipe)(t_pipe_info *info);
-	t_process_result	(*close_pipe)(t_pipe_info *info);
+	t_process_result	(*wait_all)(pid_t * pids, int cnt, int *stat);
+	t_process_result	(*create_pipe)(t_pipe_info * info);
+	t_process_result	(*close_pipe)(t_pipe_info * info);
 	t_process_result	(*dup_fd)(int ofd, int nfd);
 	t_process_result	(*close_fd)(int fd);
 	bool				(*is_running)(pid_t pid);
