@@ -61,9 +61,12 @@ static int	setup_heredoc_pipe(int *pipefd)
 	return (0);
 }
 
-static int	handle_heredoc_parent(int *pipefd)
+static int	handle_heredoc_parent(int *pipefd, pid_t pid)
 {
+	int	status;
+
 	close(pipefd[1]);
+	waitpid(pid, &status, 0);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 	{
 		perror("dup2 failed for heredoc");
@@ -97,7 +100,7 @@ int	handle_heredoc_redirect(const char *delimiter)
 	if (pid == 0)
 		heredoc_child_process(pipefd[1], delimiter);
 	else if (pid > 0)
-		return (handle_heredoc_parent(pipefd));
+		return (handle_heredoc_parent(pipefd, pid));
 	perror("fork failed for heredoc");
 	close(pipefd[0]);
 	close(pipefd[1]);
