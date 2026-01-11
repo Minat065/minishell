@@ -25,7 +25,7 @@ static int	print_echo(char **argv, t_output_service *out)
 	{
 		if (out->write_stdout(*argv) != OUTPUT_SUCCESS)
 			return (EXIT_FAILURE);
-		if (*(argv + 1) && (*argv)[0] != '\0')
+		if (*(argv + 1))
 			out->write_stdout(" ");
 		argv++;
 	}
