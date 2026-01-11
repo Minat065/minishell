@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "domain/token.h"
 #include "usecase/assignment/assignment_creator.h"
 #include "usecase/lexer/token_creator.h"
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void	add_token(t_token_stream *stream, t_token *token)
 {
@@ -35,8 +35,8 @@ void	add_token(t_token_stream *stream, t_token *token)
 
 static int	has_word_value(t_token_type type)
 {
-	return (type == TOKEN_WORD || type == TOKEN_OPERATOR
-		|| type == TOKEN_OR || type == TOKEN_LPAREN || type == TOKEN_RPAREN);
+	return (type == TOKEN_WORD || type == TOKEN_OPERATOR || type == TOKEN_OR
+		|| type == TOKEN_LPAREN || type == TOKEN_RPAREN);
 }
 
 void	free_tokens(t_token_stream *stream)

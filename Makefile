@@ -98,4 +98,30 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all clean fclean re localclean
+# Norm check using c_formatter_42
+norm:
+	@echo "\033[0;33mChecking norm compliance...\033[0m"
+	@has_error=0; \
+	for file in $$(find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) 2>/dev/null); do \
+		c_formatter_42 < "$$file" > /tmp/norm_check.tmp 2>/dev/null; \
+		if ! diff -q "$$file" /tmp/norm_check.tmp > /dev/null 2>&1; then \
+			echo "\033[0;31mNorm error: $$file\033[0m"; \
+			has_error=1; \
+		fi; \
+	done; \
+	rm -f /tmp/norm_check.tmp; \
+	if [ $$has_error -eq 1 ]; then \
+		echo "\033[0;31mNorm errors found. Run 'make norm-fix' to auto-fix.\033[0m"; \
+		exit 1; \
+	fi
+	@echo "\033[0;32mAll files are norm compliant!\033[0m"
+
+norm-fix:
+	@echo "\033[0;33mFixing norm issues...\033[0m"
+	@find $(SRCS_DIR) $(INCLUDES_DIR) \( -name "*.c" -o -name "*.h" \) | \
+		while read file; do \
+			c_formatter_42 < "$$file" > "$$file.tmp" && mv "$$file.tmp" "$$file"; \
+		done
+	@echo "\033[0;32mNorm issues fixed!\033[0m"
+
+.PHONY: all clean fclean re localclean norm norm-fix

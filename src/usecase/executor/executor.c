@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include "usecase/executor/executor.h"
 #include "usecase/builtin/builtin_commands.h"
+#include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /* Check if pipeline should be executed based on previous connector */
 static int	should_execute_pipeline(t_pipeline *prev, int status)
@@ -93,7 +93,7 @@ int	execute_single_command(t_cmd *cmd, t_exec_context *ctx)
 	expand_command_wildcards(cmd, ctx);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
-	if (cmd->redirects && setup_redirections_with_service(cmd->redirects, 
+	if (cmd->redirects && setup_redirections_with_service(cmd->redirects,
 			ctx->process_service) != 0)
 	{
 		ctx->process_service->close_fd(saved_stdin);
@@ -104,7 +104,7 @@ int	execute_single_command(t_cmd *cmd, t_exec_context *ctx)
 		status = execute_builtin(cmd, ctx);
 	else
 		status = execute_external(cmd, ctx);
-	restore_redirections_with_service(saved_stdin, saved_stdout, 
+	restore_redirections_with_service(saved_stdin, saved_stdout,
 		ctx->process_service);
 	return (status);
 }

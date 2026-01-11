@@ -13,12 +13,12 @@
 #ifndef ENV_MANAGER_H
 # define ENV_MANAGER_H
 
-# include "domain/env_variable.h"
 # include "domain/assignment.h"
+# include "domain/env_variable.h"
 
 /* Environment management functions */
-void		env_add(t_env_var **env,
-				const char *key, const char *value, const char *operator);
+void		env_add(t_env_var **env, const char *key, const char *value,
+				const char *operator);
 void		env_add_assignment(t_env_var **env, t_assignment *assignment);
 void		env_remove(t_env_var **env, const char *key);
 char		*env_get(const t_env_var *env, const char *key);

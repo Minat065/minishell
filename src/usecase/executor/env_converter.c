@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
 
 static int	count_env_vars(t_env_var *env)
 {

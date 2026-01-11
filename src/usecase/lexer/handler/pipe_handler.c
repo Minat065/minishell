@@ -34,7 +34,8 @@ int	handle_pipe(const char *input, t_lexer_state *st, t_token_stream *stream)
 	{
 		st->index++;
 		st->column++;
-		add_token(stream, create_token(TOKEN_PIPE, &input[start], 1, start, st));
+		add_token(stream, create_token(TOKEN_PIPE, &input[start], 1, start,
+				st));
 	}
 	return (0);
 }

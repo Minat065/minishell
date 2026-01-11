@@ -19,7 +19,8 @@
  * It iterates through the provided arguments, and for each argument,
  * it calls `env_remove` to remove the corresponding variable from the list.
  * @param argv
- *  Array of strings representing the keys of the environment variables to unset.
+
+	*  Array of strings representing the keys of the environment variables to unset.
  * @param envp Pointer to the head of the linked list of environment variables.
  * @return 0 on success, as the function does not return any error codes.
  */

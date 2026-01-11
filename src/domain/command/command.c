@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "domain/command.h"
+#include <stdlib.h>
 
 void	free_pipeline(t_pipeline *pipeline)
 {

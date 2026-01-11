@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
 
 int	is_lparen(char c)
 {

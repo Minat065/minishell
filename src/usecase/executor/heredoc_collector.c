@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
+#include <readline/readline.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static char	*append_line(char *content, char *line)
 {
@@ -58,8 +58,8 @@ static char	*collect_heredoc_content(const char *delimiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) == delimiter_len
-			&& ft_strncmp(line, delimiter, delimiter_len) == 0)
+		if (ft_strlen(line) == delimiter_len && ft_strncmp(line, delimiter,
+				delimiter_len) == 0)
 		{
 			free(line);
 			break ;

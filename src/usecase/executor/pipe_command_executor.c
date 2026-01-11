@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "usecase/executor/executor.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 static void	setup_pipe_params(t_pipe_params *pipe_params,
-						t_cmd_loop_params *loop_params, int i)
+		t_cmd_loop_params *loop_params, int i)
 {
 	pipe_params->cmd = loop_params->cmds;
 	pipe_params->ctx = loop_params->ctx;

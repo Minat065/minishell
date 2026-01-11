@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "adapters/cli/debug_output.h"
 #include "domain/token.h"
+#include <stdio.h>
 
 static int	count_total_tokens(t_token_stream *stream)
 {

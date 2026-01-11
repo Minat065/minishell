@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "usecase/executor/executor.h"
+#include <stdlib.h>
 
 /* Create execution context */
-t_exec_context	*create_exec_context(t_env_var **env,
-					t_io_service *io, t_output_service *out,
-					t_process_service *proc)
+t_exec_context	*create_exec_context(t_env_var **env, t_io_service *io,
+		t_output_service *out, t_process_service *proc)
 {
 	t_exec_context	*ctx;
 

@@ -18,7 +18,7 @@
 # include "interfaces/io_interface.h"
 # include "interfaces/output_interface.h"
 
-int		ft_cd(char **argv, t_env_var **envp, t_io_service *io, 
+int		ft_cd(char **argv, t_env_var **envp, t_io_service *io,
 			t_output_service *out);
 int		ft_echo(char **argv, t_output_service *out);
 int		ft_env(t_env_var *envp, t_output_service *out);

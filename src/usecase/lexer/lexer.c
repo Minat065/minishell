@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
+#include "usecase/lexer/token_printer.h"
 #include "usecase/lexer/token_type_handler.h"
 #include "usecase/lexer/token_type_handlers.h"
-#include "usecase/lexer/token_printer.h"
+#include "utils/libft_custom.h"
+#include <stdlib.h>
+#include <string.h>
 
 static t_token_stream	*create_token_stream(void)
 {

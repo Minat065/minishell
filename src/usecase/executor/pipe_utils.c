@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "usecase/executor/executor.h"
 #include "usecase/signal/signal_handler.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /* Count commands in pipe chain */
 int	count_commands(t_cmd *cmds)
@@ -52,7 +52,7 @@ int	allocate_pipe_resources(t_cmd *cmds, int **pipefd, pid_t **pids)
 }
 
 int	create_pipes_with_service(int *pipefd, int cmd_count,
-	t_process_service *proc_service)
+		t_process_service *proc_service)
 {
 	int					i;
 	t_pipe_info			pipe_info;
@@ -92,7 +92,7 @@ int	create_pipes(int *pipefd, int cmd_count)
 }
 
 void	cleanup_pipes_with_service(int *pipefd, int cmd_count,
-	t_process_service *proc_service)
+		t_process_service *proc_service)
 {
 	int	i;
 
@@ -119,7 +119,7 @@ void	cleanup_pipes(int *pipefd, int cmd_count)
 }
 
 int	wait_for_children_with_service(pid_t *pids, int cmd_count,
-	t_process_service *proc_service)
+		t_process_service *proc_service)
 {
 	int	i;
 	int	status;

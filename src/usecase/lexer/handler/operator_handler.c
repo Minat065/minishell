@@ -25,7 +25,8 @@ int	is_semicolon(char c)
 	return (c == ';');
 }
 
-int	handle_ampersand(const char *input, t_lexer_state *st, t_token_stream *stream)
+int	handle_ampersand(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int	start;
 
@@ -34,8 +35,8 @@ int	handle_ampersand(const char *input, t_lexer_state *st, t_token_stream *strea
 	{
 		st->index += 2;
 		st->column += 2;
-		add_token(stream, create_token(TOKEN_OPERATOR,
-				&input[start], 2, start, st));
+		add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 2, start,
+				st));
 	}
 	else
 	{
@@ -47,13 +48,15 @@ int	handle_ampersand(const char *input, t_lexer_state *st, t_token_stream *strea
 	return (0);
 }
 
-int	handle_semicolon(const char *input, t_lexer_state *st, t_token_stream *stream)
+int	handle_semicolon(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int	start;
 
 	start = st->index;
 	st->index++;
 	st->column++;
-	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, start, st));
+	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, start,
+			st));
 	return (0);
 }

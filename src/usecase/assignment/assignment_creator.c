@@ -19,7 +19,7 @@ static t_assignment	init_assignment(void)
 
 	assignment.name = NULL;
 	assignment.value = NULL;
-	assignment.operator = NULL;
+	assignment.operator= NULL;
 	assignment.text = NULL;
 	return (assignment);
 }
@@ -67,15 +67,15 @@ t_assignment	create_assignment(const char *text, int len)
 	if (text[equal_index - 1] == '+')
 	{
 		assignment.name = ft_strndup(text, equal_index - 1);
-		assignment.operator = ft_strndup("+=", 2);
+		assignment.operator= ft_strndup("+=", 2);
 	}
 	else
 	{
 		assignment.name = ft_strndup(text, equal_index);
-		assignment.operator = ft_strndup("=", 1);
+		assignment.operator= ft_strndup("=", 1);
 	}
-	assignment.value
-		= strip_quotes(text + equal_index + 1, len - equal_index - 1);
+	assignment.value = strip_quotes(text + equal_index + 1, len - equal_index
+			- 1);
 	assignment.text = ft_strndup(text, len);
 	return (assignment);
 }

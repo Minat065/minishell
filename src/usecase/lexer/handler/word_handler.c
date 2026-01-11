@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_type_handler.h"
+#include "utils/libft_custom.h"
 
 /**
  * allways return 1
@@ -22,18 +22,10 @@
  */
 int	is_word(char c)
 {
-	return (
-		!ft_isspace(c)
-		&& !is_single_quote(c)
-		&& !is_double_quote(c)
-		&& !is_pipe(c)
-		&& !is_redirect_input_or_heredoc(c)
-		&& !is_redirect_output_or_append(c)
-		&& !is_ampersand(c)
-		&& !is_semicolon(c)
-		&& !is_lparen(c)
-		&& !is_rparen(c)
-	);
+	return (!ft_isspace(c) && !is_single_quote(c) && !is_double_quote(c)
+		&& !is_pipe(c) && !is_redirect_input_or_heredoc(c)
+		&& !is_redirect_output_or_append(c) && !is_ampersand(c)
+		&& !is_semicolon(c) && !is_lparen(c) && !is_rparen(c));
 }
 
 int	validate_assignment_first_char(char c)
@@ -51,7 +43,8 @@ int	validate_assignment(char *str)
 	return (ft_isalnum(*str) || *str == '_');
 }
 
-static int	skip_quoted_content(const char *input, t_lexer_state *st, char quote)
+static int	skip_quoted_content(const char *input, t_lexer_state *st,
+		char quote)
 {
 	st->index++;
 	st->column++;
@@ -78,8 +71,8 @@ static int	is_word_continue(char c, int after_equal)
 	return (is_word(c));
 }
 
-int	handle_word_or_assignment(const char *input,
-		t_lexer_state *st, t_token_stream *stream)
+int	handle_word_or_assignment(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int	start;
 	int	after_equal;
@@ -104,8 +97,8 @@ int	handle_word_or_assignment(const char *input,
 		}
 		st->index++;
 	}
-	add_token(stream, create_token(
-			TOKEN_WORD, &input[start], st->index - start, start, st));
+	add_token(stream, create_token(TOKEN_WORD, &input[start], st->index - start,
+			start, st));
 	st->column += (st->index - start);
 	return (EXIT_SUCCESS);
 }

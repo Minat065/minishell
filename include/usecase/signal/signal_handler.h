@@ -16,10 +16,10 @@
 # include <signal.h>
 
 /* Signal handler functions */
-void	setup_signal_handlers(void);
-void	setup_child_signal_handlers(void);
-void	ignore_signals(void);
-void	restore_signals(void);
+void							setup_signal_handlers(void);
+void							setup_child_signal_handlers(void);
+void							ignore_signals(void);
+void							restore_signals(void);
 
 /* Signal context for readline - Required global for signal safety */
 extern volatile sig_atomic_t	g_signal_received;

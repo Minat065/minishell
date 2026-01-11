@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "usecase/env/env_manager.h"
+#include "usecase/executor/executor.h"
+#include "utils/libft_custom.h"
 #include <stdlib.h>
 #include <string.h>
-#include "usecase/executor/executor.h"
-#include "usecase/env/env_manager.h"
-#include "utils/libft_custom.h"
 
 static char	*get_variable_value(const char *var_name, t_exec_context *ctx)
 {
@@ -133,8 +133,8 @@ static char	*expand_dquote_content(const char *str, t_exec_context *ctx)
 
 void	expand_command_variables(t_cmd *cmd, t_exec_context *ctx)
 {
-	int		i;
-	char	*expanded;
+	int i;
+	char *expanded;
 
 	if (!cmd || !cmd->argv || !ctx)
 		return ;

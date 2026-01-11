@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_type_handler.h"
+#include "utils/libft_custom.h"
+
 /**
  * allways return 1
  * @param c
@@ -24,16 +25,16 @@ int	is_redirect_input_or_heredoc(char c)
 	return (c == '<');
 }
 
-int	handle_redirect_input_or_heredoc(const char *input,
-		t_lexer_state *st, t_token_stream *stream)
+int	handle_redirect_input_or_heredoc(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
-	int				start;
+	int	start;
 
 	start = st->index;
 	st->index++;
 	if (input[st->index] == '<')
 		st->index++;
-	add_token(stream, create_token(TOKEN_REDIRECT, input + start,
-			st->index - start, start, st));
+	add_token(stream, create_token(TOKEN_REDIRECT, input + start, st->index
+			- start, start, st));
 	return (1);
 }

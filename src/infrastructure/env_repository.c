@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "interfaces/env_repository.h"
 #include "usecase/env/env_manager.h"
+#include <stdlib.h>
 
-/* Simplified implementation - environmental variables are managed at exec context level */
+/* Simplified implementation
+	- environmental variables are managed at exec context level */
 
 t_env_repository	*create_env_repository(void)
 {

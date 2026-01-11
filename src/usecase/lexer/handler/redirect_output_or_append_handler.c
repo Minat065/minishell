@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_type_handler.h"
+#include "utils/libft_custom.h"
 
 /**
  * always return 1
@@ -25,16 +25,16 @@ int	is_redirect_output_or_append(char c)
 	return (c == '>');
 }
 
-int	handle_redirect_output_or_append(const char *input,
-		t_lexer_state *st, t_token_stream *stream)
+int	handle_redirect_output_or_append(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
-	int				start;
+	int	start;
 
 	start = st->index;
 	st->index++;
 	if (input[st->index] == '>')
 		st->index++;
-	add_token(stream, create_token(TOKEN_REDIRECT, input + start,
-			st->index - start, start, st));
+	add_token(stream, create_token(TOKEN_REDIRECT, input + start, st->index
+			- start, start, st));
 	return (EXIT_SUCCESS);
 }

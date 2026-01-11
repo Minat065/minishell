@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "usecase/env/env_manager.h"
-#include "utils/libft_custom.h"
 #include "interfaces/io_interface.h"
 #include "interfaces/output_interface.h"
+#include "usecase/env/env_manager.h"
+#include "utils/libft_custom.h"
 #include <stdlib.h>
 
 /**
@@ -56,7 +56,7 @@ static char	*get_path(char **argv, t_env_var **envp, int *print_path)
 static int	handle_cd_error(char *path, char *cwd, t_io_service *io,
 		t_output_service *out)
 {
-	char		*err_msg;
+	char	*err_msg;
 
 	err_msg = ft_strjoin("minishell: cd: ", path);
 	if (err_msg)
@@ -75,17 +75,10 @@ static int	handle_cd_error(char *path, char *cwd, t_io_service *io,
 	return (EXIT_FAILURE);
 }
 
-/**
- * cd with only a relative or absolute path
- * @brief Changes the current working directory to the specified path.
- * If no path is specified, it changes to the HOME directory.
- * @param argv Array of arguments,
- * 	           where the first argument is the path to change to.
- * @param envp Pointer to the head of the linked list of environment variables.
- * @return EXIT_SUCCESS on success,
- *         EXIT_FAILURE on failure
- *         (e.g., if the path does not exist
- *         or is not accessible or too many arguments).
+/*
+ * Changes current directory to the specified path.
+ * If no path is specified, changes to HOME directory.
+ * Returns EXIT_SUCCESS on success, EXIT_FAILURE on failure.
  */
 int	ft_cd(char **argv, t_env_var **envp, t_io_service *io,
 		t_output_service *out)

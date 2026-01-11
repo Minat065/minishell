@@ -35,101 +35,106 @@ typedef struct s_exec_context
 	int					last_exit_status;
 	int					should_exit;
 	int					exit_code;
-}	t_exec_context;
+}						t_exec_context;
 
 /* Pipe execution parameters */
 typedef struct s_pipe_params
 {
-	t_cmd			*cmd;
-	int				input_fd;
-	int				output_fd;
-	t_exec_context	*ctx;
-	int				*pipefd;
-	int				cmd_count;
-}	t_pipe_params;
+	t_cmd				*cmd;
+	int					input_fd;
+	int					output_fd;
+	t_exec_context		*ctx;
+	int					*pipefd;
+	int					cmd_count;
+}						t_pipe_params;
 
 /* Command loop execution parameters */
 typedef struct s_cmd_loop_params
 {
-	t_cmd			*cmds;
-	int				*pipefd;
-	pid_t			*pids;
-	t_exec_context	*ctx;
-	int				cmd_count;
-}	t_cmd_loop_params;
+	t_cmd				*cmds;
+	int					*pipefd;
+	pid_t				*pids;
+	t_exec_context		*ctx;
+	int					cmd_count;
+}						t_cmd_loop_params;
 
 /* Main executor functions */
-int			execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx);
-int			execute_pipeline(t_pipeline *pipeline, t_exec_context *ctx);
-int			execute_command_chain(t_cmd *cmds, t_exec_context *ctx);
-int			execute_single_command(t_cmd *cmd, t_exec_context *ctx);
+int						execute_pipeline_list(t_pipeline *pipelines,
+							t_exec_context *ctx);
+int						execute_pipeline(t_pipeline *pipeline,
+							t_exec_context *ctx);
+int						execute_command_chain(t_cmd *cmds, t_exec_context *ctx);
+int						execute_single_command(t_cmd *cmd, t_exec_context *ctx);
 
 /* Pipe utility functions */
-int			count_commands(t_cmd *cmds);
-int			allocate_pipe_resources(t_cmd *cmds, int **pipefd, pid_t **pids);
-int			create_pipes(int *pipefd, int cmd_count);
-int			create_pipes_with_service(int *pipefd, int cmd_count, 
-				t_process_service *proc_service);
-void		cleanup_pipes(int *pipefd, int cmd_count);
-void		cleanup_pipes_with_service(int *pipefd, int cmd_count, 
-				t_process_service *proc_service);
-int			wait_for_children(pid_t *pids, int cmd_count);
-int			wait_for_children_with_service(pid_t *pids, int cmd_count, 
-				t_process_service *proc_service);
-int			execute_commands_loop(t_cmd_loop_params *params);
-int			execute_pipe_command(t_pipe_params *params);
+int						count_commands(t_cmd *cmds);
+int						allocate_pipe_resources(t_cmd *cmds, int **pipefd,
+							pid_t **pids);
+int						create_pipes(int *pipefd, int cmd_count);
+int						create_pipes_with_service(int *pipefd, int cmd_count,
+							t_process_service *proc_service);
+void					cleanup_pipes(int *pipefd, int cmd_count);
+void					cleanup_pipes_with_service(int *pipefd, int cmd_count,
+							t_process_service *proc_service);
+int						wait_for_children(pid_t *pids, int cmd_count);
+int						wait_for_children_with_service(pid_t *pids,
+							int cmd_count, t_process_service *proc_service);
+int						execute_commands_loop(t_cmd_loop_params *params);
+int						execute_pipe_command(t_pipe_params *params);
 
 /* Command execution helpers */
-int			is_builtin(const char *cmd);
-int			execute_builtin(t_cmd *cmd, t_exec_context *ctx);
-int			execute_external(t_cmd *cmd, t_exec_context *ctx);
+int						is_builtin(const char *cmd);
+int						execute_builtin(t_cmd *cmd, t_exec_context *ctx);
+int						execute_external(t_cmd *cmd, t_exec_context *ctx);
 
 /* Environment and command path utilities */
-char		**env_to_envp(t_env_var *env);
-void		free_envp(char **envp);
-char		*find_command_path(const char *cmd, t_env_var *env);
+char					**env_to_envp(t_env_var *env);
+void					free_envp(char **envp);
+char					*find_command_path(const char *cmd, t_env_var *env);
 
 /* Execution context management */
-t_exec_context	*create_exec_context(t_env_var **env, 
-					t_io_service *io, t_output_service *out, 
-					t_process_service *proc);
-void			free_exec_context(t_exec_context *ctx);
+t_exec_context			*create_exec_context(t_env_var **env, t_io_service *io,
+							t_output_service *out, t_process_service *proc);
+void					free_exec_context(t_exec_context *ctx);
 
 /* Redirection handling */
-int			setup_redirections(t_cmd_redirect *redirects);
-int			setup_redirections_with_service(t_cmd_redirect *redirects, 
-				t_process_service *proc_service);
-void		restore_redirections(int saved_stdin, int saved_stdout);
-void		restore_redirections_with_service(int saved_stdin, int saved_stdout, 
-				t_process_service *proc_service);
-int			handle_input_redirect(const char *filename);
-int			handle_input_redirect_with_service(const char *filename, 
-				t_process_service *proc_service);
-int			handle_output_redirect(const char *filename);
-int			handle_output_redirect_with_service(const char *filename, 
-				t_process_service *proc_service);
-int			handle_append_redirect(const char *filename);
-int			handle_append_redirect_with_service(const char *filename, 
-				t_process_service *proc_service);
-int			handle_heredoc_redirect(const char *delimiter);
-int			handle_heredoc_redirect_with_service(const char *delimiter,
-				t_process_service *proc_service);
-int			handle_heredoc_with_content(const char *content);
+int						setup_redirections(t_cmd_redirect *redirects);
+int						setup_redirections_with_service(t_cmd_redirect *redirects,
+							t_process_service *proc_service);
+void					restore_redirections(int saved_stdin, int saved_stdout);
+void					restore_redirections_with_service(int saved_stdin,
+							int saved_stdout, t_process_service *proc_service);
+int						handle_input_redirect(const char *filename);
+int						handle_input_redirect_with_service(const char *filename,
+							t_process_service *proc_service);
+int						handle_output_redirect(const char *filename);
+int						handle_output_redirect_with_service(const char *filename,
+							t_process_service *proc_service);
+int						handle_append_redirect(const char *filename);
+int						handle_append_redirect_with_service(const char *filename,
+							t_process_service *proc_service);
+int						handle_heredoc_redirect(const char *delimiter);
+int						handle_heredoc_redirect_with_service(const char *delimiter,
+							t_process_service *proc_service);
+int						handle_heredoc_with_content(const char *content);
 
 /* Heredoc pre-collection */
-int			collect_heredocs_for_pipeline(t_pipeline *pipeline);
-int			collect_heredocs_for_cmd(t_cmd *cmd);
+int						collect_heredocs_for_pipeline(t_pipeline *pipeline);
+int						collect_heredocs_for_cmd(t_cmd *cmd);
 
 /* Pipe handling */
-int			execute_pipe_chain(t_cmd *cmds, t_exec_context *ctx);
-int			execute_pipe_chain_with_service(t_cmd *cmds, t_exec_context *ctx);
+int						execute_pipe_chain(t_cmd *cmds, t_exec_context *ctx);
+int						execute_pipe_chain_with_service(t_cmd *cmds,
+							t_exec_context *ctx);
 
 /* Variable expansion */
-char		*expand_variables(const char *str, t_exec_context *ctx);
-void		expand_command_variables(t_cmd *cmd, t_exec_context *ctx);
+char					*expand_variables(const char *str, t_exec_context *ctx);
+void					expand_command_variables(t_cmd *cmd,
+							t_exec_context *ctx);
 
 /* Wildcard expansion */
-void		expand_command_wildcards(t_cmd *cmd, t_exec_context *ctx);
+void					expand_command_wildcards(t_cmd *cmd,
+							t_exec_context *ctx);
 
 /* Note: Utility functions declared above in "Environment and command path utilities" section */
 

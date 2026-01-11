@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "usecase/env/env_manager.h"
-#include "usecase/assignment/assignment_creator.h"
-#include "utils/libft_custom.h"
 #include "interfaces/output_interface.h"
+#include "usecase/assignment/assignment_creator.h"
+#include "usecase/env/env_manager.h"
+#include "utils/libft_custom.h"
 #include <stdlib.h>
 
 /**
@@ -103,7 +103,7 @@ static int	print_all_env(t_env_var *env, t_output_service *out)
 	return (EXIT_SUCCESS);
 }
 
-static	void	print_error(char *arg, t_output_service *out)
+static void	print_error(char *arg, t_output_service *out)
 {
 	if (!out)
 		return ;
@@ -123,15 +123,14 @@ int	ft_export(char **argv, t_env_var **envp, t_output_service *out)
 {
 	char			*arg;
 	t_assignment	assignment;
-	int i = 0; //debag
 
+	int i = 0; // debag
 	// デバッグ: argvの中身を表示
 	while (argv && argv[i])
 	{
 		printf("DEBUG argv[%d]: [%s]\n", i, argv[i]);
 		i++;
 	}
-
 	if (!argv || !*argv)
 		return (print_all_env(*envp, out));
 	while (*argv)

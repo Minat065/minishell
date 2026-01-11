@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "usecase/executor/executor.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 static int	setup_pipe_resources_with_service(t_cmd *cmds, int **pipefd,
-	pid_t **pids, t_process_service *proc_service)
+		pid_t **pids, t_process_service *proc_service)
 {
 	int	cmd_count;
 
@@ -51,9 +51,8 @@ static void	cleanup_and_free_resources(int *pipefd, pid_t *pids, int cmd_count)
 	free(pids);
 }
 
-
 static int	finalize_pipe_execution_with_service(int *pipefd, pid_t *pids,
-	int cmd_count, t_process_service *proc_service)
+		int cmd_count, t_process_service *proc_service)
 {
 	cleanup_pipes_with_service(pipefd, cmd_count, proc_service);
 	cmd_count = wait_for_children_with_service(pids, cmd_count, proc_service);

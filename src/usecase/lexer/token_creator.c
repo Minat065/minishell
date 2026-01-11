@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "domain/token.h"
+#include "usecase/assignment/assignment_creator.h"
+#include "utils/libft_custom.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utils/libft_custom.h"
-#include "domain/token.h"
-#include "usecase/assignment/assignment_creator.h"
 
 static t_redirect	create_redirect(const char *text, int len)
 {
@@ -39,8 +39,7 @@ static t_redirect	create_redirect(const char *text, int len)
 	return (redirect);
 }
 
-static t_value	create_value(
-	t_token_type type, const char *text, int len)
+static t_value	create_value(t_token_type type, const char *text, int len)
 {
 	t_value	value;
 
@@ -55,9 +54,8 @@ static t_value	create_value(
 	return (value);
 }
 
-t_token	*create_token(
-	t_token_type type, const char *text, int len, int start_index,
-	t_lexer_state *st)
+t_token	*create_token(t_token_type type, const char *text, int len,
+		int start_index, t_lexer_state *st)
 {
 	t_token	*token;
 

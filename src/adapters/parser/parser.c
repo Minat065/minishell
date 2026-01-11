@@ -10,19 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "adapters/parser/parser_internal.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
 
-static t_pipeline	*parse_group_content(
-	t_token_stream *tokens, t_parse_result *result);
+static t_pipeline	*parse_group_content(t_token_stream *tokens,
+						t_parse_result *result);
 
 /* グループ化されたパイプラインをパース */
-static t_pipeline	*parse_grouped_pipeline(
-	t_token_stream *tokens, t_parse_result *result)
+static t_pipeline	*parse_grouped_pipeline(t_token_stream *tokens,
+		t_parse_result *result)
 {
-	t_pipeline		*new_pipeline;
-	t_pipeline		*group_content;
+	t_pipeline	*new_pipeline;
+	t_pipeline	*group_content;
 
 	tokens->current = tokens->current->next;
 	new_pipeline = create_pipeline();
@@ -47,8 +47,8 @@ static t_pipeline	*parse_grouped_pipeline(
 }
 
 /* 新しいパイプラインを作成してパース */
-t_pipeline	*create_and_parse_pipeline(
-	t_token_stream *tokens, t_parse_result *result)
+t_pipeline	*create_and_parse_pipeline(t_token_stream *tokens,
+		t_parse_result *result)
 {
 	t_pipeline	*new_pipeline;
 	t_cmd		*cmds;
@@ -75,8 +75,8 @@ static int	is_operator_token(t_token_type type)
 }
 
 /* 演算子を処理 */
-int	handle_operator(
-	t_token_stream *tokens, t_pipeline *pipeline, t_parse_result *result)
+int	handle_operator(t_token_stream *tokens, t_pipeline *pipeline,
+		t_parse_result *result)
 {
 	if (!tokens->current || !is_operator_token(tokens->current->type))
 		return (1);
@@ -84,16 +84,15 @@ int	handle_operator(
 	tokens->current = tokens->current->next;
 	if (!tokens->current || tokens->current->type == TOKEN_EOF)
 	{
-		result->error_msg = ft_strdup(
-				"syntax error: unexpected end after operator");
+		result->error_msg = ft_strdup("syntax error: unexpected end after operator");
 		return (0);
 	}
 	return (1);
 }
 
 /* パイプラインをリストに追加 */
-int	add_pipeline_to_list(
-	t_pipeline **first, t_pipeline **current, t_pipeline *new_pipeline)
+int	add_pipeline_to_list(t_pipeline **first, t_pipeline **current,
+		t_pipeline *new_pipeline)
 {
 	if (!*first)
 	{
@@ -119,8 +118,8 @@ static int	should_stop_parsing(t_token *token)
 }
 
 /* グループ内のパイプラインをパース */
-static t_pipeline	*parse_group_content(
-	t_token_stream *tokens, t_parse_result *result)
+static t_pipeline	*parse_group_content(t_token_stream *tokens,
+		t_parse_result *result)
 {
 	t_pipeline	*first_pipeline;
 	t_pipeline	*current_pipeline;

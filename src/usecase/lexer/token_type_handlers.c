@@ -10,43 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <usecase/lexer/token_type_handler.h>
 #include <stdlib.h>
+#include <usecase/lexer/token_type_handler.h>
 
 t_token_type_handlers	create_token_handlers(void)
 {
 	t_token_type_handlers	handlers;
 
 	handlers.token_handler_count = 11;
-	handlers.token_handlers
-		= malloc(sizeof(t_token_handler) * handlers.token_handler_count);
+	handlers.token_handlers = malloc(sizeof(t_token_handler)
+			* handlers.token_handler_count);
 	if (!handlers.token_handlers)
 	{
 		handlers.token_handler_count = 0;
 		return (handlers);
 	}
 	handlers.token_handlers[0] = (t_token_handler){ft_isspace,
-	{.handler_regular = handle_space}};
+		{.handler_regular = handle_space}};
 	handlers.token_handlers[1] = (t_token_handler){is_single_quote,
-	{.handler_regular = handle_single_quote}};
+		{.handler_regular = handle_single_quote}};
 	handlers.token_handlers[2] = (t_token_handler){is_double_quote,
-	{.handler_regular = handle_double_quote}};
+		{.handler_regular = handle_double_quote}};
 	handlers.token_handlers[3] = (t_token_handler){is_pipe,
-	{.handler_regular = handle_pipe}};
+		{.handler_regular = handle_pipe}};
 	handlers.token_handlers[4] = (t_token_handler){is_redirect_input_or_heredoc,
-	{.handler_regular = handle_redirect_input_or_heredoc}};
+		{.handler_regular = handle_redirect_input_or_heredoc}};
 	handlers.token_handlers[5] = (t_token_handler){is_redirect_output_or_append,
-	{.handler_regular = handle_redirect_output_or_append}};
+		{.handler_regular = handle_redirect_output_or_append}};
 	handlers.token_handlers[6] = (t_token_handler){is_ampersand,
-	{.handler_regular = handle_ampersand}};
+		{.handler_regular = handle_ampersand}};
 	handlers.token_handlers[7] = (t_token_handler){is_semicolon,
-	{.handler_regular = handle_semicolon}};
+		{.handler_regular = handle_semicolon}};
 	handlers.token_handlers[8] = (t_token_handler){is_lparen,
-	{.handler_regular = handle_lparen}};
+		{.handler_regular = handle_lparen}};
 	handlers.token_handlers[9] = (t_token_handler){is_rparen,
-	{.handler_regular = handle_rparen}};
+		{.handler_regular = handle_rparen}};
 	handlers.token_handlers[10] = (t_token_handler){is_word,
-	{.handler_regular = handle_word_or_assignment}};
+		{.handler_regular = handle_word_or_assignment}};
 	return (handlers);
 }
 
@@ -59,9 +59,8 @@ void	free_token_handlers(t_token_type_handlers *handlers)
 	}
 }
 
-int	dispatch_token_handler(const char *input,
-		t_lexer_state *st, t_token_stream *stream,
-		t_token_type_handlers *handlers)
+int	dispatch_token_handler(const char *input, t_lexer_state *st,
+		t_token_stream *stream, t_token_type_handlers *handlers)
 {
 	int	i;
 

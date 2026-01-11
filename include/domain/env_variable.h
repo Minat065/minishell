@@ -14,14 +14,14 @@
 # define ENV_VARIABLE_H
 
 /* Forward declaration to avoid circular dependency */
-typedef struct s_assignment t_assignment;
+typedef struct s_assignment	t_assignment;
 
 typedef struct s_env_var
 {
-	char				*key;
-	char				*value;
-	struct s_env_var	*next;
-}						t_env_var;
+	char					*key;
+	char					*value;
+	struct s_env_var		*next;
+}							t_env_var;
 
 /* Function declarations moved to usecase layer */
 /* These functions will be defined in usecase/env/ */

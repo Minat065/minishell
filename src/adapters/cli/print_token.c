@@ -36,8 +36,8 @@ static void	print_single_token(t_token *token)
 	else if (token->type == TOKEN_REDIRECT)
 		print_redirect_token(token);
 	else if (token->type == TOKEN_ASSIGNMENT)
-		printf("ASSIGNMENT: %s=%s\n",
-			token->value.assignment.name, token->value.assignment.value);
+		printf("ASSIGNMENT: %s=%s\n", token->value.assignment.name,
+			token->value.assignment.value);
 	else if (token->type == TOKEN_ERROR)
 		printf("ERROR: %s\n", token->value.word);
 	else

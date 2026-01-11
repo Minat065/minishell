@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "interfaces/output_interface.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 /* No global variables - using dependency injection */
 

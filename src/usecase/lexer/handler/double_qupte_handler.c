@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
+#include "utils/libft_custom.h"
+#include <stdlib.h>
 
 int	is_double_quote(char c)
 {
@@ -34,8 +34,8 @@ static char	*add_dquote_marker(const char *content, int len)
 	return (marked);
 }
 
-int	handle_double_quote(
-	const char *input, t_lexer_state *st, t_token_stream *stream)
+int	handle_double_quote(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int		token_start;
 	int		content_start;
@@ -61,8 +61,8 @@ int	handle_double_quote(
 	}
 	st->index++;
 	st->column++;
-	marked_content = add_dquote_marker(&input[content_start],
-			st->index - content_start - 1);
+	marked_content = add_dquote_marker(&input[content_start], st->index
+			- content_start - 1);
 	add_token(stream, create_token(TOKEN_WORD, marked_content,
 			ft_strlen(marked_content), token_start, st));
 	free(marked_content);

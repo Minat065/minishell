@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <limits.h>
-#include "utils/libft_custom.h"
 #include "usecase/exit/exit.h"
+#include "utils/libft_custom.h"
+#include <limits.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static int	count_arg(char **argv)
 {

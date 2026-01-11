@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <errno.h>
 #include "interfaces/process_interface.h"
 #include "utils/libft_custom.h"
+#include <errno.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /* No global variables - using dependency injection */
 
@@ -30,7 +30,7 @@ static t_process_result	impl_fork_process(pid_t *pid)
 }
 
 static t_process_result	impl_exec_command(const char *path, char **argv,
-							char **envp)
+		char **envp)
 {
 	if (!path || !argv)
 		return (PROCESS_ERROR_EXEC);
@@ -60,7 +60,7 @@ static t_process_result	impl_wait_process(pid_t pid, int *exit_status)
 }
 
 static t_process_result	impl_wait_all_processes(pid_t *pids, int count,
-							int *exit_statuses)
+		int *exit_statuses)
 {
 	int	i;
 	int	status;

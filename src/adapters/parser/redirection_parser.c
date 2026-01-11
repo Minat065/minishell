@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "adapters/parser/parser_internal.h"
+#include <stdlib.h>
 
 /* リダイレクションのパース */
 t_cmd_redirect	*parse_redirection(t_token_stream *tokens)

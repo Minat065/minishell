@@ -12,8 +12,8 @@
 
 #ifndef EXIT_H
 # define EXIT_H
-# include "domain/token.h"
 # include "domain/env_variable.h"
+# include "domain/token.h"
 
 void	exit_minishell(int exit_code, t_token_stream *stream, t_env_var *env);
 
