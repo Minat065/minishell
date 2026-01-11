@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   external_executor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/16 08:34:44 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/11 12:08:44 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "usecase/executor/executor.h"
 #include "usecase/signal/signal_handler.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 static int	execute_child_process(char *cmd_path, t_cmd *cmd, char **envp)
 {
@@ -35,6 +35,8 @@ static int	handle_parent_process(pid_t pid, char *cmd_path, char **envp)
 	ignore_signals();
 	waitpid(pid, &status, 0);
 	setup_signal_handlers();
+	if (WIFSIGNALED(status))
+		write(STDOUT_FILENO, "\n", 1);
 	free(cmd_path);
 	free_envp(envp);
 	if (WIFEXITED(status))
@@ -49,8 +51,8 @@ static int	handle_parent_process(pid_t pid, char *cmd_path, char **envp)
 	return (EXIT_FAILURE);
 }
 
-static int	prepare_execution(t_cmd *cmd, t_exec_context *ctx,
-							char **cmd_path, char ***envp)
+static int	prepare_execution(t_cmd *cmd, t_exec_context *ctx, char **cmd_path,
+		char ***envp)
 {
 	if (!cmd || !cmd->argv || !cmd->argv[0] || !ctx)
 		return (EXIT_FAILURE);

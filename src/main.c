@@ -26,12 +26,13 @@
 #include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_printer.h"
 #include "usecase/signal/signal_handler.h"
-#include "utils/libft/libft.h"
+#include "utils/libft_custom.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 static void	execute_and_cleanup(t_parse_result *result, t_exec_context *ctx)
 {
@@ -82,12 +83,18 @@ static int	shell_loop(t_exec_context *exec_ctx)
 	{
 		g_signal_received = 0;
 		line = readline("minishell> ");
+		if (g_signal_received == SIGINT)
+		{
+			exec_ctx->last_exit_status = 130;
+			g_signal_received = 0;
+			continue ;
+		}
 		if (!line)
 		{
 			printf("exit\n");
 			break ;
 		}
-		if (g_signal_received == SIGINT)
+		if (g_signal_received == SIGINT && *line == '\0')
 		{
 			exec_ctx->last_exit_status = 130;
 			g_signal_received = 0;
