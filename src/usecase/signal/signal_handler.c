@@ -6,11 +6,12 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:30:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/11 11:40:31 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/11 23:48:38 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/signal/signal_handler.h"
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,6 +23,9 @@ static void	handle_sigint(int sig)
 	(void)sig;
 	g_signal_received = SIGINT;
 	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	setup_signal_handlers(void)
