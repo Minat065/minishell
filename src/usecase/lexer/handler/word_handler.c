@@ -28,21 +28,6 @@ int	is_word(char c)
 		&& !is_semicolon(c) && !is_lparen(c) && !is_rparen(c));
 }
 
-int	validate_assignment_first_char(char c)
-{
-	return (ft_isalpha(c) || c == '_');
-}
-
-int	validate_assignment(char *str)
-{
-	if (*str == '+')
-	{
-		if (*(str + 1) == '=')
-			return (1);
-	}
-	return (ft_isalnum(*str) || *str == '_');
-}
-
 static int	skip_quoted_content(const char *input, t_lexer_state *st,
 		char quote)
 {

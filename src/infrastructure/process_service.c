@@ -93,9 +93,3 @@ t_process_service	*create_process_service(void)
 	service->get_err_msg = process_get_error_message;
 	return (service);
 }
-
-void	destroy_process_service(t_process_service *service)
-{
-	if (service)
-		free(service);
-}

@@ -12,6 +12,7 @@
 
 #include "interfaces/process_interface.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
 #include <sys/wait.h>
 
 bool	process_is_running(pid_t pid)
@@ -40,4 +41,10 @@ char	*process_get_error_message(t_process_result result)
 	else if (result == PROCESS_ERROR_ACCESS)
 		return (ft_strdup("Access denied"));
 	return (ft_strdup("Unknown process error"));
+}
+
+void	destroy_process_service(t_process_service *service)
+{
+	if (service)
+		free(service);
 }

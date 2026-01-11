@@ -31,7 +31,7 @@ int	handle_output_redirect_with_service(const char *filename,
 		perror(filename);
 		return (-1);
 	}
-	if (proc_service->duplicate_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
+	if (proc_service->dup_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
 	{
 		perror("dup2 failed for output redirection");
 		proc_service->close_fd(fd);
@@ -82,7 +82,7 @@ int	handle_append_redirect_with_service(const char *filename,
 		perror(filename);
 		return (-1);
 	}
-	if (proc_service->duplicate_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
+	if (proc_service->dup_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
 	{
 		perror("dup2 failed for append redirection");
 		proc_service->close_fd(fd);

@@ -21,7 +21,7 @@ static void	setup_input_fd(int input_fd, t_process_service *proc_service)
 {
 	if (input_fd != STDIN_FILENO)
 	{
-		if (proc_service->duplicate_fd(input_fd,
+		if (proc_service->dup_fd(input_fd,
 				STDIN_FILENO) != PROCESS_SUCCESS)
 		{
 			perror("dup2 input failed");
@@ -35,7 +35,7 @@ static void	setup_output_fd(int output_fd, t_process_service *proc_service)
 {
 	if (output_fd != STDOUT_FILENO)
 	{
-		if (proc_service->duplicate_fd(output_fd,
+		if (proc_service->dup_fd(output_fd,
 				STDOUT_FILENO) != PROCESS_SUCCESS)
 		{
 			perror("dup2 output failed");
@@ -92,7 +92,7 @@ int	execute_pipe_command(t_pipe_params *params)
 	pid_t				pid;
 	t_process_result	result;
 
-	result = params->ctx->process_service->fork_process(&pid);
+	result = params->ctx->process_service->fork_proc(&pid);
 	if (result != PROCESS_SUCCESS)
 	{
 		perror("fork failed");

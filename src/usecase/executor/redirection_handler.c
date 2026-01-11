@@ -90,12 +90,12 @@ void	restore_redirections_with_service(int saved_stdin, int saved_stdout,
 {
 	if (saved_stdin != -1)
 	{
-		proc_service->duplicate_fd(saved_stdin, STDIN_FILENO);
+		proc_service->dup_fd(saved_stdin, STDIN_FILENO);
 		proc_service->close_fd(saved_stdin);
 	}
 	if (saved_stdout != -1)
 	{
-		proc_service->duplicate_fd(saved_stdout, STDOUT_FILENO);
+		proc_service->dup_fd(saved_stdout, STDOUT_FILENO);
 		proc_service->close_fd(saved_stdout);
 	}
 }

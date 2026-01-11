@@ -129,7 +129,7 @@ int	wait_for_children_with_service(pid_t *pids, int cmd_count,
 	i = 0;
 	while (i < cmd_count)
 	{
-		if (proc_service->wait_process(pids[i], &status) != PROCESS_SUCCESS)
+		if (proc_service->wait_proc(pids[i], &status) != PROCESS_SUCCESS)
 		{
 			perror("wait failed for child process");
 			return (EXIT_FAILURE);
