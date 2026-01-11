@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
-#include "usecase/executor/executor.h"
 #include "usecase/builtin/builtin_commands.h"
+#include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
+#include <string.h>
 
 /* Check if command is a builtin */
 int	is_builtin(const char *cmd)
@@ -55,7 +55,7 @@ static int	handle_exit_command(char **args, t_exec_context *ctx)
 }
 
 static int	execute_basic_builtins(char *command, char **args,
-									t_exec_context *ctx)
+		t_exec_context *ctx)
 {
 	if (ft_strcmp(command, "echo") == 0)
 		return (ft_echo(args, ctx->output_service));

@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "adapters/cli/output_utils.h"
-#include "domain/token.h"
-#include "domain/command.h"
 #include "adapters/parser/parser_interface.h"
+#include "domain/command.h"
+#include "domain/token.h"
 #include "usecase/executor/executor.h"
+#include <stdio.h>
 
 void	print_indent(int depth)
 {

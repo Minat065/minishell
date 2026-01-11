@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "usecase/env/env_manager.h"
 #include "utils/libft_custom.h"
+#include <stdlib.h>
+#include <string.h>
 
 static char	*extract_key(const char *env_str)
 {

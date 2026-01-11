@@ -10,14 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <sys/stat.h>
 #include "interfaces/io_interface.h"
 #include "utils/libft_custom.h"
-
-/* No global variables - using dependency injection */
+#include <errno.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 static t_io_result	impl_change_directory(const char *path)
 {
@@ -54,14 +52,8 @@ static bool	impl_file_exists(const char *path)
 	return (stat(path, &st) == 0);
 }
 
-static bool	impl_is_directory(const char *path)
-{
-	struct stat	st;
-
-	if (!path || stat(path, &st) == -1)
-		return (false);
-	return (S_ISDIR(st.st_mode));
-}
+bool	impl_is_directory(const char *path);
+char	*impl_get_error_message(t_io_result result);
 
 static t_io_result	impl_create_directory(const char *path)
 {
@@ -79,19 +71,6 @@ static t_io_result	impl_create_directory(const char *path)
 	return (IO_SUCCESS);
 }
 
-static char	*impl_get_error_message(t_io_result result)
-{
-	if (result == IO_ERROR_ACCESS)
-		return (ft_strdup("Access denied"));
-	else if (result == IO_ERROR_NOT_FOUND)
-		return (ft_strdup("No such file or directory"));
-	else if (result == IO_ERROR_PERMISSION)
-		return (ft_strdup("Permission denied"));
-	else if (result == IO_ERROR_SYSTEM)
-		return (ft_strdup("System error"));
-	return (ft_strdup("Unknown error"));
-}
-
 t_io_service	*create_io_service(void)
 {
 	t_io_service	*service;
@@ -106,10 +85,4 @@ t_io_service	*create_io_service(void)
 	service->create_directory = impl_create_directory;
 	service->get_error_message = impl_get_error_message;
 	return (service);
-}
-
-void	destroy_io_service(t_io_service *service)
-{
-	if (service)
-		free(service);
 }

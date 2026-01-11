@@ -30,8 +30,8 @@ static t_env_var	*create_node(const char *key, const char *value)
 	return (new_node);
 }
 
-static char	*get_new_value(const char *current_value,
-				const char *value, const char *operator)
+static char	*get_new_value(const char *current_value, const char *value,
+		const char *operator)
 {
 	char	*new_value;
 
@@ -49,8 +49,8 @@ static char	*get_new_value(const char *current_value,
 	return (new_value);
 }
 
-void	env_add(t_env_var **env,
-			const char *key, const char *value, const char *operator)
+void	env_add(t_env_var **env, const char *key, const char *value,
+		const char *operator)
 {
 	t_env_var	*curr;
 	t_env_var	*new_node;

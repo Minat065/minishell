@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../../../include/adapters/parser/parser_internal.h"
 #include "../../../src/utils/libft/libft.h"
+#include <stdlib.h>
 
 /* argv配列を拡張 */
 char	**extend_argv(char **argv, int current_size)
@@ -70,4 +70,18 @@ void	free_parse_result(t_parse_result *result)
 	free_pipeline(result->ast);
 	free(result->error_msg);
 	free(result);
+}
+
+/* 単純コマンドを初期化 */
+t_cmd	*init_simple_command(void)
+{
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->argv = NULL;
+	cmd->redirects = NULL;
+	cmd->next = NULL;
+	return (cmd);
 }

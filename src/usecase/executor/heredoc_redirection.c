@@ -10,22 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "usecase/executor/executor.h"
+#include "utils/libft_custom.h"
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
-#include <readline/readline.h>
-#include "usecase/executor/executor.h"
-#include "utils/libft_custom.h"
-
+#include <unistd.h>
 
 static int	process_heredoc_line(int pipefd, char *line, const char *delimiter)
 {
 	size_t	delimiter_len;
 
 	delimiter_len = ft_strlen(delimiter);
-	if (ft_strlen(line) == delimiter_len
-		&& ft_strncmp(line, delimiter, delimiter_len) == 0)
+	if (ft_strlen(line) == delimiter_len && ft_strncmp(line, delimiter,
+			delimiter_len) == 0)
 	{
 		free(line);
 		return (1);
@@ -67,39 +66,6 @@ static int	handle_heredoc_parent(int *pipefd, pid_t pid)
 
 	close(pipefd[1]);
 	waitpid(pid, &status, 0);
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-	{
-		perror("dup2 failed for heredoc");
-		close(pipefd[0]);
-		return (-1);
-	}
-	close(pipefd[0]);
-	return (0);
-}
-
-int	handle_heredoc_redirect_with_service(const char *delimiter,
-	t_process_service *proc_service)
-{
-	(void)proc_service;
-	return (handle_heredoc_redirect(delimiter));
-}
-
-int	handle_heredoc_with_content(const char *content)
-{
-	int		pipefd[2];
-
-	if (!content)
-	{
-		printf("minishell: heredoc: missing content\n");
-		return (-1);
-	}
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe failed for heredoc");
-		return (-1);
-	}
-	write(pipefd[1], content, ft_strlen(content));
-	close(pipefd[1]);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 	{
 		perror("dup2 failed for heredoc");

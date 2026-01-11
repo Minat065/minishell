@@ -12,8 +12,8 @@
 
 #ifndef TOKEN_TYPE_HANDLERS_H
 # define TOKEN_TYPE_HANDLERS_H
-# include <usecase/lexer/token_type_handler.h>
 # include <usecase/lexer/lexer.h>
+# include <usecase/lexer/token_type_handler.h>
 
 t_token_type_handlers	create_token_handlers(void);
 void					free_token_handlers(t_token_type_handlers *handlers);

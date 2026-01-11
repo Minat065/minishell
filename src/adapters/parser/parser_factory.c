@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../../../include/adapters/parser/parser_internal.h"
 #include "../../../src/utils/libft/libft.h"
+#include <stdlib.h>
 
 t_parse_result	*create_parse_result(void)
 {

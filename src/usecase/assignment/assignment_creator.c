@@ -74,8 +74,8 @@ t_assignment	create_assignment(const char *text, int len)
 		assignment.name = ft_strndup(text, equal_index);
 		assignment.operator = ft_strndup("=", 1);
 	}
-	assignment.value
-		= strip_quotes(text + equal_index + 1, len - equal_index - 1);
+	assignment.value = strip_quotes(text + equal_index + 1, len - equal_index
+			- 1);
 	assignment.text = ft_strndup(text, len);
 	return (assignment);
 }

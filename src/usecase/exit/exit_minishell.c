@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "domain/token.h"
 #include "usecase/env/env_manager.h"
 #include "usecase/lexer/token_manager.h"
+#include <stdlib.h>
 
 void	exit_minishell(int exit_code, t_token_stream *stream, t_env_var *env)
 {

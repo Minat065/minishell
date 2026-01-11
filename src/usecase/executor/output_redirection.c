@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include "usecase/executor/executor.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int	handle_output_redirect_with_service(const char *filename, 
-	t_process_service *proc_service)
+int	handle_output_redirect_with_service(const char *filename,
+		t_process_service *proc_service)
 {
 	int	fd;
 
@@ -31,7 +31,7 @@ int	handle_output_redirect_with_service(const char *filename,
 		perror(filename);
 		return (-1);
 	}
-	if (proc_service->duplicate_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
+	if (proc_service->dup_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
 	{
 		perror("dup2 failed for output redirection");
 		proc_service->close_fd(fd);
@@ -66,8 +66,8 @@ int	handle_output_redirect(const char *filename)
 	return (0);
 }
 
-int	handle_append_redirect_with_service(const char *filename, 
-	t_process_service *proc_service)
+int	handle_append_redirect_with_service(const char *filename,
+		t_process_service *proc_service)
 {
 	int	fd;
 
@@ -82,7 +82,7 @@ int	handle_append_redirect_with_service(const char *filename,
 		perror(filename);
 		return (-1);
 	}
-	if (proc_service->duplicate_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
+	if (proc_service->dup_fd(fd, STDOUT_FILENO) != PROCESS_SUCCESS)
 	{
 		perror("dup2 failed for append redirection");
 		proc_service->close_fd(fd);

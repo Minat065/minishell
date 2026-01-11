@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
+#include <readline/readline.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static char	*append_line(char *content, char *line)
 {
@@ -58,8 +58,8 @@ static char	*collect_heredoc_content(const char *delimiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) == delimiter_len
-			&& ft_strncmp(line, delimiter, delimiter_len) == 0)
+		if (ft_strlen(line) == delimiter_len && ft_strncmp(line, delimiter,
+				delimiter_len) == 0)
 		{
 			free(line);
 			break ;
@@ -98,44 +98,6 @@ int	collect_heredocs_for_cmd(t_cmd *cmd)
 		if (collect_heredoc_for_redirect(redirect) == -1)
 			return (-1);
 		redirect = redirect->next;
-	}
-	return (0);
-}
-
-static int	collect_heredocs_for_cmd_chain(t_cmd *cmds)
-{
-	t_cmd	*current;
-
-	current = cmds;
-	while (current)
-	{
-		if (collect_heredocs_for_cmd(current) == -1)
-			return (-1);
-		current = current->next;
-	}
-	return (0);
-}
-
-int	collect_heredocs_for_pipeline(t_pipeline *pipeline)
-{
-	t_pipeline	*current;
-
-	if (!pipeline)
-		return (0);
-	current = pipeline;
-	while (current)
-	{
-		if (current->group)
-		{
-			if (collect_heredocs_for_pipeline(current->group) == -1)
-				return (-1);
-		}
-		if (current->cmds)
-		{
-			if (collect_heredocs_for_cmd_chain(current->cmds) == -1)
-				return (-1);
-		}
-		current = current->next;
 	}
 	return (0);
 }

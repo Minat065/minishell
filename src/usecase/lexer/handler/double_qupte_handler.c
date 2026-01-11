@@ -10,38 +10,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "utils/libft_custom.h"
 #include "domain/token.h"
-#include "usecase/lexer/token_manager.h"
 #include "usecase/lexer/token_creator.h"
+#include "usecase/lexer/token_manager.h"
+#include "utils/libft_custom.h"
+#include <stdlib.h>
 
 int	is_double_quote(char c)
 {
 	return (c == '\"');
 }
 
-static char	*add_dquote_marker(const char *content, int len)
+static int	set_dquote_error(t_token_stream *stream, t_lexer_state *st)
 {
-	char	*marked;
-	char	*quoted_content;
-
-	quoted_content = ft_strndup(content, len);
-	if (!quoted_content)
-		return (NULL);
-	marked = ft_strjoin("\x02", quoted_content);
-	free(quoted_content);
-	return (marked);
+	stream->error_message = ft_strdup("Unclosed double quote");
+	stream->error_line = st->line;
+	stream->error_column = st->column;
+	return (-1);
 }
 
-int	handle_double_quote(
-	const char *input, t_lexer_state *st, t_token_stream *stream)
+static void	add_dquote_token(t_token_stream *stream, const char *input,
+		int start, t_lexer_state *st)
 {
-	int		token_start;
-	int		content_start;
-	char	*marked_content;
+	char	*quoted;
+	char	*marked;
 
-	token_start = st->index;
+	st->index++;
+	st->column++;
+	quoted = ft_strndup(&input[start], st->index - start - 1);
+	marked = ft_strjoin("\x02", quoted);
+	free(quoted);
+	add_token(stream, create_token(TOKEN_WORD, marked, ft_strlen(marked), st));
+	free(marked);
+}
+
+int	handle_double_quote(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
+{
+	int		content_start;
+
+	st->start_index = st->index;
 	st->index++;
 	st->column++;
 	content_start = st->index;
@@ -53,18 +61,7 @@ int	handle_double_quote(
 		st->column++;
 	}
 	if (input[st->index] != '"')
-	{
-		stream->error_message = ft_strdup("Unclosed double quote");
-		stream->error_line = st->line;
-		stream->error_column = st->column;
-		return (-1);
-	}
-	st->index++;
-	st->column++;
-	marked_content = add_dquote_marker(&input[content_start],
-			st->index - content_start - 1);
-	add_token(stream, create_token(TOKEN_WORD, marked_content,
-			ft_strlen(marked_content), token_start, st));
-	free(marked_content);
+		return (set_dquote_error(stream, st));
+	add_dquote_token(stream, input, content_start, st);
 	return (0);
 }

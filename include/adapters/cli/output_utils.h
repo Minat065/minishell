@@ -13,8 +13,8 @@
 #ifndef OUTPUT_UTILS_H
 # define OUTPUT_UTILS_H
 
-# include "domain/command.h"
 # include "adapters/parser/parser_interface.h"
+# include "domain/command.h"
 # include "usecase/executor/executor.h"
 
 void	print_indent(int depth);

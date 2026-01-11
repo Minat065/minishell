@@ -36,6 +36,7 @@ void	handle_first_cmd_error(t_parse_result *result, t_token_stream *tokens)
 		set_parse_error(result, tokens,
 			"syntax error near unexpected token 'newline'");
 }
+
 /* パイプ直後が不正な場合の構文エラー判定 */
 static int	check_pipe_syntax_error(t_token_stream *tokens,
 		t_parse_result *result)

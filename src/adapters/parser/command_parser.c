@@ -67,19 +67,6 @@ int	add_redirect_to_cmd(t_cmd *cmd, t_token_stream *tokens,
 	return (1);
 }
 
-t_cmd	*init_simple_command(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->argv = NULL;
-	cmd->redirects = NULL;
-	cmd->next = NULL;
-	return (cmd);
-}
-
 int	process_command_tokens(t_cmd *cmd, t_token_stream *tokens, int *argc,
 		t_cmd_redirect **last_redirect)
 {

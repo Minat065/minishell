@@ -18,8 +18,7 @@ int	ft_isspace(char c)
 		|| c == '\r');
 }
 
-int	handle_space(const char *input,
-			t_lexer_state *st, t_token_stream *stream)
+int	handle_space(const char *input, t_lexer_state *st, t_token_stream *stream)
 {
 	(void)input;
 	(void)stream;

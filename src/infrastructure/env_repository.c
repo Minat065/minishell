@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "interfaces/env_repository.h"
 #include "usecase/env/env_manager.h"
+#include <stdlib.h>
 
-/* Simplified implementation - environmental variables are managed at exec context level */
+/* Simplified implementation
+	- environmental variables are managed at exec context level */
 
 t_env_repository	*create_env_repository(void)
 {
@@ -23,13 +24,12 @@ t_env_repository	*create_env_repository(void)
 	repo = malloc(sizeof(t_env_repository));
 	if (!repo)
 		return (NULL);
-	/* This is a simplified version - functionality moved to exec context */
-	repo->add_variable = NULL;
-	repo->add_assignment = NULL;
-	repo->remove_variable = NULL;
-	repo->get_variable = NULL;
-	repo->get_all_variables = NULL;
-	repo->initialize_from_envp = NULL;
+	repo->add_var = NULL;
+	repo->add_assign = NULL;
+	repo->remove_var = NULL;
+	repo->get_var = NULL;
+	repo->get_all_vars = NULL;
+	repo->init_envp = NULL;
 	repo->cleanup = NULL;
 	return (repo);
 }

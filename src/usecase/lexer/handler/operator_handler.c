@@ -25,21 +25,22 @@ int	is_semicolon(char c)
 	return (c == ';');
 }
 
-int	handle_ampersand(const char *input, t_lexer_state *st, t_token_stream *stream)
+int	handle_ampersand(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	if (input[st->index + 1] == '&')
 	{
 		st->index += 2;
 		st->column += 2;
-		add_token(stream, create_token(TOKEN_OPERATOR,
-				&input[start], 2, start, st));
+		add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 2, st));
 	}
 	else
 	{
-		stream->error_message = ft_strdup("syntax error near unexpected token `&'");
+		stream->error_message = ft_strdup("syntax error near token `&'");
 		stream->error_line = st->line;
 		stream->error_column = st->column;
 		return (-1);
@@ -47,13 +48,15 @@ int	handle_ampersand(const char *input, t_lexer_state *st, t_token_stream *strea
 	return (0);
 }
 
-int	handle_semicolon(const char *input, t_lexer_state *st, t_token_stream *stream)
+int	handle_semicolon(const char *input, t_lexer_state *st,
+		t_token_stream *stream)
 {
 	int	start;
 
 	start = st->index;
+	st->start_index = start;
 	st->index++;
 	st->column++;
-	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, start, st));
+	add_token(stream, create_token(TOKEN_OPERATOR, &input[start], 1, st));
 	return (0);
 }

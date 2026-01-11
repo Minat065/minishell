@@ -49,7 +49,7 @@ long long	convert_str_to_negative_num(const char *str)
 
 long long	ft_atoll(const char *str)
 {
-	int			negative;
+	int	negative;
 
 	negative = 0;
 	if (str == NULL)

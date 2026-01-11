@@ -49,7 +49,8 @@ SRCS			=	$(DOMAIN_SRCS) \
 					$(ADAPT_IO_SRCS) \
 					$(INFRA_SRCS) \
 					$(UTILS_SRCS) \
-					$(SRCS_DIR)/main.c
+					$(SRCS_DIR)/main.c \
+					$(SRCS_DIR)/main_helper.c
 OBJS			=	$(SRCS:%.c=%.o)
 LIBFT_DIR		=	$(SRCS_DIR)/utils/libft
 LIBFT_A			=	libft.a
@@ -98,4 +99,21 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all clean fclean re localclean
+# Norm check using norminette
+# Run 'make norm-install' first to install norminette
+NORM_CMD = python3 -m norminette
+
+norm-install:
+	@echo "\033[0;33mInstalling norminette...\033[0m"
+	@pip3 install norminette --quiet
+	@echo "\033[0;32mnorminette installed!\033[0m"
+
+norm:
+	@if ! python3 -c "import norminette" 2>/dev/null; then \
+		echo "\033[0;31mnorminette not found. Run 'make norm-install' first.\033[0m"; \
+		exit 1; \
+	fi
+	@echo "\033[0;33mChecking norm compliance...\033[0m"
+	@$(NORM_CMD) $(SRCS_DIR) $(INCLUDES_DIR) 2>/dev/null | grep -v "^$$" || true
+
+.PHONY: all clean fclean re localclean norm norm-install
