@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:57:29 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/01 17:58:58 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/03 21:23:46 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,14 @@ int	ft_export(char **argv, t_env_var **envp, t_output_service *out)
 {
 	char			*arg;
 	t_assignment	assignment;
+	int i = 0; //debag
+
+	// デバッグ: argvの中身を表示
+	while (argv && argv[i])
+	{
+		printf("DEBUG argv[%d]: [%s]\n", i, argv[i]);
+		i++;
+	}
 
 	if (!argv || !*argv)
 		return (print_all_env(*envp, out));

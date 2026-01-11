@@ -62,7 +62,7 @@ START_COMPILING	=	0
 CFLAGS			=	-Wall -Wextra -Werror -g $(INCLUDES)
 
 # コンパイルコマンド
-CC				=	gcc
+CC				=	cc
 
 # 依存関係
 all: $(NAME)

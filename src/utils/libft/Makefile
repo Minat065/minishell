@@ -5,7 +5,7 @@ OBJS = $(SRCSM:.c=.o)
 OBJSM = $(SRCSM:.c=.o)
 OBJSB = $(SRCSB:.c=.o)
 
-CC = gcc
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 MSG = "Make \033[0;32m$(NAME)\033[0m."
 # BONUS用の動的設定
