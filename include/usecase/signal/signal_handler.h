@@ -15,13 +15,13 @@
 
 # include <signal.h>
 
-/* Signal handler functions */
-void							setup_signal_handlers(void);
-void							setup_child_signal_handlers(void);
-void							ignore_signals(void);
-void							restore_signals(void);
-
-/* Signal context for readline - Required global for signal safety */
+/* Global variable for signal handling (1 global allowed by 42 subject) */
 extern volatile sig_atomic_t	g_signal_received;
+
+/* Signal handler functions */
+void	setup_signal_handlers(void);
+void	setup_child_signal_handlers(void);
+void	ignore_signals(void);
+void	restore_signals(void);
 
 #endif
