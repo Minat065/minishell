@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:30:38 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 14:54:30 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:00:39 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	handle_sigint(t_exec_context *exec_ctx)
 {
 	exec_ctx->last_exit_status = 130;
 }
+
 int	shell_loop(t_exec_context *exec_ctx)
 {
 	char	*line;
