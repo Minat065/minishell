@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:31 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 19:14:41 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ int	execute_pipe_chain_with_service(t_cmd *cmds, t_exec_context *ctx)
 	loop_params.cmd_count = cmd_count;
 	ignore_signals();
 	if (execute_commands_loop(&loop_params) == EXIT_FAILURE)
-	{
-		setup_signal_handlers();
-		return (EXIT_FAILURE);
-	}
+		return (setup_signal_handlers(), EXIT_FAILURE);
 	return (finalize_pipe_execution_with_service(pipefd, pids, cmd_count,
 			ctx->process_service));
 }
