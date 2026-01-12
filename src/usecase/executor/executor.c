@@ -12,6 +12,7 @@
 
 #include "usecase/builtin/builtin_commands.h"
 #include "usecase/executor/executor.h"
+#include "usecase/signal/signal_handler.h"
 #include "utils/libft_custom.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -40,7 +41,14 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 	if (!pipelines || !ctx)
 		return (EXIT_FAILURE);
 	if (collect_heredocs_for_pipeline(pipelines) == -1)
-		return (EXIT_FAILURE);
+	{
+		if (g_signal_received == SIGINT)
+		{
+			ctx->last_exit_status = 130;
+			g_signal_received = 0;
+		}
+		return (ctx->last_exit_status);
+	}
 	current = pipelines;
 	prev = NULL;
 	status = 0;

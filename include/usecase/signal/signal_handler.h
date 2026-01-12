@@ -23,5 +23,6 @@ void	setup_signal_handlers(void);
 void	setup_child_signal_handlers(void);
 void	ignore_signals(void);
 void	restore_signals(void);
+void	setup_heredoc_signal_handlers(void);
 
 #endif

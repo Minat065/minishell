@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
+#include "usecase/signal/signal_handler.h"
 #include "utils/libft_custom.h"
 #include <readline/readline.h>
 #include "libft.h"
@@ -53,9 +54,18 @@ static char	*collect_heredoc_content(const char *delimiter)
 
 	content = NULL;
 	delimiter_len = ft_strlen(delimiter);
+	g_signal_received = 0;
+	setup_heredoc_signal_handlers();
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal_received == SIGINT)
+		{
+			free(line);
+			free(content);
+			setup_signal_handlers();
+			return (NULL);
+		}
 		if (!line)
 			break ;
 		if (ft_strlen(line) == delimiter_len && ft_strncmp(line, delimiter,
@@ -67,8 +77,12 @@ static char	*collect_heredoc_content(const char *delimiter)
 		content = append_line(content, line);
 		free(line);
 		if (!content)
+		{
+			setup_signal_handlers();
 			return (NULL);
+		}
 	}
+	setup_signal_handlers();
 	if (!content)
 		content = ft_strdup("");
 	return (content);
