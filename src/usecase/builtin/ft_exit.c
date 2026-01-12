@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:26:14 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 13:57:58 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:14:07 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	ft_exit(char **argv, t_exec_context *ctx)
 				37), 1);
 	if (!can_convert_str_to_longlong(argv[0]))
 		return (write(STDERR_FILENO,
-				"minishell: exit: numeric argument required\n", 38),
-			ctx->should_exit = 1, ctx->exit_code = 255, 255);
+				"minishell: exit: numeric argument required\n", 44),
+			ctx->should_exit = 1, ctx->exit_code = 2, 2);
 	exit_code = ft_atoll(argv[0]) % 256;
 	if (exit_code < 0)
 		exit_code += 256;
