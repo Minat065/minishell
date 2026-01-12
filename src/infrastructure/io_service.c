@@ -55,22 +55,6 @@ static bool	impl_file_exists(const char *path)
 bool				impl_is_directory(const char *path);
 char				*impl_get_error_message(t_io_result result);
 
-static t_io_result	impl_create_directory(const char *path)
-{
-	if (!path)
-		return (IO_ERROR_ACCESS);
-	if (mkdir(path, 0755) == -1)
-	{
-		if (errno == EACCES)
-			return (IO_ERROR_PERMISSION);
-		else if (errno == EEXIST)
-			return (IO_SUCCESS);
-		else
-			return (IO_ERROR_SYSTEM);
-	}
-	return (IO_SUCCESS);
-}
-
 t_io_service	*create_io_service(void)
 {
 	t_io_service	*service;
@@ -82,7 +66,6 @@ t_io_service	*create_io_service(void)
 	service->get_current_directory = impl_get_current_directory;
 	service->file_exists = impl_file_exists;
 	service->is_directory = impl_is_directory;
-	service->create_directory = impl_create_directory;
 	service->get_error_message = impl_get_error_message;
 	return (service);
 }
