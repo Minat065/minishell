@@ -99,6 +99,8 @@ fclean: clean
 
 re: clean all
 
+bonus: all
+
 # Norm check using norminette
 # Run 'make norm-install' first to install norminette
 NORM_CMD = python3 -m norminette
@@ -116,4 +118,4 @@ norm:
 	@echo "\033[0;33mChecking norm compliance...\033[0m"
 	@$(NORM_CMD) $(SRCS_DIR) $(INCLUDES_DIR) 2>/dev/null | grep -v "^$$" || true
 
-.PHONY: all clean fclean re localclean norm norm-install
+.PHONY: all clean fclean re bonus localclean norm norm-install

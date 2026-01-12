@@ -32,6 +32,22 @@ static int	print_echo(char **argv, t_output_service *out)
 	return (EXIT_SUCCESS);
 }
 
+static int	is_n_flag(const char *arg)
+{
+	int	i;
+
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
+		return (0);
+	i = 2;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 /**
  * echo with option -n
  *
@@ -53,7 +69,7 @@ int	ft_echo(char **argv, t_output_service *out)
 		out->write_stdout("\n");
 		return (EXIT_SUCCESS);
 	}
-	if (ft_strcmp(argv[0], "-n") == 0)
+	while (*argv && is_n_flag(*argv))
 	{
 		newline = 0;
 		argv++;
