@@ -14,6 +14,16 @@
 #include <readline/readline.h>
 #include <unistd.h>
 
+static int	check_heredoc_signal(void)
+{
+	if (g_signal_received == SIGINT)
+	{
+		rl_done = 1;
+		return (1);
+	}
+	return (0);
+}
+
 static void	handle_heredoc_sigint(int sig)
 {
 	(void)sig;
@@ -33,4 +43,5 @@ void	setup_heredoc_signal_handlers(void)
 	sa_int.sa_flags = 0;
 	sigaction(SIGINT, &sa_int, NULL);
 	signal(SIGQUIT, SIG_IGN);
+	rl_event_hook = check_heredoc_signal;
 }
