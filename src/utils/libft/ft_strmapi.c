@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 20:40:58 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/23 21:49:53 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/29 21:33:04 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,41 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	unsigned int	i;
-	char			*str;
-	size_t			len;
+	char	*c;
+	int		i;
 
-	i = 0;
-	if (s == NULL || f == NULL)
-		return (NULL);
-	len = ft_strlen(s) + 1;
-	str = (char *)malloc(len);
-	if (str == NULL)
-		return (NULL);
-	ft_strlcpy(str, s, len);
-	while (str[i])
+	if (*s == '\0')
 	{
-		str[i] = (*f)(i, str[i]);
+		c = (char *)malloc(sizeof(char) * 1);
+		if (!c)
+			return (NULL);
+		c[0] = '\0';
+		return (c);
+	}
+	if (!*s || !f)
+		return (NULL);
+	c = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!c)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		c[i] = f(i, s[i]);
 		i++;
 	}
-	return (str);
+	c[i] = '\0';
+	return (c);
 }
+
+// #include "libft.h"
+
+// int	main(void)
+// {
+// 	char	*s;
+// 	char	*c;
+
+// 	s = "hello";
+// 	c = ft_strmapi(s, function);
+// 	ft_printf("%s\n", c);
+// 	return (0);
+// }

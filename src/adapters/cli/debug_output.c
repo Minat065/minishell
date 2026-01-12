@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   debug_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:23:33 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "adapters/cli/debug_output.h"
 #include "adapters/parser/parser_interface.h"
 #include "domain/token.h"
-#include <stdio.h>
+#include "libft.h"
 
 static void	count_token_types(t_token_stream *stream, int *counts)
 {

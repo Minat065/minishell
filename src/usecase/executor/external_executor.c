@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   external_executor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:26:55 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:50:19 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include "usecase/signal/signal_handler.h"
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "utils/libft_custom.h"
+#include <stdio.h>
+#include "libft.h"
 
 static int	execute_child_process(char *cmd_path, t_cmd *cmd, char **envp)
 {
@@ -59,7 +62,19 @@ static int	prepare_execution(t_cmd *cmd, t_exec_context *ctx, char **cmd_path,
 	*cmd_path = find_command_path(cmd->argv[0], *ctx->env);
 	if (!*cmd_path)
 	{
-		printf("minishell: %s: command not found\n", cmd->argv[0]);
+		if (ft_strchr(cmd->argv[0], '/'))
+		{
+			if (access(cmd->argv[0], F_OK) == 0)
+			{
+				write(STDERR_FILENO, "minishell: ", 11);
+				write(STDERR_FILENO, cmd->argv[0], ft_strlen(cmd->argv[0]));
+				write(STDERR_FILENO, ": Permission denied\n", 20);
+				return (126);
+			}
+		}
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, cmd->argv[0], ft_strlen(cmd->argv[0]));
+		write(STDERR_FILENO, ": command not found\n", 20);
 		return (EXIT_COMMAND_NOT_FOUND);
 	}
 	*envp = env_to_envp(*ctx->env);

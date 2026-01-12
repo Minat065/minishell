@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   print_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:15:07 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:20:26 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/lexer/token_printer.h"
-#include <stdio.h>
+#include "libft.h"
 
 static void	print_redirect_token(t_token *token)
 {
 	if (token->value.redirect.redirect_type == REDIRECT_INPUT)
-		printf("REDIRECT IN: <\n");
+		ft_printf("REDIRECT IN: <\n");
 	else if (token->value.redirect.redirect_type == REDIRECT_OUTPUT)
-		printf("REDIRECT OUT: >\n");
+		ft_printf("REDIRECT OUT: >\n");
 	else if (token->value.redirect.redirect_type == REDIRECT_HEREDOC)
-		printf("HEREDOC: <<\n");
+		ft_printf("HEREDOC: <<\n");
 	else if (token->value.redirect.redirect_type == REDIRECT_APPEND)
-		printf("APPEND: >>\n");
+		ft_printf("APPEND: >>\n");
 }
 
 static void	print_single_token(t_token *token)
 {
 	if (token->type == TOKEN_WORD)
-		printf("WORD: %s\n", token->value.word);
+		ft_printf("WORD: %s\n", token->value.word);
 	else if (token->type == TOKEN_PIPE)
-		printf("PIPE: %s\n", "|");
+		ft_printf("PIPE: %s\n", "|");
 	else if (token->type == TOKEN_EOF)
-		printf("EOF\n");
+		ft_printf("EOF\n");
 	else if (token->type == TOKEN_REDIRECT)
 		print_redirect_token(token);
 	else if (token->type == TOKEN_ASSIGNMENT)
-		printf("ASSIGNMENT: %s=%s\n", token->value.assignment.name,
+		ft_printf("ASSIGNMENT: %s=%s\n", token->value.assignment.name,
 			token->value.assignment.value);
 	else if (token->type == TOKEN_ERROR)
-		printf("ERROR: %s\n", token->value.word);
+		ft_printf("ERROR: %s\n", token->value.word);
 	else
-		printf("UNKNOWN\n");
+		ft_printf("UNKNOWN\n");
 }
 
 void	print_tokens(t_token *token)

@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_executor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:51 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:51:52 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include "usecase/signal/signal_handler.h"
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
 
 static void	setup_input_fd(int input_fd, t_process_service *proc_service)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 10:08:46 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/22 19:32:56 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/19 03:56:38 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:51:01 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*ptr;
-	int		flg;
+	char	*last_ad;
+	char	c1;
 
-	flg = 0;
+	c1 = (char)c;
+	last_ad = NULL;
+	if (c1 == '\0')
+	{
+		while (*s)
+			s++;
+		return ((char *)s);
+	}
 	while (*s)
 	{
-		if (*s == (char)c)
-		{
-			flg = 1;
-			ptr = (char *)s;
-		}
+		if (*s == c1)
+			last_ad = (char *)s;
 		s++;
 	}
-	if (flg)
-		return (ptr);
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
+	return (last_ad);
 }

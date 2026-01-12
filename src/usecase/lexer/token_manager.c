@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:19:37 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:29:29 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "usecase/assignment/assignment_creator.h"
 #include "usecase/lexer/token_creator.h"
 #include <ctype.h>
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <string.h>
 

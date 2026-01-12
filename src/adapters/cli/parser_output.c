@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_output.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:20:24 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "adapters/parser/parser_interface.h"
 #include "domain/command.h"
 #include "utils/libft_custom.h"
-#include <stdio.h>
+#include "libft.h"
 #include <unistd.h>
 
 static void	count_pipelines_and_commands(t_parse_result *result, int *counts)

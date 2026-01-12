@@ -2,81 +2,50 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 22:43:43 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/24 23:32:22 by tatsato          ###   ########.fr       */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
+/*   Created: 2024/04/21 17:02:53 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:51:21 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_include(char const c, char const *str);
-static int	get_start(char const *s1, char const *set);
-static int	get_count(char const *s1, char const *set);
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*mem;
-	int		i;
-	int		len;
-	int		count;
+	char	*result;
+	size_t	s1_len;
+	size_t	start;
+	size_t	end;
 
-	len = ft_strlen(s1) - get_start(s1, set);
-	s1 = s1 + get_start(s1, set);
-	count = get_count(s1, set);
-	if (len - count < 0)
-	{
-		mem = (char *)malloc(sizeof(char));
-		mem[0] = '\0';
-		return (mem);
-	}
-	mem = (char *)malloc(sizeof(char) * (len - count) + 1);
-	if (mem == NULL)
+	if (!s1 || !set)
 		return (NULL);
-	i = 0;
-	while (i < len - count && *s1)
-		mem[i++] = *s1++;
-	mem[i] = '\0';
-	return (mem);
+	s1_len = ft_strlen(s1);
+	start = 0;
+	while (start < s1_len && ft_strchr(set, s1[start]))
+		start++;
+	end = s1_len;
+	while (end > start && ft_strchr(set, s1[end - 1]))
+		end--;
+	result = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!result)
+		return (NULL);
+	ft_strlcpy(result, s1 + start, end - start + 1);
+	return (result);
 }
 
-static int	is_include(char const c, char const *str)
-{
-	while (*str)
-	{
-		if (c == *str)
-			return (1);
-		str++;
-	}
-	return (0);
-}
+// #include "libft.h"
 
-static int	get_start(char const *s1, char const *set)
-{
-	int	count;
+// int	main(void)
+// {
+// 	char *str = "1234a12aa12321";
+// 	char *set = "1234";
 
-	count = 0;
-	while (*s1 && is_include(*s1, set))
-	{
-		s1++;
-		count++;
-	}
-	return (count);
-}
+// 	ft_printf("%s\n", ft_strtrim(str, set));
 
-static int	get_count(char const *s1, char const *set)
-{
-	int	count;
-
-	count = 0;
-	while (*s1)
-	{
-		if (is_include(*s1++, set))
-			count++;
-		else
-			count = 0;
-	}
-	return (count);
-}
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 20:59:25 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/23 21:50:01 by tatsato          ###   ########.fr       */
+/*   Created: 2024/05/02 17:28:58 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,23 @@
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	unsigned int	i;
-	unsigned int	j;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	if (s != NULL && f != NULL)
+	while (s[i])
 	{
-		i = ft_strlen(s);
-		while (j < i)
-			(*f)(j++, s++);
+		f(i, &s[i]);
+		i++;
 	}
 }
+
+// int	main(void)
+// {
+// 	char	*s;
+
+// 	s = ft_strdup("abc");
+// 	ft_striteri(s, function);
+// 	ft_printf("%s\n", s);
+// 	free(s);
+// 	return (0);
+// }

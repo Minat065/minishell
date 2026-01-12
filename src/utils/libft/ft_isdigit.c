@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 21:26:25 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/19 21:56:48 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/16 20:11:24 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,18 @@
 
 int	ft_isdigit(int c)
 {
-	return ('0' <= c && c <= '9');
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
+
+// int	main(void)
+// {
+// 	for (int i = 0; i < 128; i++)
+// 	{
+// 		if (isdigit(i) != ft_isdigit(i))
+// 			ft_printf("NG\n");
+// 	}
+// 	ft_printf("OK\n");
+// 	return (0);
+// }

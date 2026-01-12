@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 21:26:25 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:30:27 by mokabe           ###   ########.fr       */
+/*   Created: 2024/04/16 17:36:33 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,21 @@
 
 int	ft_isalpha(int c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))
+		return (1);
+	return (0);
 }
+
+//
+// int	main(void)
+//{
+//	int i = 0;
+//	while (i < 256)
+//	{
+//		if (isalpha(i) != ft_isalpha(i))
+//			ft_printf("error: %d\n", i);
+//		i++;
+//	}
+//	ft_printf("done\n");
+//	return (0);
+//}

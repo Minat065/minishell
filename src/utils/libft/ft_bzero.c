@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 07:51:14 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:30:17 by mokabe           ###   ########.fr       */
+/*   Created: 2024/04/16 22:10:50 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,28 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	size_t	i;
-	char	*mem;
+	unsigned char	*ptr;
+	size_t			i;
 
-	if (!n)
-		return ;
+	ptr = (unsigned char *)s;
 	i = 0;
-	mem = (char *)s;
 	while (i < n)
-		mem[i++] = 0;
+	{
+		ptr[i] = 0;
+		i++;
+	}
 }
+
+/* #include "libft.h"
+#include <string.h>
+
+int	main(void)
+{
+	char s[10] = "123456789";
+	char s2[10] = "123456789";
+	ft_bzero(s, 5);
+	bzero(s2, 5);
+	ft_printf("ft_bzero: %s\n", s);
+	ft_printf("bzero: %s\n", s2);
+	return (0);
+} */

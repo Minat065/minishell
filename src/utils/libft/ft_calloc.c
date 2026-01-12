@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 12:57:49 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:30:23 by mokabe           ###   ########.fr       */
+/*   Created: 2024/04/19 06:22:36 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,38 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	char	*mem;
-	size_t	i;
-	size_t	bytes;
+	void		*ptr;
+	long long	i;
 
-	bytes = count * size;
-	if (count != 0)
-	{
-		if (bytes / count != size)
-			return (NULL);
-	}
-	mem = (char *)malloc(bytes);
-	if (mem == NULL)
+	i = count * size;
+	if (i == 0)
+		i = 1;
+	else if (i / size != count)
 		return (NULL);
-	i = 0;
-	while (i < bytes)
-		mem[i++] = 0;
-	return ((void *)mem);
+	ptr = malloc(i);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, i);
+	return (ptr);
 }
+
+/* #include <libc.h>
+#include "libft.h"
+
+int	main(void)
+{
+	int *ptr;
+	int *ptr2;
+
+	ptr = (int *)calloc(5, sizeof(int));
+	ptr2 = (int *)ft_calloc(5, sizeof(int));
+	for (int i = 0; i < 5; i++)
+	{
+		ft_printf("%d\n", ptr[i]);
+		ft_printf("%d\n", ptr2[i]);
+	}
+	free(ptr);
+	free(ptr2);
+
+	return (0);
+} */

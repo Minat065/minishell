@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 21:21:38 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/24 23:37:12 by tatsato          ###   ########.fr       */
+/*   Created: 2024/05/03 14:11:43 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,27 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	if (lst == NULL)
-		return (NULL);
-	while (lst->next != NULL)
+	t_list	*current;
+
+	current = lst;
+	while (current)
 	{
-		lst = lst->next;
+		if (current->next == NULL)
+			return (current);
+		current = current->next;
 	}
-	return (lst);
+	return (NULL);
 }
+
+// int	main(void)
+// {
+// 	t_list *lst = ft_lstnew("first");
+// 	t_list *last;
+
+// 	ft_lstadd_front(&lst, ft_lstnew("second"));
+// 	ft_lstadd_front(&lst, ft_lstnew("third"));
+// 	ft_lstadd_front(&lst, ft_lstnew("fourth"));
+// 	last = ft_lstlast(lst);
+// 	ft_printf("%s\n", (char *)last->content);
+// 	return (0);
+// }

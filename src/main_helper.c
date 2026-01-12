@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:30:38 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 15:00:39 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "usecase/executor/executor.h"
 #include "usecase/signal/signal_handler.h"
 #include <readline/readline.h>
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 
 int			handle_line(char *line, t_exec_context *ctx);

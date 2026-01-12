@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 14:50:28 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #include "utils/libft_custom.h"
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -73,7 +73,7 @@ int	handle_line(char *line, t_exec_context *ctx)
 {
 	if (!line)
 	{
-		printf("exit\n");
+		ft_printf("exit\n");
 		return (0);
 	}
 	if (g_signal_received == SIGINT && *line == '\0')

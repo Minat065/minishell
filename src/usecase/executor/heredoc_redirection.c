@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:15 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
 #include <readline/readline.h>
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -83,7 +83,7 @@ int	handle_heredoc_redirect(const char *delimiter)
 
 	if (!delimiter)
 	{
-		printf("minishell: syntax error: missing delimiter\n");
+		ft_printf("minishell: syntax error: missing delimiter\n");
 		return (-1);
 	}
 	if (setup_heredoc_pipe(pipefd) == -1)

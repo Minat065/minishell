@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 23:11:14 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/24 23:12:22 by tatsato          ###   ########.fr       */
+/*   Created: 2024/05/03 20:04:55 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,29 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_list	*tmp;
-
-	tmp = lst;
-	while (tmp)
+	while (lst)
 	{
-		f(tmp->content);
-		tmp = tmp->next;
+		f(lst->content);
+		lst = lst->next;
 	}
 }
+
+// void	function(void *content)
+// {
+// 	ft_printf("%s\n", (char *)content);
+// }
+
+// int	main(void)
+// {
+// 	t_list	*lst;
+// 	t_list	*lst2;
+// 	t_list	*lst3;
+
+// 	lst = ft_lstnew(strdup("Hello, World!"));
+// 	lst2 = ft_lstnew(strdup("Hello, World!1"));
+// 	lst3 = ft_lstnew(strdup("Hello, World!2"));
+// 	lst->next = lst2;
+// 	lst2->next = lst3;
+// 	ft_lstiter(lst, function);
+// 	return (0);
+// }

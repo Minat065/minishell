@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 21:38:47 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/19 22:21:46 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/16 20:23:26 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,19 @@
 
 int	ft_isascii(int c)
 {
-	return ((0 <= c && c <= 127));
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
 }
+
+// int	main(void)
+// {
+// 	int i = -1;
+// 	while (i < 130)
+// 	{
+// 		ft_printf("c: %c, ft_isascii: %d, isascii: %d\n", i, ft_isascii(i),
+// 			isascii(i));
+// 		i++;
+// 	}
+// 	return (0);
+// }

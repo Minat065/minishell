@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 23:16:28 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/26 14:00:51 by tatsato          ###   ########.fr       */
+/*   Created: 2024/05/03 20:13:22 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,44 @@
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new_list;
-	t_list	*tmp;
+	t_list	*new_node;
 
-	if (!lst || !f || !del)
+	if (!lst || !f)
 		return (NULL);
 	new_list = NULL;
 	while (lst)
 	{
-		tmp = ft_lstnew(f(lst->content));
-		if (!tmp)
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
 		{
-			ft_lstclear(&new_list, (*del));
+			ft_lstclear(&new_list, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&new_list, tmp);
+		ft_lstadd_back(&new_list, new_node);
 		lst = lst->next;
 	}
 	return (new_list);
 }
+
+// void del(void *content)
+// {
+// 	free(content);
+// }
+
+// void *f(void *content)
+// {
+// 	return (content);
+// }
+
+// int main()
+// {
+// 	t_list *lst = ft_lstnew(ft_strdup("hello"));
+// 	ft_lstadd_back(&lst, ft_lstnew(ft_strdup("world")));
+// 	ft_lstadd_back(&lst, ft_lstnew(ft_strdup("42")));
+// 	t_list *new_lst = ft_lstmap(lst, f, del);
+// 	while (new_lst)
+// 	{
+// 		ft_printf("%s\n", (char *)new_lst->content);
+// 		new_lst = new_lst->next;
+// 	}
+// }

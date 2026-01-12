@@ -3,93 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 10:57:55 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:30:20 by mokabe           ###   ########.fr       */
+/*   Created: 2024/04/19 05:55:00 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_strcmp(const char *s1, const char *s2);
-static int	check_sign(const char **str);
-static int	is_long_range(long a, int b);
-static int	is_space(const char c);
+int	ft_isspace(int c)
+{
+	if (c == ' ' || (9 <= c && c <= 13))
+		return (1);
+	return (0);
+}
+
+long	ft_strtol(const char *str)
+{
+	long	n;
+	int		sign;
+
+	n = 0;
+	sign = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			sign = -1;
+	while ('0' <= *str && *str <= '9')
+	{
+		if (n > (LONG_MAX - (*str - '0')) / 10)
+		{
+			if (sign == 1)
+				return (LONG_MAX);
+			else
+				return (LONG_MIN);
+		}
+		n = n * 10 + *str - '0';
+		str++;
+	}
+	return (n * sign);
+}
 
 int	ft_atoi(const char *str)
 {
-	long	num;
-	long	long_max;
-	int		sign;
-
-	if (!ft_strcmp(str, "-9223372036854775808"))
-		return ((int)0x8000000000000000L);
-	num = 0;
-	long_max = 9223372036854775807;
-	while (is_space(*str))
-		str++;
-	sign = check_sign(&str);
-	while (ft_isdigit(*str))
-	{
-		if (is_long_range(num, *str - '0'))
-		{
-			if (sign == -1)
-				num = 0x8000000000000000L;
-			else
-				num = long_max;
-			break ;
-		}
-		num = 10 * num + (*str++ - '0');
-	}
-	return ((int)(num * sign));
+	return ((int)ft_strtol(str));
 }
 
-static int	ft_strcmp(const char *s1, const char *s2)
-{
-	unsigned char	*p1;
-	unsigned char	*p2;
+// int	main(void)
+// {
+// 	char	*str;
 
-	p1 = (unsigned char *)s1;
-	p2 = (unsigned char *)s2;
-	while (*p1 && *p2)
-	{
-		if (*p1 != *p2)
-			break ;
-		p1++;
-		p2++;
-	}
-	return (*p1 - *p2);
-}
-
-static int	check_sign(const char **str)
-{
-	int	sign;
-
-	sign = 1;
-	if (**str == '-' || **str == '+')
-	{
-		if (**str == '-')
-			sign = -1;
-		*str += 1;
-	}
-	return (sign);
-}
-
-static int	is_long_range(long a, int b)
-{
-	long	long_max;
-	long	max_div;
-	long	max_mod;
-
-	long_max = 9223372036854775807;
-	max_div = long_max / 10;
-	max_mod = long_max % 10;
-	return (a > max_div || (a == max_div && b > max_mod));
-}
-
-static int	is_space(const char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r');
-}
+// 	str = "2147483647";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "-2147483648";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "2147483647";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "-1";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "0";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "42tokyo";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "tokyo42";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "000042";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "  -42";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "9223372036854775806";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	ft_printf("%ld\n", strtol(str, NULL, 10));
+// 	ft_printf("%d\n", (int)strtol(str, NULL, 10));
+// 	str = "-9223372036854775807";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "9223372036854775808";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "-9223372036854775809";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "123456789012345678901234567890";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	str = "-123456789012345678901234567890";
+// 	ft_printf("%d\n", ft_atoi(str));
+// 	ft_printf("%d\n", atoi(str));
+// 	return (0);
+// }

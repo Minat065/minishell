@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 20:40:08 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/24 20:43:47 by tatsato          ###   ########.fr       */
+/*   Created: 2024/05/03 13:40:12 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,33 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	cnt;
+	int		length;
+	t_list	*current;
 
-	cnt = 0;
-	while (lst != NULL)
+	length = 0;
+	current = lst;
+	while (current)
 	{
-		cnt++;
-		lst = lst->next;
+		length++;
+		current = current->next;
 	}
-	return (cnt);
+	return (length);
 }
+
+// int	main(void)
+// {
+// 	t_list	*lst;
+// 	t_list	*lst2;
+// 	t_list	*lst3;
+// 	t_list	*lst4;
+
+// 	lst = ft_lstnew("1");
+// 	lst2 = ft_lstnew("2");
+// 	lst3 = ft_lstnew("3");
+// 	lst4 = ft_lstnew("4");
+// 	lst->next = lst2;
+// 	lst2->next = lst3;
+// 	lst3->next = lst4;
+// 	ft_printf("%d\n", ft_lstsize(lst));
+// 	return (0);
+// }

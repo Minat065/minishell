@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:28:05 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "domain/token.h"
 #include "usecase/executor/executor.h"
-#include <stdio.h>
+#include "libft.h"
 #include <unistd.h>
 
 static int	process_redirection_with_service(t_cmd_redirect *current,
@@ -34,7 +34,7 @@ static int	process_redirection_with_service(t_cmd_redirect *current,
 		return (handle_heredoc_redirect_with_service(current->file,
 				proc_service));
 	}
-	printf("minishell: unsupported redirection type\n");
+	ft_printf("minishell: unsupported redirection type\n");
 	return (-1);
 }
 
@@ -52,7 +52,7 @@ static int	process_redirection(t_cmd_redirect *current)
 			return (handle_heredoc_with_content(current->heredoc_content));
 		return (handle_heredoc_redirect(current->file));
 	}
-	printf("minishell: unsupported redirection type\n");
+	ft_printf("minishell: unsupported redirection type\n");
 	return (-1);
 }
 

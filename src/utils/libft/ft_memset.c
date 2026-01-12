@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 21:47:14 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/19 22:27:00 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/16 21:21:13 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,27 @@
 
 void	*ft_memset(void *b, int c, size_t len)
 {
+	unsigned char	*ptr;
 	size_t			i;
-	unsigned char	*mem;
 
-	mem = (unsigned char *)b;
+	ptr = (unsigned char *)b;
 	i = 0;
 	while (i < len)
 	{
-		mem[i] = (unsigned char)c;
+		ptr[i] = (unsigned char)c;
 		i++;
 	}
-	return (mem);
+	return (b);
 }
+
+// #include <string.h>
+// #include "libft.h"
+
+// int	main(void)
+// {
+// 	char s[10] = "123456789";
+// 	char s2[10] = "123456789";
+// 	ft_printf("ft_memset: %s\n", ft_memset(s, 'a', 5));
+// 	ft_printf("memset: %s\n", memset(s2, 'a', 5));
+// 	return (0);
+// }

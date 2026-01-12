@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   input_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:26 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:51:28 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include <fcntl.h>
-#include <stdio.h>
+#include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int	handle_input_redirect_with_service(const char *filename,
 		t_process_service *proc_service)
@@ -22,7 +23,7 @@ int	handle_input_redirect_with_service(const char *filename,
 
 	if (!filename)
 	{
-		printf("minishell: syntax error: missing filename\n");
+		ft_printf("minishell: syntax error: missing filename\n");
 		return (-1);
 	}
 	fd = open(filename, O_RDONLY);
@@ -47,7 +48,7 @@ int	handle_input_redirect(const char *filename)
 
 	if (!filename)
 	{
-		printf("minishell: syntax error: missing filename\n");
+		ft_printf("minishell: syntax error: missing filename\n");
 		return (-1);
 	}
 	fd = open(filename, O_RDONLY);

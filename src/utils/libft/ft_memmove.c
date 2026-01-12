@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 08:31:42 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/22 22:23:59 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/17 00:04:22 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,39 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char		*tmp;
-	const char	*s;
+	unsigned char		*d;
+	const unsigned char	*s;
+	size_t				i;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	if (dst <= src)
+	d = (unsigned char *)dst;
+	s = (const unsigned char *)src;
+	i = 0;
+	if (dst == src || len == 0)
+		return (dst);
+	if (d < s)
 	{
-		tmp = (char *)dst;
-		s = (char *)src;
-		while (len--)
-			*tmp++ = *s++;
+		while (i < len)
+		{
+			d[i] = s[i];
+			i++;
+		}
 	}
 	else
 	{
-		tmp = (char *)dst;
-		tmp += len;
-		s = (char *)src;
-		s += len;
 		while (len--)
-			*--tmp = *--s;
+			d[len] = s[len];
 	}
 	return (dst);
 }
+
+// #include "libft.h"
+// #include <string.h>
+
+// int	main(void)
+// {
+// 	char	s[10] = "123456789";
+// 	char	s2[10] = "123456789";
+// 	ft_printf("ft_memmove: %s\n", ft_memmove(s + 2, s, 8));
+// 	ft_printf("memmove: %s\n", memmove(s2 + 2, s2, 8));
+// 	return (0);
+// }

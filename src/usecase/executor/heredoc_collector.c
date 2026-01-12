@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:27:10 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:11 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
 #include <readline/readline.h>
-#include <stdio.h>
+#include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 

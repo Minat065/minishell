@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 22:34:13 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/22 22:41:35 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/21 13:30:54 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,34 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	int		i;
-	int		j;
+	char	*result;
+	int		s1_len;
+	int		s2_len;
 
-	if (s1 == NULL || s2 == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (str == NULL)
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	result = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!result)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
+	while (*s1)
+		*result++ = *s1++;
+	while (*s2)
+		*result++ = *s2++;
+	*result = '\0';
+	return (result - s1_len - s2_len);
 }
+
+// int	main(void)
+// {
+// 	char	*s1;
+// 	char	*s2;
+// 	char	*result;
+
+// 	s1 = "Hello, ";
+// 	s2 = "world!";
+// 	result = ft_strjoin(s1, s2);
+// 	ft_printf("%s\n", result);
+// 	return (0);
+// }

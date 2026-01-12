@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 08:24:08 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/22 22:22:37 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/16 23:28:08 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:44:36 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,32 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t			i;
-	unsigned char	*s;
-	unsigned char	*d;
+	unsigned char		*d;
+	const unsigned char	*s;
+	size_t				i;
 
-	if (n == 0)
-		return (dst);
-	if (dst == NULL && src == NULL)
+	if (!dst && !src)
 		return (NULL);
-	i = 0;
-	s = (unsigned char *)src;
 	d = (unsigned char *)dst;
+	s = (const unsigned char *)src;
+	i = 0;
 	while (i < n)
 	{
 		d[i] = s[i];
 		i++;
 	}
-	return (d);
+	return (dst);
 }
+
+// int	main(void)
+// {
+// 	char s[10] = "123456789";
+// 	char s2[10] = "123456789";
+// 	ft_printf("ft_memcpy: %s\n", ft_memcpy(s, "abc", 5));
+// 	ft_printf("memcpy: %s\n", memcpy(s2, "abc", 5));
+
+// 	ft_printf("ft_memcpy: %s\n", ft_memcpy("", "", 3));
+// 	ft_printf("memcpy: %s\n", memcpy("", "", 3));
+
+// 	return (0);
+// }

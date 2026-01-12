@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 13:51:35 by tatsato           #+#    #+#             */
-/*   Updated: 2024/04/21 13:54:29 by tatsato          ###   ########.fr       */
+/*   Created: 2024/04/19 06:44:48 by mirokugo          #+#    #+#             */
+/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,30 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char			*dup;
-	unsigned int	len;
-	unsigned int	i;
+	char	*ptr;
 
-	len = 0;
-	while (s1[len])
-		len++;
-	dup = malloc(sizeof(char) * (len + 1));
-	if (!dup)
+	ptr = (char *)malloc(ft_strlen(s1) + 1);
+	if (!ptr)
 		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dup[i] = s1[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	ft_memcpy(ptr, s1, ft_strlen(s1) + 1);
+	return (ptr);
 }
+
+// #include <libc.h>
+// #include "libft.h"
+
+// int	main(void)
+// {
+// 	char *str = "Hello, World!";
+// 	char *ptr;
+
+// 	ptr = strdup(str);
+// 	ft_printf("%s\n", ptr);
+// 	free(ptr);
+
+// 	ptr = ft_strdup(str);
+// 	ft_printf("%s\n", ptr);
+// 	free(ptr);
+
+// 	return (0);
+// }

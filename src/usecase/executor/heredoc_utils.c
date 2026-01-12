@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:27:22 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 11:27:23 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:50:52 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
-#include <stdio.h>
+#include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int	handle_heredoc_redirect_with_service(const char *delimiter,
 		t_process_service *proc_service)
@@ -28,7 +29,7 @@ int	handle_heredoc_with_content(const char *content)
 
 	if (!content)
 	{
-		printf("minishell: heredoc: missing content\n");
+		ft_printf("minishell: heredoc: missing content\n");
 		return (-1);
 	}
 	if (pipe(pipefd) == -1)
