@@ -14,9 +14,15 @@
 
 int	ft_putstr_fd(char *s, int fd, int *count_char)
 {
+	int	len;
+
 	if (!s)
 		return (0);
-	write(fd, s, ft_strlen(s));
-	*count_char += ft_strlen(s);
-	return (*count_char);
+	len = ft_strlen(s);
+	write(fd, s, len);
+	if (count_char)
+		*count_char += len;
+	if (count_char)
+		return (*count_char);
+	return (len);
 }

@@ -15,6 +15,7 @@
 int	ft_putchar_fd(char c, int fd, int *count_char)
 {
 	write(fd, &c, 1);
-	(*count_char)++;
+	if (count_char)
+		(*count_char)++;
 	return (1);
 }
