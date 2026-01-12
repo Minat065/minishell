@@ -32,7 +32,7 @@ static int	should_execute_pipeline(t_pipeline *prev, int status)
 }
 
 /* Handle heredoc collection and SIGINT signal */
-static int	handle_heredoc_collection(t_pipeline *pipelines, t_exec_context *ctx)
+static int	handle_hd_collect(t_pipeline *pipelines, t_exec_context *ctx)
 {
 	if (collect_heredocs_for_pipeline(pipelines) == -1)
 	{
@@ -55,7 +55,7 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 
 	if (!pipelines || !ctx)
 		return (EXIT_FAILURE);
-	if (handle_heredoc_collection(pipelines, ctx) == -1)
+	if (handle_hd_collect(pipelines, ctx) == -1)
 		return (ctx->last_exit_status);
 	current = pipelines;
 	prev = NULL;
@@ -94,33 +94,4 @@ int	execute_command_chain(t_cmd *cmds, t_exec_context *ctx)
 	if (!cmds || !ctx)
 		return (EXIT_FAILURE);
 	return (execute_pipe_chain_with_service(cmds, ctx));
-}
-
-/* Execute a single command */
-int	execute_single_command(t_cmd *cmd, t_exec_context *ctx)
-{
-	int	saved_stdin;
-	int	saved_stdout;
-	int	status;
-
-	if (!cmd || !cmd->argv || !cmd->argv[0] || !ctx)
-		return (EXIT_FAILURE);
-	expand_command_variables(cmd, ctx);
-	expand_command_wildcards(cmd, ctx);
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (cmd->redirects && setup_redirections_with_service(cmd->redirects,
-			ctx->process_service) != 0)
-	{
-		ctx->process_service->close_fd(saved_stdin);
-		ctx->process_service->close_fd(saved_stdout);
-		return (EXIT_FAILURE);
-	}
-	if (is_builtin(cmd->argv[0]))
-		status = execute_builtin(cmd, ctx);
-	else
-		status = execute_external(cmd, ctx);
-	restore_redirections_with_service(saved_stdin, saved_stdout,
-		ctx->process_service);
-	return (status);
 }
