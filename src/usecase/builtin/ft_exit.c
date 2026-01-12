@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:26:14 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 11:57:41 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 13:57:58 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,40 +76,24 @@ static int	can_convert_str_to_longlong(const char *str)
 		return (can_convert_str_to_positive_longlong(str));
 }
 
-static int	normalize_exit_code(long long code)
-{
-	int	result;
-
-	result = (int)(code % 256);
-	if (result < 0)
-		result += 256;
-	return (result);
-}
-
 int	ft_exit(char **argv, t_exec_context *ctx)
 {
 	long long	exit_code;
 
 	write(STDERR_FILENO, "exit\n", 5);
 	if (!argv || !*argv)
-	{
-		ctx->should_exit = 1;
-		ctx->exit_code = 0;
-		return (0);
-	}
-	if (argv[0] && argv[1])
-	{
-		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
-		return (1);
-	}
-	if (can_convert_str_to_longlong(*argv) == 0)
-	{
-		write(STDERR_FILENO, "minishell: exit: numeric argument required\n",
-			38);
-		exit_minishell(255, stream, env);
-	}
-	exit_code = ft_atoll(*argv) % 256;
+		return (ctx->should_exit = 1, ctx->exit_code = 0, 0);
+	if (argv[1])
+		return (write(STDERR_FILENO, "minishell: exit: too many arguments\n",
+				37), 1);
+	if (!can_convert_str_to_longlong(argv[0]))
+		return (write(STDERR_FILENO,
+				"minishell: exit: numeric argument required\n", 38),
+			ctx->should_exit = 1, ctx->exit_code = 255, 255);
+	exit_code = ft_atoll(argv[0]) % 256;
 	if (exit_code < 0)
 		exit_code += 256;
-	exit_minishell(exit_code, stream, env);
+	ctx->should_exit = 1;
+	ctx->exit_code = (int)exit_code;
+	return ((int)exit_code);
 }
