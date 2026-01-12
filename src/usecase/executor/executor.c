@@ -31,6 +31,21 @@ static int	should_execute_pipeline(t_pipeline *prev, int status)
 	return (1);
 }
 
+/* Handle heredoc collection and SIGINT signal */
+static int	handle_heredoc_collection(t_pipeline *pipelines, t_exec_context *ctx)
+{
+	if (collect_heredocs_for_pipeline(pipelines) == -1)
+	{
+		if (g_signal_received == SIGINT)
+		{
+			ctx->last_exit_status = 130;
+			g_signal_received = 0;
+		}
+		return (-1);
+	}
+	return (0);
+}
+
 /* Execute a list of pipelines connected by operators (&&, ||, ;) */
 int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 {
@@ -40,15 +55,8 @@ int	execute_pipeline_list(t_pipeline *pipelines, t_exec_context *ctx)
 
 	if (!pipelines || !ctx)
 		return (EXIT_FAILURE);
-	if (collect_heredocs_for_pipeline(pipelines) == -1)
-	{
-		if (g_signal_received == SIGINT)
-		{
-			ctx->last_exit_status = 130;
-			g_signal_received = 0;
-		}
+	if (handle_heredoc_collection(pipelines, ctx) == -1)
 		return (ctx->last_exit_status);
-	}
 	current = pipelines;
 	prev = NULL;
 	status = 0;
