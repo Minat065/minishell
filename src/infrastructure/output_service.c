@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_service.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 08:34:06 by tatsato          ###   ########.fr       */
+/*   Created: 2026/01/12 11:25:10 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:25:12 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_output_result	impl_write_stderr_newline(const char *message)
 	return (OUTPUT_SUCCESS);
 }
 
-t_output_result	impl_write_fd(int fd, const char *message);
+t_output_result			impl_write_fd(int fd, const char *message);
 
 t_output_service	*create_output_service(void)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by claude           ###   ########.fr       */
+/*   Created: 2026/01/12 11:30:38 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:30:39 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	handle_line(char *line, t_exec_context *ctx);
+int			handle_line(char *line, t_exec_context *ctx);
 
 static int	handle_sigint(t_exec_context *exec_ctx)
 {

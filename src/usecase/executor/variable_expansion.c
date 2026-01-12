@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/18 00:00:00 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:28:07 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils/libft_custom.h"
 #include <stdlib.h>
 
-char	*expand_single_variable(const char *str, t_exec_context *ctx);
+char		*expand_single_variable(const char *str, t_exec_context *ctx);
 
 char	*expand_variables(const char *str, t_exec_context *ctx)
 {

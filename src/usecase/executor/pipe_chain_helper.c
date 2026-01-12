@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_chain_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by claude           ###   ########.fr       */
+/*   Created: 2026/01/12 11:27:37 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:27:38 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	setup_pipe_resources_with_service(t_cmd *cmds, int **pipefd,
-		pid_t **pids, t_process_service *proc_service)
+int	setup_pipe_resources_with_service(t_cmd *cmds, int **pipefd, pid_t **pids,
+		t_process_service *proc_service)
 {
 	int	cmd_count;
 

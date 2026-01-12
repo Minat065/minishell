@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by claude           ###   ########.fr       */
+/*   Created: 2026/01/12 11:27:22 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:27:23 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_heredoc_with_content(const char *content)
 	return (0);
 }
 
-int	collect_heredocs_for_cmd(t_cmd *cmd);
+int			collect_heredocs_for_cmd(t_cmd *cmd);
 
 static int	collect_heredocs_for_cmd_chain(t_cmd *cmds)
 {
