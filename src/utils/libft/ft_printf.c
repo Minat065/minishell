@@ -100,7 +100,7 @@ void	ft_exist_formt_2(const char *format, va_list ap, int *count_char)
 	}
 }
 
-int	ft_ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		count_char;
