@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
+#include "usecase/signal/signal_handler.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -42,8 +43,12 @@ int	execute_pipe_chain_with_service(t_cmd *cmds, t_exec_context *ctx)
 	loop_params.pids = pids;
 	loop_params.ctx = ctx;
 	loop_params.cmd_count = cmd_count;
+	ignore_signals();
 	if (execute_commands_loop(&loop_params) == EXIT_FAILURE)
+	{
+		setup_signal_handlers();
 		return (EXIT_FAILURE);
+	}
 	return (finalize_pipe_execution_with_service(pipefd, pids, cmd_count,
 			ctx->process_service));
 }
@@ -67,9 +72,11 @@ int	execute_pipe_chain(t_cmd *cmds, t_exec_context *ctx)
 	loop_params.pids = pids;
 	loop_params.ctx = ctx;
 	loop_params.cmd_count = cmd_count;
+	ignore_signals();
 	if (execute_commands_loop(&loop_params) == -1)
 	{
 		cleanup_and_free_resources(pipefd, pids, cmd_count);
+		setup_signal_handlers();
 		return (EXIT_FAILURE);
 	}
 	return (finalize_pipe_execution(pipefd, pids, cmd_count));
