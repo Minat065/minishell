@@ -6,7 +6,7 @@
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 16:32:29 by mirokugo         ###   ########.fr       */
+/*   Updated: 2026/01/12 19:09:51 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ static int	prepare_execution(t_cmd *cmd, t_exec_context *ctx, char **cmd_path,
 		{
 			if (access(cmd->argv[0], F_OK) == 0)
 			{
-				printf("minishell: %s: Permission denied\n", cmd->argv[0]);
+				ft_printf("minishell: %s: Permission denied\n", cmd->argv[0]);
 				return (126);
 			}
 		}
-		printf("minishell: %s: command not found\n", cmd->argv[0]);
+		ft_printf("minishell: %s: command not found\n", cmd->argv[0]);
 		return (EXIT_COMMAND_NOT_FOUND);
 	}
 	*envp = env_to_envp(*ctx->env);
