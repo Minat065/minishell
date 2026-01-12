@@ -38,7 +38,7 @@ int	shell_loop(t_exec_context *exec_ctx)
 		{
 			handle_sigint(exec_ctx);
 			g_signal_received = 0;
-			if (!line || line[0] == '\0')
+			if (line && line[0] == '\0')
 			{
 				free(line);
 				continue ;
