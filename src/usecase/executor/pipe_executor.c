@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_executor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/16 08:35:40 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:27:51 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	setup_input_fd(int input_fd, t_process_service *proc_service)
 {
 	if (input_fd != STDIN_FILENO)
 	{
-		if (proc_service->dup_fd(input_fd,
-				STDIN_FILENO) != PROCESS_SUCCESS)
+		if (proc_service->dup_fd(input_fd, STDIN_FILENO) != PROCESS_SUCCESS)
 		{
 			perror("dup2 input failed");
 			exit(EXIT_FAILURE);
@@ -35,8 +34,7 @@ static void	setup_output_fd(int output_fd, t_process_service *proc_service)
 {
 	if (output_fd != STDOUT_FILENO)
 	{
-		if (proc_service->dup_fd(output_fd,
-				STDOUT_FILENO) != PROCESS_SUCCESS)
+		if (proc_service->dup_fd(output_fd, STDOUT_FILENO) != PROCESS_SUCCESS)
 		{
 			perror("dup2 output failed");
 			exit(EXIT_FAILURE);

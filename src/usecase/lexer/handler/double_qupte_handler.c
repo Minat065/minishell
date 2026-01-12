@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_qupte_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:15:11 by tatsato           #+#    #+#             */
-/*   Updated: 2025/05/31 21:39:52 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:28:41 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	add_dquote_token(t_token_stream *stream, const char *input,
 int	handle_double_quote(const char *input, t_lexer_state *st,
 		t_token_stream *stream)
 {
-	int		content_start;
+	int	content_start;
 
 	st->start_index = st->index;
 	st->index++;

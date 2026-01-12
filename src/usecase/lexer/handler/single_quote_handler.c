@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_quote_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:14:06 by tatsato           #+#    #+#             */
-/*   Updated: 2025/05/31 23:43:23 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:29:09 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	add_squote_token(t_token_stream *stream, const char *input,
 int	handle_single_quote(const char *input, t_lexer_state *st,
 		t_token_stream *stream)
 {
-	int		content_start;
+	int	content_start;
 
 	st->start_index = st->index;
 	st->index++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 07:31:58 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/01 17:46:15 by tatsato          ###   ########.fr       */
+/*   Created: 2026/01/12 11:26:14 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:57:41 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ static int	can_convert_str_to_positive_longlong(const char *str)
 {
 	long long	result;
 	int			digit;
+	int			has_digit;
 
 	result = 0;
+	has_digit = 0;
 	while (ft_isdigit(*str))
 	{
+		has_digit = 1;
 		digit = *str - '0';
 		if (result > (LLONG_MAX - digit) / 10)
 			return (0);
 		result = result * 10 + digit;
 		str++;
 	}
-	if (*str != '\0')
+	if (!has_digit || *str != '\0')
 		return (0);
 	return (1);
 }
@@ -39,17 +42,20 @@ static int	can_convert_str_to_negative_longlong(const char *str)
 {
 	long long	result;
 	int			digit;
+	int			has_digit;
 
 	result = 0;
+	has_digit = 0;
 	while (ft_isdigit(*str))
 	{
+		has_digit = 1;
 		digit = *str - '0';
 		if (result < (LLONG_MIN + digit) / 10)
 			return (0);
 		result = result * 10 - digit;
 		str++;
 	}
-	if (*str != '\0')
+	if (!has_digit || *str != '\0')
 		return (0);
 	return (1);
 }
@@ -98,15 +104,12 @@ int	ft_exit(char **argv, t_exec_context *ctx)
 	}
 	if (can_convert_str_to_longlong(*argv) == 0)
 	{
-		write(STDERR_FILENO, "minishell: exit: ", 17);
-		write(STDERR_FILENO, *argv, ft_strlen(*argv));
-		write(STDERR_FILENO, ": numeric argument required\n", 28);
-		ctx->should_exit = 1;
-		ctx->exit_code = 2;
-		return (2);
+		write(STDERR_FILENO, "minishell: exit: numeric argument required\n",
+			38);
+		exit_minishell(255, stream, env);
 	}
-	exit_code = ft_atoll(*argv);
-	ctx->should_exit = 1;
-	ctx->exit_code = normalize_exit_code(exit_code);
-	return (ctx->exit_code);
+	exit_code = ft_atoll(*argv) % 256;
+	if (exit_code < 0)
+		exit_code += 256;
+	exit_minishell(exit_code, stream, env);
 }

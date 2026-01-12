@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_expansion.c                              :+:      :+:    :+:   */
+/*   wildcard_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 00:00:00 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/19 00:00:00 by tatsato          ###   ########.fr       */
+/*   Created: 2026/01/12 11:28:23 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:28:24 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "utils/libft_custom.h"
 #include <stdlib.h>
 
-int		has_wildcard(const char *str);
-char	**get_matches(const char *pattern, int *match_count);
+int			has_wildcard(const char *str);
+char		**get_matches(const char *pattern, int *match_count);
 
 static int	count_argv(char **argv)
 {

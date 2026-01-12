@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_service.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by claude            #+#    #+#             */
-/*   Updated: 2025/06/16 08:33:51 by tatsato          ###   ########.fr       */
+/*   Created: 2026/01/12 11:24:55 by mokabe            #+#    #+#             */
+/*   Updated: 2026/01/12 11:24:56 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static bool	impl_file_exists(const char *path)
 	return (stat(path, &st) == 0);
 }
 
-bool	impl_is_directory(const char *path);
-char	*impl_get_error_message(t_io_result result);
+bool				impl_is_directory(const char *path);
+char				*impl_get_error_message(t_io_result result);
 
 static t_io_result	impl_create_directory(const char *path)
 {

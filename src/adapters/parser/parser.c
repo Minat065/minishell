@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:27:11 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/06/13 23:59:18 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:24:26 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils/libft_custom.h"
 #include <stdlib.h>
 
-int	should_stop_parsing(t_token *token);
+int					should_stop_parsing(t_token *token);
 
 static t_pipeline	*parse_group_content(t_token_stream *tokens,
 		t_parse_result *result)
@@ -92,8 +92,7 @@ t_pipeline	*create_and_parse_pipeline(t_token_stream *tokens,
 	return (new_pipeline);
 }
 
-t_parse_result	*parse_main_loop(t_token_stream *tokens,
-		t_parse_result *result)
+t_parse_result	*parse_main_loop(t_token_stream *tokens, t_parse_result *result)
 {
 	t_pipeline	*first_pipeline;
 	t_pipeline	*current_pipeline;

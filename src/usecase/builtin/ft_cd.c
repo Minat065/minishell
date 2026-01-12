@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tatsato <tatsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 23:03:51 by tatsato           #+#    #+#             */
-/*   Updated: 2025/06/16 08:37:50 by tatsato          ###   ########.fr       */
+/*   Updated: 2026/01/12 11:26:01 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static void	set_new_pwd(t_env_var **envp, t_io_service *io, int print,
 int	ft_cd(char **argv, t_env_var **envp, t_io_service *io,
 		t_output_service *out)
 {
-	char		*path;
-	char		*cwd;
-	int			print_path;
+	char	*path;
+	char	*cwd;
+	int		print_path;
 
 	if (!io || !out)
 		return (EXIT_FAILURE);
