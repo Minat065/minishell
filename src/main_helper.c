@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:30:38 by mokabe            #+#    #+#             */
-/*   Updated: 2026/01/12 11:30:39 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:54:30 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,26 @@
 
 int			handle_line(char *line, t_exec_context *ctx);
 
-static int	handle_sigint(t_exec_context *exec_ctx)
+static void	handle_sigint(t_exec_context *exec_ctx)
 {
 	exec_ctx->last_exit_status = 130;
-	g_signal_received = 0;
-	return (1);
 }
-
 int	shell_loop(t_exec_context *exec_ctx)
 {
 	char	*line;
 
 	while (1)
 	{
-		g_signal_received = 0;
 		line = readline("minishell> ");
 		if (g_signal_received == SIGINT)
 		{
-			if (handle_sigint(exec_ctx))
+			handle_sigint(exec_ctx);
+			g_signal_received = 0;
+			if (!line || line[0] == '\0')
+			{
+				free(line);
 				continue ;
+			}
 		}
 		if (!handle_line(line, exec_ctx))
 			break ;

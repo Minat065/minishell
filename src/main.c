@@ -6,7 +6,7 @@
 /*   By: mokabe <mokabe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:17:10 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/09 14:19:32 by mokabe           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:50:28 by mokabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		shell_loop(t_exec_context *exec_ctx);
-int		init_and_run(char **envp);
+int			shell_loop(t_exec_context *exec_ctx);
+int			init_and_run(char **envp);
 
 static void	process_parsed_result(t_parse_result *result, t_exec_context *ctx,
 		t_token_stream *stream)
@@ -69,6 +69,7 @@ static void	process_input_line(char *line, t_exec_context *exec_ctx)
 }
 
 int	handle_line(char *line, t_exec_context *ctx)
+
 {
 	if (!line)
 	{
