@@ -14,8 +14,6 @@
 #include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 /* Check if command is a builtin */
 int	is_builtin(const char *cmd)
@@ -39,28 +37,6 @@ int	is_builtin(const char *cmd)
 	return (0);
 }
 
-static int	handle_exit_command(char **args, t_exec_context *ctx)
-{
-	int	exit_code;
-
-	write(STDERR_FILENO, "exit\n", 5);
-	exit_code = 0;
-	if (args[0] && args[1])
-	{
-		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
-		return (1);
-	}
-	if (args[0])
-	{
-		exit_code = ft_atoll(args[0]);
-		if (exit_code < 0 || exit_code > 255)
-			exit_code = exit_code % 256;
-	}
-	ctx->should_exit = 1;
-	ctx->exit_code = exit_code;
-	return (exit_code);
-}
-
 static int	execute_basic_builtins(char *command, char **args,
 		t_exec_context *ctx)
 {
@@ -77,7 +53,7 @@ static int	execute_basic_builtins(char *command, char **args,
 	else if (ft_strcmp(command, "env") == 0)
 		return (ft_env(*ctx->env, ctx->output_service));
 	else if (ft_strcmp(command, "exit") == 0)
-		return (handle_exit_command(args, ctx));
+		return (ft_exit(args, ctx));
 	return (EXIT_FAILURE);
 }
 

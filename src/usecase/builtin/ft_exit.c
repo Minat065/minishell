@@ -10,24 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "usecase/exit/exit.h"
+#include "usecase/executor/executor.h"
 #include "utils/libft_custom.h"
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-static int	count_arg(char **argv)
-{
-	int	count;
-
-	count = 0;
-	while (argv && *argv)
-	{
-		count++;
-		argv++;
-	}
-	return (count);
-}
 
 static int	can_convert_str_to_positive_longlong(const char *str)
 {
@@ -83,37 +70,43 @@ static int	can_convert_str_to_longlong(const char *str)
 		return (can_convert_str_to_positive_longlong(str));
 }
 
-void	ft_exit(char **argv, t_token_stream *stream, t_env_var *env)
+static int	normalize_exit_code(long long code)
+{
+	int	result;
+
+	result = (int)(code % 256);
+	if (result < 0)
+		result += 256;
+	return (result);
+}
+
+int	ft_exit(char **argv, t_exec_context *ctx)
 {
 	long long	exit_code;
-	int			argc;
 
 	write(STDERR_FILENO, "exit\n", 5);
 	if (!argv || !*argv)
-		exit_minishell(0, stream, env);
-	argc = count_arg(argv);
-	if (argc > 1)
 	{
-		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 31);
-		exit_minishell(1, stream, env);
+		ctx->should_exit = 1;
+		ctx->exit_code = 0;
+		return (0);
+	}
+	if (argv[0] && argv[1])
+	{
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
+		return (1);
 	}
 	if (can_convert_str_to_longlong(*argv) == 0)
 	{
-		write(STDERR_FILENO, "minishell: exit: numeric argument required\n", 38);
-		exit_minishell(255, stream, env);
+		write(STDERR_FILENO, "minishell: exit: ", 17);
+		write(STDERR_FILENO, *argv, ft_strlen(*argv));
+		write(STDERR_FILENO, ": numeric argument required\n", 28);
+		ctx->should_exit = 1;
+		ctx->exit_code = 2;
+		return (2);
 	}
 	exit_code = ft_atoll(*argv);
-	if (exit_code < 0)
-		exit_code = 256 + exit_code;
-	if (exit_code < 0)
-		exit_code = 0;
-	if (exit_code > 255)
-		exit_code = 255;
-	exit_minishell(exit_code, stream, env);
+	ctx->should_exit = 1;
+	ctx->exit_code = normalize_exit_code(exit_code);
+	return (ctx->exit_code);
 }
-
-// int main(int argc, char **argv)
-// {
-// 	argv++;
-// 	ft_exit(argv);
-// }

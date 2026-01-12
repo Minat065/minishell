@@ -14,15 +14,16 @@
 # define BUILTIN_COMMANDS_H
 
 # include "domain/env_variable.h"
-# include "domain/token.h"
 # include "interfaces/io_interface.h"
 # include "interfaces/output_interface.h"
+
+typedef struct s_exec_context	t_exec_context;
 
 int		ft_cd(char **argv, t_env_var **envp, t_io_service *io,
 			t_output_service *out);
 int		ft_echo(char **argv, t_output_service *out);
 int		ft_env(t_env_var *envp, t_output_service *out);
-void	ft_exit(char **argv, t_token_stream *stream, t_env_var *env);
+int		ft_exit(char **argv, t_exec_context *ctx);
 int		ft_export(char **argv, t_env_var **envp, t_output_service *out);
 int		ft_pwd(t_io_service *io, t_output_service *out);
 int		ft_unset(char **argv, t_env_var **envp);
