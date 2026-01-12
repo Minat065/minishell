@@ -6,7 +6,7 @@
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:19:37 by tatsato           #+#    #+#             */
-/*   Updated: 2026/01/12 15:49:43 by mirokugo         ###   ########.fr       */
+/*   Updated: 2026/01/12 18:40:19 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void	free_tokens(t_token_stream *stream)
 		free(cur);
 		cur = next;
 	}
+	free(stream->error_message);
 	free(stream);
 }
