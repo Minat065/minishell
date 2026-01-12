@@ -11,82 +11,11 @@
 /* ************************************************************************** */
 
 #include "usecase/executor/executor.h"
-#include "usecase/signal/signal_handler.h"
 #include "utils/libft_custom.h"
-#include <readline/readline.h>
 #include "libft.h"
 #include <stdlib.h>
-#include <unistd.h>
 
-static char	*append_line(char *content, char *line)
-{
-	char	*temp;
-	char	*new_content;
-	size_t	content_len;
-	size_t	line_len;
-
-	if (!content)
-	{
-		temp = ft_strjoin(line, "\n");
-		return (temp);
-	}
-	content_len = ft_strlen(content);
-	line_len = ft_strlen(line);
-	new_content = malloc(content_len + line_len + 2);
-	if (!new_content)
-	{
-		free(content);
-		return (NULL);
-	}
-	ft_strlcpy(new_content, content, content_len + 1);
-	ft_strlcpy(new_content + content_len, line, line_len + 1);
-	new_content[content_len + line_len] = '\n';
-	new_content[content_len + line_len + 1] = '\0';
-	free(content);
-	return (new_content);
-}
-
-static char	*collect_heredoc_content(const char *delimiter)
-{
-	char	*content;
-	char	*line;
-	size_t	delimiter_len;
-
-	content = NULL;
-	delimiter_len = ft_strlen(delimiter);
-	g_signal_received = 0;
-	setup_heredoc_signal_handlers();
-	while (1)
-	{
-		line = readline("> ");
-		if (g_signal_received == SIGINT)
-		{
-			free(line);
-			free(content);
-			setup_signal_handlers();
-			return (NULL);
-		}
-		if (!line)
-			break ;
-		if (ft_strlen(line) == delimiter_len && ft_strncmp(line, delimiter,
-				delimiter_len) == 0)
-		{
-			free(line);
-			break ;
-		}
-		content = append_line(content, line);
-		free(line);
-		if (!content)
-		{
-			setup_signal_handlers();
-			return (NULL);
-		}
-	}
-	setup_signal_handlers();
-	if (!content)
-		content = ft_strdup("");
-	return (content);
-}
+char	*collect_heredoc_content(const char *delimiter);
 
 static int	collect_heredoc_for_redirect(t_cmd_redirect *redirect)
 {
